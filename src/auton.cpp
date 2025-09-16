@@ -28,7 +28,7 @@ void bottomGoalSide() {
     storageIn();
     hopper.move(0);
     
-    chassis.moveToPoint(39.5, 2.61, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.moveToPoint(39.5, 2.61, 1500, {.forwards = false, .maxSpeed = 67});
 
     chassis.turnToHeading(-180, 600, {.maxSpeed = 70});
 
