@@ -1,0 +1,184 @@
+#include "main.h"
+#include "intake.h"
+#include "pros/adi.hpp"
+#include "pros/misc.h"
+#include "pros/motors.hpp"
+#include "lemlib/api.hpp"
+#include "autons.h"
+#include "autonSelector.h"
+
+// controller
+pros::Controller controller(pros::E_CONTROLLER_MASTER);
+
+// motor groups
+pros::MotorGroup leftMotors({-19, -8, 16},
+                            pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
+pros::MotorGroup rightMotors({-7, 1, 13}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
+
+
+lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
+                              &rightMotors, // right motor group
+                              12, // 10 inch track width
+                              lemlib::Omniwheel::NEW_325,
+                              450, // drivetrain rpm is 450
+                              2 // horizontal drift is 2 (for now)
+);
+
+pros::Imu imu(3);
+
+pros::Rotation horizontal_encoder(-15); //odom sensor
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, 0);
+
+pros::Rotation vertical_encoder(-14); //odom sensor
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -.75);
+
+lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
+
+// Dummy PID settings — required by Chassis constructor, but not used for arcade
+lemlib::ControllerSettings lateral(13, // proportional gain (kP)
+                                              0, // integral gain (kI)
+                                              50, // derivative gain (kD)
+                                              3, // anti windup
+                                              .5, // small error range, in inches
+                                              100, // small error range timeout, in milliseconds
+                                              1, // large error range, in inches
+                                              2000, // large error range timeout, in milliseconds
+                                              20 // maximum acceleration (slew)
+);
+
+lemlib::ControllerSettings angular(11, // proportional gain (kP)
+                                              0, // integral gain (kI)
+                                              120, // derivative gain (kD)
+                                              3, // anti windup
+                                              1, // small error range, in degrees
+                                              120, // small error range timeout, in milliseconds
+                                              3, // large error range, in degrees
+                                              2000, // large error range timeout, in milliseconds
+                                              0 // maximum acceleration (slew)
+);
+
+lemlib::ExpoDriveCurve throttle(3, 10, 1.019);
+lemlib::ExpoDriveCurve steer(3, 10, 1.019);
+
+// Chassis with dummy settings
+lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle, &steer);
+
+//Scraper
+pros::adi::DigitalOut scraper ('B', false);
+
+bool hoodActivated = false;
+bool scraperActivated = false;
+
+//flingBlue = false;
+bool hoodPressedLast = false;
+bool scraperPressedLast = false;
+
+void coord()
+{
+    while (true)
+    {
+        lemlib::Pose pose = chassis.getPose();
+        pros::lcd::print(5, "x: %f | y: %f | Theta: %f", pose.x, pose.y);
+        pros::lcd::print(6, "Theta: %f", pose.theta);
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+        {
+            printf("x: %f | y: %f | Theta: %f", pose.x, pose.y);
+            printf("Theta: %f", pose.theta);
+        }
+
+        pros::delay(50);
+    }
+
+}
+// drivetrain settings
+/**
+ * Runs initialization code. This occurs as soon as the program is started.
+ *
+ * All other competition modes are blocked by initialize; it is recommended
+ * to keep execution time for this mode under a few seconds.
+ */
+void initialize() {
+    chassis.calibrate();
+    chassis.setPose(0,0,0);
+
+    pros::lcd::initialize(); // initialize brain screen
+    leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    opticalSensor.set_led_pwm(100);
+
+    pros::delay(1000);
+    //pros::Task selector(autonSelectorStart);    
+
+
+    pros::Task updateScreen (coord);
+    pros::delay(100);
+}
+
+/**
+ * Runs while the robot is disabled
+ */
+void disabled() {}
+
+/**
+ * runs after initialize if the robot is connected to field control
+ */
+void competition_initialize() {}
+
+// get a path used for pure pursuit
+// this needs to be put outside a function
+
+/**
+ * Runs during auto
+ *
+ * This is an example autonomous routine which demonstrates a lot of the features LemLib has to offer
+ */
+void autonomous() 
+{
+    topGoal();
+
+
+}
+
+
+
+void opcontrol() 
+{
+    //scoreTop();
+    //topGoalSide();
+    //bottomGoalSide();
+
+
+    while (true)
+    {
+        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+
+		chassis.arcade(leftY, rightX);
+
+        bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+
+        if (hoodPressedNow && !hoodPressedLast) {
+            // Toggle hood
+            hoodActivated = !hoodActivated;
+            hood.set_value(hoodActivated);
+        }
+
+        hoodPressedLast = hoodPressedNow;
+
+        bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+
+        if (scraperPressedNow && !scraperPressedLast) {
+            // Toggle hood
+            scraperActivated = !scraperActivated;
+            scraper.set_value(scraperActivated);
+        }
+
+        scraperPressedLast = scraperPressedNow;
+        
+        updateIntake();
+        pros::delay(20);
+    }
+        
+        
+
+}
