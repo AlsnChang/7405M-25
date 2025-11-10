@@ -2,11 +2,11 @@
 #include "pros/motors.hpp"
 
 
-pros::Motor intake (19); //top & middle
-pros::Motor hopper (1); //self explanatory 
+pros::Motor intake (15); //top & middle
+pros::Motor hopper (2); //self explanatory 
 
-pros::adi::DigitalOut hood ('H', false);
-pros::Optical opticalSensor(2);
+pros::adi::DigitalOut flippy ('H', false);
+pros::Optical opticalSensor(11);
 
 bool flingBlue = false;
 
@@ -16,7 +16,6 @@ void updateIntake()
     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
     {
         //Put in storage
-        //colorSort();
         storageIn();
         
     }
@@ -28,6 +27,7 @@ void updateIntake()
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
     {
+        colorSort();
         //Score in long goal
         scoreTop();
        
@@ -47,28 +47,38 @@ void updateIntake()
 void storageIn()
 {
     //Put in storage
-    hopper.move (-100);
+    flippy.set_value(false);
+    hopper.move (-127);
     
 }
 
 void bottomGoal()
 {
-    hopper.move(100);
+    flippy.set_value(false);
+    hopper.move(127);
      
 }
+
 void stopIntake() {
     hopper.brake();
     intake.brake();
-    
+}
 
-}
 void scoreTop() {
-    hopper.move(100);
-    intake.move(-100);
+    flippy.set_value(true);
+    hopper.move(127);
+    intake.move(127);
 }
+
 void scoreMiddle() {
-    intake.move(100); 
-    hopper.move(100);
+    flippy.set_value(true);
+    intake.move(-127); 
+    hopper.move(127);
+}
+
+void load()
+{
+    
 }
 
 void colorSort()
@@ -77,13 +87,13 @@ void colorSort()
     {
         if (opticalSensor.get_hue() > 75)
         {
-            secondIn.move(150);
+            intake.move(-127);
             pros::lcd::set_text(1, "BLUE: " + std::to_string(opticalSensor.get_hue()));
             pros::delay(450);
         }
         else if (opticalSensor.get_hue() < 30)
         {
-            secondIn.move(-150);
+            intake.move(127);
             pros::lcd::set_text(1, "RED: " + std::to_string(opticalSensor.get_hue()));
         }
         else
@@ -95,12 +105,12 @@ void colorSort()
     {
         if (opticalSensor.get_hue() > 50)
         {
-            secondIn.move(-255);
+            intake.move(127);
             pros::lcd::set_text(1, "BLUE: " + std::to_string(opticalSensor.get_hue()));
         }
         else if (opticalSensor.get_hue() < 45)
         {
-            secondIn.move(255);
+            intake.move(-127);
             pros::lcd::set_text(1, "RED: " + std::to_string(opticalSensor.get_hue()));
             pros::delay(450);
         }
