@@ -1,5 +1,5 @@
 #include "main.h"
-#include "autonsSelector.h"
+#include "autonSelector.h"
 #include "pros/adi.hpp"
 #include "pros/rtos.hpp"
 #include "pros/screen.hpp"

@@ -13,7 +13,5 @@ void cancelSelection();
 
 
 //variables
-extern int auton;       
-extern int alliance;
-
-
+//extern int auton;       
+//extern int alliance;
