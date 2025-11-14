@@ -5,7 +5,7 @@
 pros::Motor intake (18); //top & middle
 pros::Motor hopper (13); //self explanatory 
 
-pros::adi::DigitalOut flippy ('H', false);
+pros::adi::DigitalOut flippy ('B', false);
 pros::Optical opticalSensor(11);
 
 bool flingBlue = false;
@@ -33,6 +33,11 @@ void updateIntake()
        
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+    {
+        //Outake into bottom goal
+        bottomGoal();       
+    }
+    else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
     {
         //Outake into bottom goal
         bottomGoal();       
@@ -72,8 +77,8 @@ void scoreTop() {
 
 void scoreMiddle() {
     flippy.set_value(true);
-    intake.move(-127); 
-    hopper.move(127);
+    intake.move(-100); 
+    hopper.move(100);
 }
 
 void load()

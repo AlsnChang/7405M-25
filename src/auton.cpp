@@ -1,6 +1,6 @@
 #include "intake.h"
 #include "pros/motors.hpp"
-#include "autonsSelector.h"
+#include "autonselector.h"
 #include "main.h"
 #include "pros/adi.hpp"
 #include "pros/misc.h"

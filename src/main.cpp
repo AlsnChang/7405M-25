@@ -5,7 +5,7 @@
 #include "pros/motors.hpp"
 #include "lemlib/api.hpp"
 #include "autons.h"
-#include "autonsSelector.h"
+#include "autonselector.h"
 
 / controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -68,7 +68,7 @@ lemlib::ExpoDriveCurve steer(3, 10, 1.019);
 lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle, &steer);
 
 //Scraper
-pros::ADIDigitalOut scraper ('G', false);
+pros::ADIDigitalOut scraper ('A', false);
 
 bool hoodActivated = false;
 bool scraperActivated = false;
@@ -93,8 +93,15 @@ void initialize() {
     opticalSensor.set_led_pwm(100);
 
     pros::delay(1000);
-    autonSelectorStart();
+    //autonSelectorStart();
     //pros::Task updateScreen (coord);
+    while (true) {
+        lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
+        pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta); // print the x position
+        pros::lcd::print(1, "H: %f", pose.theta); // print the x position
+        // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta, vertical_rot.get_position());
+        pros::delay(10);
+    }
 }
 
 /**
@@ -117,7 +124,9 @@ void competition_initialize() {}
  */
 void autonomous() 
 {
-    startAuton();
+    //chassis.moveToPoint(0, 20, 2000, {.maxSpeed = 30});
+    chassis.turnToHeading(90,1000, {.maxSpeed = 90});
+    //startAuton();
 }
 
 void coord()
@@ -140,34 +149,35 @@ void coord()
 
 void opcontrol() 
 {
-    while (true)
-    {
-        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    autonomous();
+//     while (true)
+//     {
+//         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+//         int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-		chassis.arcade(leftY, rightX);
-/*
-        bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+// 		chassis.arcade(leftY, rightX);
+// /*
+//         bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-        if (hoodPressedNow && !hoodPressedLast) {
-            // Toggle hood
-            hoodActivated = !hoodActivated;
-            hood.set_value(hoodActivated);
-        } 
+//         if (hoodPressedNow && !hoodPressedLast) {
+//             // Toggle hood
+//             hoodActivated = !hoodActivated;
+//             hood.set_value(hoodActivated);
+//         } 
 
-        hoodPressedLast = hoodPressedNow; */
+//         hoodPressedLast = hoodPressedNow; */
 
-        bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+//         bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-        if (scraperPressedNow && !scraperPressedLast) {
-            // Toggle hood
-            scraperActivated = !scraperActivated;
-            scraper.set_value(scraperActivated);
-        }
+//         if (scraperPressedNow && !scraperPressedLast) {
+//             // Toggle hood
+//             scraperActivated = !scraperActivated;
+//             scraper.set_value(scraperActivated);
+//         }
 
-        scraperPressedLast = scraperPressedNow;
+//         scraperPressedLast = scraperPressedNow;
         
-        updateIntake();
-        pros::delay(20);
-    }
+//         updateIntake();
+//         pros::delay(20);
+//     }
 }
