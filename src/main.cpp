@@ -15,7 +15,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 //                             pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
 // pros::MotorGroup rightMotors({12, 5, 6}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
 
-pros::MotorGroup leftMotors({-10, -16, -20},
+pros::MotorGroup leftMotors({-10, -15, -20},
                             pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
 pros::MotorGroup rightMotors({4, 5, 11}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
 
@@ -30,10 +30,10 @@ lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
 
 pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(-3); //odom sensor
+pros::Rotation horizontal_encoder(3); //odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, 0);
 
-pros::Rotation vertical_encoder(-3); //odom sensor
+pros::Rotation vertical_encoder(-17); //odom sensor
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -.75);
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
@@ -77,6 +77,37 @@ bool scraperActivated = false;
 bool hoodPressedLast = false;
 bool scraperPressedLast = false;
 
+void coord()
+{
+    // loop forever
+    while (true) {
+        lemlib::Pose pose = chassis.getPose();
+        pros::lcd::print(0, "x: %.2f | y: %.2f | H: %.2f", pose.x, pose.y, pose.theta);
+        pros::lcd::print(1, "theta: %.2f", pose.theta);
+
+        // lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
+        // pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta); // print the x position
+        // //pros::lcd::print(0, "x: %f | y: %f", horizontal_encoder.get_position(), vertical_encoder.get_position(), pose.theta); // print the x position
+        // pros::lcd::print(1, "H: %f", pose.theta); // print the x position
+        // // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta, vertical_rot.get_position());
+        pros::delay(100);
+    }
+
+    // while (true)
+    // {
+    //     lemlib::Pose pose = chassis.getPose();
+    //     pros::lcd::print(1, "x: %f | y: %f", pose.x, pose.y);
+    //     pros::lcd::print(2, "Theta: %f", pose.theta);
+    //     // if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+    //     // {
+    //     //     printf("x: %f | y: %f | Theta: %f", pose.x, pose.y);
+    //     //     printf("Theta: %f", pose.theta);
+    //     // }
+
+    //     pros::delay(50);
+    // }
+
+}
 // drivetrain settings
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -84,16 +115,34 @@ bool scraperPressedLast = false;
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+void screen() {
+    // loop forever
+    while (true) {
+        lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
+        pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta); // print the x position
+        pros::lcd::print(1, "H: %f", pose.theta); // print the x position
+        // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta, vertical_rot.get_position());
+        pros::delay(10);
+    }
+}
+
 void initialize() {
+    pros::lcd::initialize();
     chassis.calibrate();
     chassis.setPose(0,0,0);
+    horizontal_encoder.reset_position();
+    vertical_encoder.reset_position();
     pros::lcd::initialize(); // initialize brain screen
     leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     opticalSensor.set_led_pwm(100);
 
     pros::delay(1000);
-    autonSelectorStart();
+    //autonSelectorStart();
+    pros::Task screenTask(screen);
+   
+    //pros::Task updateScreen (coord);
+    
     //pros::Task updateScreen (coord);
 }
 
@@ -117,57 +166,45 @@ void competition_initialize() {}
  */
 void autonomous() 
 {
-    startAuton();
+    //startAuton();
+    chassis.moveToPoint(0, 20, 2000, {.maxSpeed = 50});
 }
 
-void coord()
-{
-    while (true)
-    {
-        lemlib::Pose pose = chassis.getPose();
-        pros::lcd::print(5, "x: %f | y: %f | Theta: %f", pose.x, pose.y);
-        pros::lcd::print(6, "Theta: %f", pose.theta);
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
-        {
-            printf("x: %f | y: %f | Theta: %f", pose.x, pose.y);
-            printf("Theta: %f", pose.theta);
-        }
 
-        pros::delay(50);
-    }
-
-}
 
 void opcontrol() 
 {
-    while (true)
-    {
-        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-		chassis.arcade(leftY, rightX);
-/*
-        bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+    // pros::Task updateScreen (coord);
+    autonomous();
+//     while (true)
+//     {
+//         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+//         int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-        if (hoodPressedNow && !hoodPressedLast) {
-            // Toggle hood
-            hoodActivated = !hoodActivated;
-            hood.set_value(hoodActivated);
-        } 
+// 		chassis.arcade(leftY, rightX);
+// /*
+//         bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-        hoodPressedLast = hoodPressedNow; */
+//         if (hoodPressedNow && !hoodPressedLast) {
+//             // Toggle hood
+//             hoodActivated = !hoodActivated;
+//             hood.set_value(hoodActivated);
+//         } 
 
-        bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+//         hoodPressedLast = hoodPressedNow; */
 
-        if (scraperPressedNow && !scraperPressedLast) {
-            // Toggle hood
-            scraperActivated = !scraperActivated;
-            scraper.set_value(scraperActivated);
-        }
+//         bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-        scraperPressedLast = scraperPressedNow;
+//         if (scraperPressedNow && !scraperPressedLast) {
+//             // Toggle hood
+//             scraperActivated = !scraperActivated;
+//             scraper.set_value(scraperActivated);
+//         }
+
+//         scraperPressedLast = scraperPressedNow;
         
-        updateIntake();
-        pros::delay(20);
-    }
+//         updateIntake();
+//         pros::delay(20);
+//     }
 }

@@ -77,8 +77,8 @@ void scoreTop() {
 
 void scoreMiddle() {
     flippy.set_value(true);
-    intake.move(-100); 
-    hopper.move(100);
+    intake.move(-127); 
+    hopper.move(127);
 }
 
 void load()
