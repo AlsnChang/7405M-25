@@ -7,13 +7,17 @@
 #include "autons.h"
 #include "autonsSelector.h"
 
-// controller
+/ controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // motor groups
-pros::MotorGroup leftMotors({-20, -18, -10},
+// pros::MotorGroup leftMotors({-20, -18, -10},
+//                             pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
+// pros::MotorGroup rightMotors({12, 5, 6}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
+
+pros::MotorGroup leftMotors({-10, -16, -20},
                             pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
-pros::MotorGroup rightMotors({12, 5, 6}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
+pros::MotorGroup rightMotors({4, 5, 11}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
 
 
 lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
@@ -24,12 +28,12 @@ lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
                               2 // horizontal drift is 2 (for now)
 );
 
-pros::Imu imu(19);
+pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(-15); //odom sensor
+pros::Rotation horizontal_encoder(-3); //odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, 0);
 
-pros::Rotation vertical_encoder(-14); //odom sensor
+pros::Rotation vertical_encoder(-3); //odom sensor
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -.75);
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
@@ -48,7 +52,7 @@ lemlib::ControllerSettings lateral(13, // proportional gain (kP)
 
 lemlib::ControllerSettings angular(11, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              120, // derivative gain (kD)
+                                              100, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
