@@ -2,8 +2,8 @@
 #include "pros/motors.hpp"
 
 
-pros::Motor intake (15); //top & middle
-pros::Motor hopper (2); //self explanatory 
+pros::Motor intake (18); //top & middle
+pros::Motor hopper (13); //self explanatory 
 
 pros::adi::DigitalOut flippy ('H', false);
 pros::Optical opticalSensor(11);
