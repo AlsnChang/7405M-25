@@ -1,11 +1,11 @@
 #include "main.h"
-#include "autonSelector.h"
+#include "autonsSelector.h"
 #include "pros/adi.hpp"
 #include "pros/rtos.hpp"
 #include "pros/screen.hpp"
 
-int auton = -1;       
-int alliance = -1;    
+static int auton = -1;       
+static int alliance = -1;    
 static bool selectingAuton = false;    
 static bool autonSelected = false;     
 static const char* selectedAutonLabel = "None";  //labeling stuff
