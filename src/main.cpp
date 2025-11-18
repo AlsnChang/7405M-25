@@ -5,9 +5,8 @@
 #include "pros/motors.hpp"
 #include "lemlib/api.hpp"
 #include "autons.h"
-#include "autonSelector.h"
+#include "autonsSelector.h"
 
-/ controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // motor groups
@@ -30,18 +29,18 @@ lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
 
 pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(3); //odom sensor
+pros::Rotation horizontal_encoder(-3); //odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1);
 
-pros::Rotation vertical_encoder(-17); //odom sensor
+pros::Rotation vertical_encoder(17); //odom sensor
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -0.5);
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
 
 // Dummy PID settings — required by Chassis constructor, but not used for arcade
-lemlib::ControllerSettings lateral(13, // proportional gain (kP)
+lemlib::ControllerSettings lateral(16, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              50, // derivative gain (kD)
+                                              0, // derivative gain (kD)
                                               3, // anti windup
                                               .5, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
@@ -167,16 +166,17 @@ void competition_initialize() {}
 void autonomous() 
 {
     //startAuton();
-    chassis.moveToPoint(0, 20, 2000, {.maxSpeed = 50});
+    chassis.moveToPoint(0, 10, 2000);
 }
 
 
 
 void opcontrol() 
 {
+    pros::delay(3);
 
-    // pros::Task updateScreen (coord);
     autonomous();
+    
 //     while (true)
 //     {
 //         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
