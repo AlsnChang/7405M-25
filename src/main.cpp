@@ -38,9 +38,9 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwhe
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
 
 // Dummy PID settings — required by Chassis constructor, but not used for arcade
-lemlib::ControllerSettings lateral(16, // proportional gain (kP)
+lemlib::ControllerSettings lateral(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              0, // derivative gain (kD)
+                                              17.6, // derivative gain (kD)
                                               3, // anti windup
                                               .5, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
@@ -49,9 +49,9 @@ lemlib::ControllerSettings lateral(16, // proportional gain (kP)
                                               20 // maximum acceleration (slew)
 );
 
-lemlib::ControllerSettings angular(11, // proportional gain (kP)
+lemlib::ControllerSettings angular(1.4, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              100, // derivative gain (kD)
+                                              15, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
@@ -166,7 +166,7 @@ void competition_initialize() {}
 void autonomous() 
 {
     //startAuton();
-    chassis.moveToPoint(0, 10, 2000);
+    chassis.turnToHeading(180,1000, {.maxSpeed = 50});
 }
 
 
