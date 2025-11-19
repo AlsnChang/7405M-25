@@ -7,7 +7,6 @@
 #include "autons.h"
 #include "autonSelector.h"
 
-/ controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // motor groups
