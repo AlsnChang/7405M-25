@@ -38,7 +38,7 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwhe
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
 
 
-lemlib::ControllerSettings lateral(6, // proportional gain (kP)
+lemlib::ControllerSettings lateral(8.9, // proportional gain (kP)
                                               0, // integral gain (kI)
                                               17.6, // derivative gain (kD)
                                               3, // anti windup
@@ -161,20 +161,6 @@ void competition_initialize() {}
  *
  * This is an example autonomous routine which demonstrates a lot of the features LemLib has to offer
  */
-
-void skills1() {
-    pros::delay(3);
-    chassis.moveToPoint(0,11,1000);
-    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
-    storageIn();
-    chassis.moveToPoint(40, 11,1000);
-    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-    
-    scraper.set_value(true);
-    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
-    pros::delay(1500);
-}
-
 void autonomous() 
 {
 
@@ -197,7 +183,16 @@ void autonomous()
 void opcontrol() 
 {
     //skills
-    skills1();
+    pros::delay(3);
+    chassis.moveToPoint(0,11,1000);
+    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+    storageIn();
+    chassis.moveToPoint(40, 11,1000);
+    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
+    
+    scraper.set_value(true);
+    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
+    pros::delay(1500);
     
 
 
