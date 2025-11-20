@@ -7,18 +7,28 @@
 #include "lemlib/api.hpp"
 
 
+void skills() {
+    chassis.moveToPoint(0,15,1000);
+    chassis.turnToPoint(0,15,90);
+    chassis.moveToPoint(40,15,3000);
+    chassis.turnToPoint(40,15,90);
+    scraper.set_value(true);
+    storageIn();
+    chassis.moveToPoint(40, -10, 1000);
+
+
+}
 void bottomGoalSide() {
     //Align with three blocks
     chassis.moveToPoint(0, 11, 1000);
     //50
-    chassis.turnToPoint(13.4, 26.1, 1000, {.maxSpeed=80});
+    chassis.turnToPoint(13.4, 26.1, 2000, {.maxSpeed=90});
     storageIn();
-    //Get blocks
-    // chassis.moveToPoint(5.52, 18.7, 1000, {.maxSpeed = 25});
-    chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 25});
+    
+    chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 35});
     chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
 
-    chassis.moveToPoint(5.5,35.5,5000);
+    chassis.moveToPoint(5.5,35.5,3500);
     bottomGoal();
     pros::delay(2000);
 
@@ -32,15 +42,12 @@ void bottomGoalSide() {
     storageIn();
 
     scraper.set_value(true);
-    chassis.moveToPoint(39, -11, 2000,{.minSpeed=100});
+    chassis.moveToPoint(40, -11, 2000,{.minSpeed=100});
     pros::delay(1500);
 
     //move to long goal
-    chassis.moveToPoint(39, 10,2000, {.forwards = false});
     scraper.set_value(false);
-    chassis.turnToHeading(0,1000, {.maxSpeed = 90});
-    pros::delay(1000);
-    chassis.moveToPoint(39, 15.5,5000, {.forwards = true});
+    chassis.moveToPoint(40, 20,5000, {.forwards = false});
     //scoreTop();
 
 }

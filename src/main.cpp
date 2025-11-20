@@ -5,7 +5,7 @@
 #include "pros/motors.hpp"
 #include "lemlib/api.hpp"
 #include "autons.h"
-#include "autonsSelector.h"
+#include "autonSelector.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -139,7 +139,6 @@ void initialize() {
     //autonSelectorStart();
     pros::Task screenTask(screen);
    
-    //pros::Task updateScreen (coord);
     
     //pros::Task updateScreen (coord);
 }
@@ -164,17 +163,44 @@ void competition_initialize() {}
  */
 void autonomous() 
 {
+
+    
     //startAuton();
+    
+    //chassis.moveToPoint(0, 11, 1000);
+    //chassis.turnToPoint(0,0,0);
+
+    // chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 25});
+    // chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
+
+    // chassis.moveToPoint(5.5,35.5,5000);
+
+
 }
 
 
 
 void opcontrol() 
 {
+    //skills
     pros::delay(3);
-
-    autonomous();
+    chassis.moveToPoint(0,11,1000);
+    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+    storageIn();
+    chassis.moveToPoint(40, 11,1000);
+    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
     
+    scraper.set_value(true);
+    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
+    pros::delay(1500);
+    
+
+
+    // chassis.moveToPoint(40,15,3000);
+    // chassis.turnToPoint(40,15,90);
+    // scraper.set_value(true);
+    // storageIn();
+    // chassis.moveToPoint(40, -10, 1000);   
 //     while (true)
 //     {
 //         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
