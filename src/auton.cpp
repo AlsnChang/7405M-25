@@ -6,18 +6,17 @@
 #include "pros/misc.h"
 #include "lemlib/api.hpp"
 
+// void skills() {
+//     chassis.moveToPoint(0,15,1000);
+//     chassis.turnToPoint(0,15,90);
+//     chassis.moveToPoint(40,15,3000);
+//     chassis.turnToPoint(40,15,90);
+//     scraper.set_value(true);
+//     storageIn();
+//     chassis.moveToPoint(40, -10, 1000);
 
-void skills() {
-    chassis.moveToPoint(0,15,1000);
-    chassis.turnToPoint(0,15,90);
-    chassis.moveToPoint(40,15,3000);
-    chassis.turnToPoint(40,15,90);
-    scraper.set_value(true);
-    storageIn();
-    chassis.moveToPoint(40, -10, 1000);
 
-
-}
+// }
 void bottomGoalSide() {
     //Align with three blocks
     chassis.moveToPoint(0, 11, 1000);
@@ -31,7 +30,6 @@ void bottomGoalSide() {
     chassis.moveToPoint(5.5,35.5,3500);
     bottomGoal();
     pros::delay(2000);
-
     
    //loader
     hopper.move(-127);

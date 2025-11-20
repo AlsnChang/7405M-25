@@ -38,7 +38,7 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwhe
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
 
 
-lemlib::ControllerSettings lateral(6, // proportional gain (kP)
+lemlib::ControllerSettings lateral(8.9, // proportional gain (kP)
                                               0, // integral gain (kI)
                                               17.6, // derivative gain (kD)
                                               3, // anti windup
@@ -161,28 +161,7 @@ void competition_initialize() {}
  *
  * This is an example autonomous routine which demonstrates a lot of the features LemLib has to offer
  */
-void autonomous() 
-{
-
-    
-    //startAuton();
-    
-    //chassis.moveToPoint(0, 11, 1000);
-    //chassis.turnToPoint(0,0,0);
-
-    // chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 25});
-    // chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
-
-    // chassis.moveToPoint(5.5,35.5,5000);
-
-
-}
-
-
-
-void opcontrol() 
-{
-    //skills
+void skills() {
     pros::delay(3);
     chassis.moveToPoint(0,11,1000);
     chassis.turnToHeading(90, 750, {.maxSpeed = 90});
@@ -193,6 +172,33 @@ void opcontrol()
     scraper.set_value(true);
     chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
     pros::delay(1500);
+}
+
+void blueRight() {
+    //storageIn();
+    chassis.moveToPoint(0, 20, 3000);
+    //chassis.turnToHeading(-80, 750, {.maxSpeed = 50});
+    // chassis.moveToPoint();
+    // bottomGoal();
+}
+
+void autonomous() 
+{
+
+    blueRight();
+    //startAuton();
+
+    
+
+
+}
+
+
+
+void opcontrol() 
+{
+    //skills
+    blueRight();
     
 
 
