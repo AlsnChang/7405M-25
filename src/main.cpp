@@ -5,7 +5,7 @@
 #include "pros/motors.hpp"
 #include "lemlib/api.hpp"
 #include "autons.h"
-#include "autonsSelector.h"
+#include "autonselector.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -74,6 +74,9 @@ bool scraperActivated = false;
 //flingBlue = false;
 bool hoodPressedLast = false;
 bool scraperPressedLast = false;
+
+
+
 
 void coord()
 {
@@ -176,6 +179,24 @@ void skills() {
     pros::delay(1500);
 }
 
+void move(double power, double turn, bool swing=false) {
+    int left = power + turn;
+    int right = power - turn;
+
+    if (swing && left < 0) {left = 0;}
+    if (swing && right < 0) {right = 0;}
+
+    leftMotors.move(left);
+    rightMotors.move(left);
+    // left_center_motor.move(left);
+    // left_back_motor.move(left);
+    // right_front_motor.move(left);
+    // right_center_motor.move(left);
+    // right_back_motor.move(left);
+}
+
+
+
 void autonomous() 
 {
 
@@ -194,29 +215,53 @@ void autonomous()
 }
 
 
-
 void opcontrol() 
 {
+    // scraper.set_value(true);
+    // move(60, 0);
+    //bottomGoal25()
     //Get three blocks
     pros::delay(3);
-    chassis.moveToPoint(-0.5, 10, 1000);
-    chassis.turnToHeading(40, 1500);
+    chassis.moveToPoint(-0.5, 10, 800);
+    chassis.turnToHeading(40, 1000);
     storageIn();
-    chassis.moveToPoint(14, 26, 1500, {.maxSpeed = 40});  
+    chassis.moveToPoint(14, 26, 3000, {.maxSpeed = 40});  
     pros::delay(2100);
 
     //Go and outtake into bottom goal
     stopIntake(); 
-    chassis.turnToHeading(-40, 1500);
+    chassis.turnToHeading(-37, 1500);
     chassis.moveToPoint(5.3, 39, 1500);
     pros::delay(50);
     bottomGoal();
     pros::delay(2000);
     stopIntake();
-    chassis.moveToPoint(40.1, 1.5, 1500, {.forwards = false, .maxSpeed = 60});  
-    chassis.turnToHeading(-178, 1500);
+    chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
+    chassis.turnToHeading(-174, 1500);
+    pros::delay(1000);
+    //pros::delay(5000);
     scraper.set_value(true);
-    chassis.moveToPoint(38.1, -8.9, 1500);
+    //pros::delay(100);
+    // chassis.moveToPoint(39, -7, 1500);
+
+    //cancel motions (voltage thing), move continuously into loader,  move back a bit, ram again
+    chassis.cancelAllMotions();
+    pros::delay(500);
+    move(50, 0);
+    storageIn();
+    pros::delay(2000);
+    chassis.moveToPoint(39, 0, 1500);
+    pros::delay(1000);
+    chassis.cancelAllMotions();
+    move(50,0);
+    //chassis.moveToPoint(39, -6.3, 1500);
+
+    //pros::delay(100000000);    
+
+    // pros::delay(3000);
+    // chassis.moveToPoint(39.9, 20, 3000, {.forwards = false, .maxSpeed = 50});
+    // scoreTop();
+
 //     while (true)
 //     {
 //         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);

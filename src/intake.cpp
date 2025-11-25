@@ -49,6 +49,36 @@ void updateIntake()
     }
 }
 
+// void bottomGoal25() {
+//     //Get three blocks
+//     pros::delay(3);
+//     chassis.moveToPoint(-0.5, 10, 800);
+//     chassis.turnToHeading(40, 1000);
+//     storageIn();
+//     chassis.moveToPoint(14, 26, 3000, {.maxSpeed = 40});  
+//     pros::delay(2100);
+
+//     //Go and outtake into bottom goal
+//     stopIntake(); 
+//     chassis.turnToHeading(-37, 1500);
+//     chassis.moveToPoint(5.3, 39, 1500);
+//     pros::delay(50);
+//     bottomGoal();
+//     pros::delay(2000);
+//     stopIntake();
+//     chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
+//     chassis.turnToHeading(-176, 1500);
+//     scraper.set_value(true);
+//     //pros::delay(100);
+//     chassis.moveToPoint(39, -7, 1500);
+//     pros::delay(500);
+//     move(80, 0);
+//     //chassis.moveToPoint(39, -6.3, 1500);
+//     storageIn();
+//     //pros::delay(100000000);
+// }
+
+
 void storageIn()
 {
     //Put in storage
@@ -57,9 +87,10 @@ void storageIn()
     
 }
 
+
 void bottomGoal()
 {
-    flippy.set_value(true);
+    //flippy.set_value(true);
     hopper.move(80);
      
 }
