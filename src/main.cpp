@@ -38,9 +38,9 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwhe
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
 
 
-lemlib::ControllerSettings lateral(8.9, // proportional gain (kP)
+lemlib::ControllerSettings lateral(7.25, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              17.6, // derivative gain (kD)
+                                              50, // derivative gain (kD)
                                               3, // anti windup
                                               .5, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
@@ -174,6 +174,7 @@ void autonomous()
     // chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
 
     // chassis.moveToPoint(5.5,35.5,5000);
+    
 
 
 }
@@ -182,25 +183,22 @@ void autonomous()
 
 void opcontrol() 
 {
-    //skills
+    //auton??
     pros::delay(3);
-    chassis.moveToPoint(0,11,1000);
-    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
     storageIn();
-    chassis.moveToPoint(40, 11,1000);
-    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-    
-    scraper.set_value(true);
-    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
-    pros::delay(1500);
+    chassis.moveToPoint(0.43,22,1000, {.maxSpeed = 45});
+    chassis.moveToPoint(1.6,28.1,1000);
     
 
-
-    // chassis.moveToPoint(40,15,3000);
-    // chassis.turnToPoint(40,15,90);
-    // scraper.set_value(true);
+    // chassis.moveToPoint(0,11,1000);
+    // chassis.turnToHeading(90, 750, {.maxSpeed = 90});
     // storageIn();
-    // chassis.moveToPoint(40, -10, 1000);   
+    // chassis.moveToPoint(40, 11,1000);
+    // chassis.turnToHeading(180, 750, {.maxSpeed = 90});
+    
+    
+
+ 
 //     while (true)
 //     {
 //         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
