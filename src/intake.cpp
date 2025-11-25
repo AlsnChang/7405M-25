@@ -59,8 +59,8 @@ void storageIn()
 
 void bottomGoal()
 {
-    flippy.set_value(false);
-    hopper.move(127);
+    flippy.set_value(true);
+    hopper.move(80);
      
 }
 

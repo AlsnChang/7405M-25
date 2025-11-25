@@ -5,7 +5,7 @@
 #include "pros/motors.hpp"
 #include "lemlib/api.hpp"
 #include "autons.h"
-#include "autonSelector.h"
+#include "autonsSelector.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -29,7 +29,7 @@ lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
 
 pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(-3); //odom sensor
+pros::Rotation horizontal_encoder(-2); //odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1);
 
 pros::Rotation vertical_encoder(17); //odom sensor
@@ -51,7 +51,7 @@ lemlib::ControllerSettings lateral(7.25, // proportional gain (kP)
 
 lemlib::ControllerSettings angular(1.1, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              8, // derivative gain (kD)
+                                              1, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               1000, // small error range timeout, in milliseconds
@@ -161,6 +161,21 @@ void competition_initialize() {}
  *
  * This is an example autonomous routine which demonstrates a lot of the features LemLib has to offer
  */
+
+void skills() {
+    //skills
+    pros::delay(3000);
+    chassis.moveToPoint(0,11,1000);
+    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+    storageIn();
+    chassis.moveToPoint(40, 11,1000);
+    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
+    
+    scraper.set_value(true);
+    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
+    pros::delay(1500);
+}
+
 void autonomous() 
 {
 
@@ -183,22 +198,25 @@ void autonomous()
 
 void opcontrol() 
 {
-    //auton??
+    //skills
     pros::delay(3);
+    chassis.moveToPoint(0,11,1000);
+    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
     storageIn();
-    chassis.moveToPoint(0.43,22,1000, {.maxSpeed = 45});
-    chassis.moveToPoint(1.6,28.1,1000);
+    chassis.moveToPoint(40, 11,1000);
+    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
+    
+    scraper.set_value(true);
+    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
+    pros::delay(1500);
     
 
-    // chassis.moveToPoint(0,11,1000);
-    // chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+
+    // chassis.moveToPoint(40,15,3000);
+    // chassis.turnToPoint(40,15,90);
+    // scraper.set_value(true);
     // storageIn();
-    // chassis.moveToPoint(40, 11,1000);
-    // chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-    
-    
-
- 
+    // chassis.moveToPoint(40, -10, 1000);   
 //     while (true)
 //     {
 //         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
