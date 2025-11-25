@@ -5,7 +5,7 @@
 #include "pros/motors.hpp"
 #include "lemlib/api.hpp"
 #include "autons.h"
-#include "autonSelector.h"
+#include "autonsSelector.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -29,7 +29,7 @@ lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
 
 pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(-3); //odom sensor
+pros::Rotation horizontal_encoder(-2); //odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1);
 
 pros::Rotation vertical_encoder(17); //odom sensor
@@ -51,7 +51,7 @@ lemlib::ControllerSettings lateral(8.9, // proportional gain (kP)
 
 lemlib::ControllerSettings angular(1.1, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              8, // derivative gain (kD)
+                                              1, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               1000, // small error range timeout, in milliseconds
@@ -161,6 +161,21 @@ void competition_initialize() {}
  *
  * This is an example autonomous routine which demonstrates a lot of the features LemLib has to offer
  */
+
+void skills() {
+    //skills
+    pros::delay(3000);
+    chassis.moveToPoint(0,11,1000);
+    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+    storageIn();
+    chassis.moveToPoint(40, 11,1000);
+    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
+    
+    scraper.set_value(true);
+    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
+    pros::delay(1500);
+}
+
 void autonomous() 
 {
 
@@ -182,25 +197,26 @@ void autonomous()
 
 void opcontrol() 
 {
-    //skills
+    //Get three blocks
     pros::delay(3);
-    chassis.moveToPoint(0,11,1000);
-    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+    chassis.moveToPoint(-0.5, 10, 1000);
+    chassis.turnToHeading(40, 1500);
     storageIn();
-    chassis.moveToPoint(40, 11,1000);
-    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-    
+    chassis.moveToPoint(14, 26, 1500, {.maxSpeed = 40});  
+    pros::delay(2100);
+
+    //Go and outtake into bottom goal
+    stopIntake(); 
+    chassis.turnToHeading(-40, 1500);
+    chassis.moveToPoint(5.3, 39, 1500);
+    pros::delay(50);
+    bottomGoal();
+    pros::delay(2000);
+    stopIntake();
+    chassis.moveToPoint(40.1, 1.5, 1500, {.forwards = false, .maxSpeed = 60});  
+    chassis.turnToHeading(-178, 1500);
     scraper.set_value(true);
-    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
-    pros::delay(1500);
-    
-
-
-    // chassis.moveToPoint(40,15,3000);
-    // chassis.turnToPoint(40,15,90);
-    // scraper.set_value(true);
-    // storageIn();
-    // chassis.moveToPoint(40, -10, 1000);   
+    chassis.moveToPoint(38.1, -8.9, 1500);
 //     while (true)
 //     {
 //         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
