@@ -179,15 +179,19 @@ void skills() {
     pros::delay(1500);
 }
 
-void move(double power, double turn, bool swing=false) {
+void move(double power, double turn, bool swing=false, double time=10000) {
     int left = power + turn;
     int right = power - turn;
+    // double t = time; 
 
     if (swing && left < 0) {left = 0;}
     if (swing && right < 0) {right = 0;}
 
     leftMotors.move(left);
     rightMotors.move(left);
+    pros::delay(time);
+    leftMotors.brake();
+    rightMotors.brake();
     // left_center_motor.move(left);
     // left_back_motor.move(left);
     // right_front_motor.move(left);
@@ -218,6 +222,7 @@ void autonomous()
 
 void opcontrol() 
 {
+    flingBlue = false; 
     // scraper.set_value(true);
     // move(60, 0);
     //bottomGoal25()
@@ -235,7 +240,7 @@ void opcontrol()
     chassis.moveToPoint(5.3, 39, 1500);
     pros::delay(50);
     bottomGoal();
-    pros::delay(2000);
+    pros::delay(3000);
     stopIntake();
     chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
     chassis.turnToHeading(-174, 1500);
@@ -248,14 +253,18 @@ void opcontrol()
     //cancel motions (voltage thing), move continuously into loader,  move back a bit, ram again
     chassis.cancelAllMotions();
     pros::delay(500);
-    move(50, 0);
     storageIn();
-    pros::delay(2000);
-    chassis.moveToPoint(39, 0, 1500);
-    pros::delay(1000);
-    chassis.cancelAllMotions();
-    move(50,0);
-    //chassis.moveToPoint(39, -6.3, 1500);
+    move(50, 0, false, 1000);
+    pros::delay(1500);
+    chassis.moveToPoint(41.32, 18.84, 1500, {.forwards = false});
+    pros::delay(500);
+    colorSort();
+    //pros::delay(1000);
+    // chassis.moveToPoint(39, 0, 1500);
+    // pros::delay(1000);
+    //chassis.cancelAllMotions();
+    //move(50,0);
+    //chassis.moveToPoint(39, 15, 1500);
 
     //pros::delay(100000000);    
 
@@ -291,6 +300,7 @@ void opcontrol()
 //         scraperPressedLast = scraperPressedNow;
         
 //         updateIntake();
+       
 //         pros::delay(20);
 //     }
 }

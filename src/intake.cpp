@@ -49,6 +49,8 @@ void updateIntake()
     }
 }
 
+
+
 // void bottomGoal25() {
 //     //Get three blocks
 //     pros::delay(3);
@@ -101,15 +103,16 @@ void stopIntake() {
 }
 
 void scoreTop() {
+    
     flippy.set_value(true);
-    hopper.move(127);
-    intake.move(127);
+    hopper.move(100);
+    intake.move(100);
 }
 
 void scoreMiddle() {
     flippy.set_value(true);
-    intake.move(-127); 
-    hopper.move(127);
+    intake.move(-100); 
+    hopper.move(100);
 }
 
 void load()
@@ -123,13 +126,13 @@ void colorSort()
     {
         if (opticalSensor.get_hue() > 75)
         {
-            intake.move(-127);
+            scoreMiddle();
             pros::lcd::set_text(1, "BLUE: " + std::to_string(opticalSensor.get_hue()));
             pros::delay(450);
         }
         else if (opticalSensor.get_hue() < 30)
         {
-            intake.move(127);
+            scoreTop();
             pros::lcd::set_text(1, "RED: " + std::to_string(opticalSensor.get_hue()));
         }
         else
@@ -141,12 +144,12 @@ void colorSort()
     {
         if (opticalSensor.get_hue() > 50)
         {
-            intake.move(127);
+            scoreTop();
             pros::lcd::set_text(1, "BLUE: " + std::to_string(opticalSensor.get_hue()));
         }
         else if (opticalSensor.get_hue() < 45)
         {
-            intake.move(-127);
+            scoreMiddle(); 
             pros::lcd::set_text(1, "RED: " + std::to_string(opticalSensor.get_hue()));
             pros::delay(450);
         }
