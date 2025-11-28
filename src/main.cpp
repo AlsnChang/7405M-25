@@ -179,31 +179,13 @@ void skills() {
     pros::delay(1500);
 }
 
-void move(double power, double turn, bool swing=false, double time=10000) {
-    int left = power + turn;
-    int right = power - turn;
-    // double t = time; 
 
-    if (swing && left < 0) {left = 0;}
-    if (swing && right < 0) {right = 0;}
-
-    leftMotors.move(left);
-    rightMotors.move(left);
-    pros::delay(time);
-    leftMotors.brake();
-    rightMotors.brake();
-    // left_center_motor.move(left);
-    // left_back_motor.move(left);
-    // right_front_motor.move(left);
-    // right_center_motor.move(left);
-    // right_back_motor.move(left);
-}
 
 
 
 void autonomous() 
 {
-
+    bottomGoalSideWPI();
     
     //startAuton();
     
@@ -227,80 +209,37 @@ void opcontrol()
     // move(60, 0);
     //bottomGoal25()
     //Get three blocks
-    pros::delay(3);
-    chassis.moveToPoint(-0.5, 10, 800);
-    chassis.turnToHeading(40, 1000);
-    storageIn();
-    chassis.moveToPoint(14, 26, 3000, {.maxSpeed = 40});  
-    pros::delay(2100);
+    
 
-    //Go and outtake into bottom goal
-    stopIntake(); 
-    chassis.turnToHeading(-37, 1500);
-    chassis.moveToPoint(5.3, 39, 1500);
-    pros::delay(50);
-    bottomGoal();
-    pros::delay(3000);
-    stopIntake();
-    chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
-    chassis.turnToHeading(-174, 1500);
-    pros::delay(1000);
-    //pros::delay(5000);
-    scraper.set_value(true);
-    //pros::delay(100);
-    // chassis.moveToPoint(39, -7, 1500);
+    while (true)
+    {
+        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    //cancel motions (voltage thing), move continuously into loader,  move back a bit, ram again
-    chassis.cancelAllMotions();
-    pros::delay(500);
-    storageIn();
-    move(50, 0, false, 1000);
-    pros::delay(1500);
-    chassis.moveToPoint(41.32, 18.84, 1500, {.forwards = false});
-    pros::delay(500);
-    colorSort();
-    //pros::delay(1000);
-    // chassis.moveToPoint(39, 0, 1500);
-    // pros::delay(1000);
-    //chassis.cancelAllMotions();
-    //move(50,0);
-    //chassis.moveToPoint(39, 15, 1500);
+		chassis.arcade(leftY, rightX);
+/*
+        bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-    //pros::delay(100000000);    
+        if (hoodPressedNow && !hoodPressedLast) {
+            // Toggle hood
+            hoodActivated = !hoodActivated;
+            hood.set_value(hoodActivated);
+        } 
 
-    // pros::delay(3000);
-    // chassis.moveToPoint(39.9, 20, 3000, {.forwards = false, .maxSpeed = 50});
-    // scoreTop();
+        hoodPressedLast = hoodPressedNow; */
 
-//     while (true)
-//     {
-//         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-//         int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+        bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-// 		chassis.arcade(leftY, rightX);
-// /*
-//         bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        if (scraperPressedNow && !scraperPressedLast) {
+            // Toggle hood
+            scraperActivated = !scraperActivated;
+            scraper.set_value(scraperActivated);
+        }
 
-//         if (hoodPressedNow && !hoodPressedLast) {
-//             // Toggle hood
-//             hoodActivated = !hoodActivated;
-//             hood.set_value(hoodActivated);
-//         } 
-
-//         hoodPressedLast = hoodPressedNow; */
-
-//         bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
-
-//         if (scraperPressedNow && !scraperPressedLast) {
-//             // Toggle hood
-//             scraperActivated = !scraperActivated;
-//             scraper.set_value(scraperActivated);
-//         }
-
-//         scraperPressedLast = scraperPressedNow;
+        scraperPressedLast = scraperPressedNow;
         
-//         updateIntake();
+        updateIntake();
        
-//         pros::delay(20);
-//     }
+        pros::delay(20);
+    }
 }

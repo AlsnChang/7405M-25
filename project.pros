@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "auton code",
+    "project_name": "comp switch code",
     "target": "v5",
     "templates": {
       "LemLib": {
