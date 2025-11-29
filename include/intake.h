@@ -25,6 +25,7 @@ void updateIntake();
 void colorSort();
 void storageIn();
 void bottomGoal();
+void fastBottomScore();
 void stopIntake();
 void scoreTop();
 void scoreMiddle();

@@ -6,3 +6,4 @@ void startAuton();
 void topGoal();
 void bottomGoalSide();
 void bottomGoalSideWPI();
+void fastBottomGoals();

@@ -96,6 +96,12 @@ void bottomGoal()
     hopper.move(80);
      
 }
+void fastBottomScore()
+{
+    //flippy.set_value(true);
+    hopper.move(127);
+     
+}
 
 void stopIntake() {
     hopper.brake();

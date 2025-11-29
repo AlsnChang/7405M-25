@@ -37,6 +37,37 @@ void move(double power, double turn, bool swing=false, double time=10000) {
     // right_back_motor.move(left);
 }
 
+void fastBottomGoals(){
+    flingBlue = false;
+    storageIn();
+    chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
+    pros::delay(20);
+    chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
+    chassis.turnToPoint(14.3, 54, 700);
+    chassis.moveToPoint(14.3, 54, 1000,{});
+    pros::delay(100);
+    chassis.moveToPoint(-1, 33.14, 1000,{ .forwards = false});
+    // chassis.moveToPoint(-5.24, 34.70, 1000,{ .forwards = false});
+
+    chassis.turnToPoint(-14.05, 40.44, 700);
+    chassis.moveToPoint(-10.45, 38.1, 1000,{},false);
+    // chassis.turnToHeading(-65, 1000);
+    fastBottomScore();
+    pros::delay(1000);
+    stopIntake();
+    pros::delay(150);
+    storageIn();
+    chassis.moveToPoint(38.39, 16.52, 3000,{.forwards = false, .maxSpeed = 90});
+    chassis.turnToPoint(36.25, 9.18, 700);
+    scraper.set_value(true);
+    // chassis.moveToPoint(36.25, 9.18, 1000,{});
+
+
+
+
+
+}
+
 void bottomGoalSideWPI() {
     flingBlue = false;
     pros::delay(3);

@@ -185,7 +185,7 @@ void skills() {
 
 void autonomous() 
 {
-    bottomGoalSideWPI();
+    fastBottomGoals();
     
     //startAuton();
     
