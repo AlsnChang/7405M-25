@@ -80,7 +80,7 @@ void fastBottomGoals(){
     scoreTop();
 }
 
-void fastTopGoals(){
+void fastTopGoals() {
     flingBlue = false;
     storageIn();
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
@@ -92,29 +92,32 @@ void fastTopGoals(){
 
     chassis.moveToPoint(2, 33, 1000,{ .forwards = false});
 
-   chassis.turnToPoint(12, 37.3, 700, {.forwards = false});
-   chassis.moveToPoint(12, 37.3, 1000,{.forwards = false},false);
+    chassis.turnToPoint(12, 37.3, 700, {.forwards = false});
+    chassis.moveToPoint(12, 37.3, 1000,{.forwards = false},false);
 
-    fastMiddleScore();
+    scoreMiddle();
     pros::delay(1500);
     stopIntake();
     storageIn();
     pros::delay(150);
     
-    chassis.moveToPoint(-36.7, 18, 1000,{.maxSpeed = 90});
+    chassis.moveToPoint(-36.7, 18, 1000,{.maxSpeed = 80});
     chassis.turnToHeading(-153,1000);
 
     scraper.set_value(true);
 
     stopIntake();
-    // chassis.moveToPoint(-36.5,-10.2, 1000, {}, false);
+    chassis.moveToPoint(-36.5,-10.2, 1000, {}, false);
 
-    // chassis.cancelAllMotions();
-    // storageIn();
-    // move(50, 0, false, 500);
-    // pros::delay(1000);
+    chassis.cancelAllMotions();
+    storageIn();
+    move(10, 0, false, 500);
+    pros::delay(1000);
 
-    // chassis.turnToPoint(-27.92, -37.21, 1000, {.forwards = false});
+    chassis.moveToPoint(-26.6, 37, 1000, {.forwards = false, .maxSpeed = 60});
+
+    pros::delay(1500);
+    scoreTop();
     // chassis.moveToPoint(-27.92, -37.21, 1000, {.forwards = false});
 
     // pros::delay(1500);
