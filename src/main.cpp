@@ -45,7 +45,7 @@ lemlib::ControllerSettings lateral(7.25, // proportional gain (kP)
                                               .5, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
                                               1, // large error range, in inches
-                                              2000, // large error range timeout, in milliseconds
+                                                 2000, // large error range timeout, in milliseconds
                                               20 // maximum acceleration (slew)
 );
 
@@ -66,7 +66,9 @@ lemlib::ExpoDriveCurve steer(3, 10, 1.019);
 lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle, &steer);
 
 //Scraper
-pros::ADIDigitalOut scraper ('A', false);
+pros::adi::DigitalOut scraper ('A', false);
+
+//wing
 
 bool hoodActivated = false;
 bool scraperActivated = false;

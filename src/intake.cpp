@@ -1,4 +1,5 @@
 #include "intake.h"
+#include "pros/misc.h"
 #include "pros/motors.hpp"
 
 
@@ -6,6 +7,8 @@ pros::Motor intake (18); //top & middle
 pros::Motor hopper (13); //self explanatory 
 
 pros::adi::DigitalOut flippy ('B', false);
+pros::adi::DigitalOut wingy ('G', false);
+
 pros::Optical opticalSensor(11);
 
 bool flingBlue = false;
@@ -41,6 +44,10 @@ void updateIntake()
     {
         //Outake into bottom goal
         bottomGoal();       
+    }
+    else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
+    {
+        wingy.set_value(true);
     }
     else
     {
