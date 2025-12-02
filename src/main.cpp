@@ -188,7 +188,7 @@ void skills() {
 void autonomous() 
 {
     //pidTest();
-    fastBottomGoals();
+    fastTopGoals();
     
     //startAuton();
     

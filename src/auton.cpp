@@ -52,17 +52,20 @@ void fastBottomGoals(){
 
     chassis.turnToPoint(14.86, 51.4, 700);
     //pros::delay(10000);
-    chassis.moveToPoint(14.86, 51.4, 1000,{});
+    chassis.moveToPoint(14.86, 51.4, 1200,{});
     pros::delay(350);
-    chassis.moveToPoint(0.49, 29.46, 1000,{ .forwards = false});
+    chassis.moveToPoint(0.49, 32.5, 1000,{ .forwards = false});
+    //pros::delay(100000);
 
-    chassis.turnToPoint(-12.3, 37, 700);
-    chassis.moveToPoint(-12.3, 37, 1000,{},false);
+    chassis.turnToHeading(-64, 700);
+    //chassis.turnToPoint(-10.5, 39.3, 700);
+    chassis.moveToPoint(-10.5, 39.3, 700,{},false);
+    //pros::delay(10000);
     fastBottomScore();
-    pros::delay(3000);
+    pros::delay(1000);
     storageIn();
 
-    chassis.moveToPoint(32.5, 24.45, 3000,{.forwards = false, .maxSpeed = 75});
+    chassis.moveToPoint(32.5, 24.45, 2800,{.forwards = false, .maxSpeed = 75});
     //pros::delay(1000000);
 
     chassis.turnToHeading(-193, 1000);
@@ -74,7 +77,7 @@ void fastBottomGoals(){
     storageIn();
     move(50, 0, false, 750);
     pros::delay(750);
-    move(50, 0, false, 750);
+    //move(50, 0, false, 750);
     //pros::delay(1000);
     // move(50, 0.5,false, 500);
     // //back up
@@ -84,7 +87,7 @@ void fastBottomGoals(){
     // chassis.moveToPoint(28.6, 34, 1000, {.forwards = false});
 
     // pros::delay(1500);
-    scoreTop();
+    scoreTopAuto();
 }
 
 void fastTopGoals() {
@@ -97,29 +100,36 @@ void fastTopGoals() {
     chassis.moveToPoint(-11, 53.7, 1000);
     pros::delay(350);
 
-    chassis.moveToPoint(2, 33, 1000,{ .forwards = false});
+    chassis.moveToPoint(3.5, 30, 1000,{ .forwards = false});
+    //pros::delay(10000);
 
-    chassis.turnToPoint(12, 37.3, 700, {.forwards = false});
-    chassis.moveToPoint(12, 37.3, 1000,{.forwards = false},false);
-
+    //chassis.turnToHeading(-114.5, 1000);
+    chassis.turnToPoint(16.5, 36.8, 1000, {.forwards = false});
+    chassis.moveToPoint(16.5, 36.8, 1000,{.forwards = false},false);
     scoreMiddle();
+    //pros::delay(10000);
+
+    //scoreMiddle();
     pros::delay(1500);
     stopIntake();
     storageIn();
     pros::delay(150);
+    //pros::delay(10000);
     
-    chassis.moveToPoint(-36.7, 18, 1000,{.maxSpeed = 80});
-    chassis.turnToHeading(-153,1000);
+    chassis.moveToPoint(-32.7, 16.67, 1500,{.maxSpeed = 60});
+    //pros::delay(10000);
+    chassis.turnToHeading(-156,1000);
 
     scraper.set_value(true);
 
     stopIntake();
+    //pros::delay(10000);
     chassis.moveToPoint(-36.5,-10.2, 1000, {}, false);
 
     chassis.cancelAllMotions();
     storageIn();
-    move(10, 0, false, 500);
-    pros::delay(1000);
+    move(30, 0, false, 500);
+    pros::delay(750);
 
     chassis.moveToPoint(-26.6, 37, 1000, {.forwards = false, .maxSpeed = 60});
 

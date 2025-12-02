@@ -29,3 +29,4 @@ void fastBottomScore();
 void stopIntake();
 void scoreTop();
 void scoreMiddle();
+void scoreTopAuto();
