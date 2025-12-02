@@ -122,6 +122,13 @@ void scoreTop() {
     intake.move(100);
 }
 
+void scoreTopAuto() {
+    
+    flippy.set_value(true);
+    hopper.move(127);
+    intake.move(127);
+}
+
 void scoreMiddle() {
     flippy.set_value(true);
     intake.move(-100); 
