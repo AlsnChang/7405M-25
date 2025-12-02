@@ -37,44 +37,54 @@ void move(double power, double turn, bool swing=false, double time=10000) {
     // right_back_motor.move(left);
 }
 
+void pidTest() {
+    chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
+}
+
 void fastBottomGoals(){
     flingBlue = false;
-    descore.set_value(false);
+    //descore.set_value(false);
     storageIn();
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
+    
     pros::delay(20);
     chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
 
     chassis.turnToPoint(14.86, 51.4, 700);
+    //pros::delay(10000);
     chassis.moveToPoint(14.86, 51.4, 1000,{});
     pros::delay(350);
     chassis.moveToPoint(0.49, 29.46, 1000,{ .forwards = false});
 
-    chassis.turnToPoint(-10.7, 38.6, 700);
-    chassis.moveToPoint(-10.7, 38.6, 1000,{},false);
+    chassis.turnToPoint(-12.3, 37, 700);
+    chassis.moveToPoint(-12.3, 37, 1000,{},false);
     fastBottomScore();
-    pros::delay(1100);
+    pros::delay(3000);
     storageIn();
 
-    chassis.moveToPoint(34.26, 24.45, 3000,{.forwards = false, .maxSpeed = 75});
+    chassis.moveToPoint(32.5, 24.45, 3000,{.forwards = false, .maxSpeed = 75});
+    //pros::delay(1000000);
 
-    chassis.turnToHeading(-200, 1000);
+    chassis.turnToHeading(-193, 1000);
     scraper.set_value(true);
     stopIntake();
-    chassis.moveToPoint(36.82,10.7, 1000, {}, false);
+    chassis.moveToPoint(36.82,10.7, 1200, {}, false);
 
     chassis.cancelAllMotions();
     storageIn();
-    move(75, 0, false, 100);
-    move(50, 0.5,false, 500);
-    //back up
-    move(-75, 0, false, 300);
+    move(50, 0, false, 750);
+    pros::delay(750);
+    move(50, 0, false, 750);
+    //pros::delay(1000);
+    // move(50, 0.5,false, 500);
+    // //back up
+    // move(-75, 0, false, 300);
 
-    // chassis.turnToPoint(28.6, 34, 1000, {.forwards = false});
+    chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
     // chassis.moveToPoint(28.6, 34, 1000, {.forwards = false});
 
     // pros::delay(1500);
-    // scoreTop();
+    scoreTop();
 }
 
 void fastTopGoals() {

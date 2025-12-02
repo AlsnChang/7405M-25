@@ -29,7 +29,7 @@ lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
 
 pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(-2); //odom sensor
+pros::Rotation horizontal_encoder(-3); //odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1);
 
 pros::Rotation vertical_encoder(16); //odom sensor
@@ -185,7 +185,8 @@ void skills() {
 
 void autonomous() 
 {
-    fastTopGoals();
+    //pidTest();
+    fastBottomGoals();
     
     //startAuton();
     
