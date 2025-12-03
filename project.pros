@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "comp switch code",
+    "project_name": "drive code only",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -635,8 +635,8 @@
       }
     },
     "upload_options": {
-      "slot": 1,
-      "icon": "alien"
+      "slot": 2,
+      "icon": "planet"
     },
     "use_early_access": false
   }
