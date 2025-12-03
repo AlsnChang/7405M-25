@@ -109,7 +109,6 @@ void fastTopGoals() {
     scoreMiddle();
     pros::delay(2000);
 
-
     stopIntake();
     storageIn();
     pros::delay(150);
