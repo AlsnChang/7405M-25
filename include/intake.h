@@ -28,5 +28,5 @@ void bottomGoal();
 void fastBottomScore();
 void stopIntake();
 void scoreTop();
-void scoreMiddle();
+void scoreMiddle(int time);
 void scoreTopAuto();

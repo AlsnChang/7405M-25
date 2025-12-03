@@ -25,7 +25,7 @@ void updateIntake()
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
     {
         //Score in middle goal
-        scoreMiddle();
+        scoreMiddle(0);
       
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
@@ -129,10 +129,11 @@ void scoreTopAuto() {
     intake.move(127);
 }
 
-void scoreMiddle() {
+void scoreMiddle(int time) {
     flippy.set_value(true);
     intake.move(-100); 
     hopper.move(100);
+    pros::delay(time);
 }
 
 void load()
@@ -146,7 +147,7 @@ void colorSort()
     {
         if (opticalSensor.get_hue() > 75)
         {
-            scoreMiddle();
+            scoreMiddle(0);
             pros::lcd::set_text(1, "BLUE: " + std::to_string(opticalSensor.get_hue()));
             pros::delay(450);
         }
@@ -169,7 +170,7 @@ void colorSort()
         }
         else if (opticalSensor.get_hue() < 45)
         {
-            scoreMiddle(); 
+            scoreMiddle(0); 
             pros::lcd::set_text(1, "RED: " + std::to_string(opticalSensor.get_hue()));
             pros::delay(450);
         }
