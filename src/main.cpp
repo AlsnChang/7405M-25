@@ -1,116 +1,127 @@
 #include "main.h"
+#include "autons.h"
+#include "autonselector.h"
 #include "intake.h"
+#include "lemlib/api.hpp"
 #include "pros/adi.hpp"
 #include "pros/misc.h"
 #include "pros/motors.hpp"
-#include "lemlib/api.hpp"
-#include "autons.h"
-#include "autonselector.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // motor groups
 // pros::MotorGroup leftMotors({-20, -18, -10},
-//                             pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
-// pros::MotorGroup rightMotors({12, 5, 6}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
+//                             pros::MotorGearset::blue); // left motor group -
+//                             ports 3 (reversed), 4, 5 (reversed)
+// pros::MotorGroup rightMotors({12, 5, 6}, pros::MotorGearset::blue); // right
+// motor group - ports 6, 7, 9 (reversed)
 
-pros::MotorGroup leftMotors({-10, -15, -20},
-                            pros::MotorGearset::blue); // left motor group - ports 3 (reversed), 4, 5 (reversed)
-pros::MotorGroup rightMotors({4, 5, 11}, pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
+pros::MotorGroup
+    leftMotors({-10, -15, -20},
+               pros::MotorGearset::blue); // left motor group - ports 3
+                                          // (reversed), 4, 5 (reversed)
+pros::MotorGroup rightMotors(
+    {4, 5, 11},
+    pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
 
-
-lemlib::Drivetrain drivetrain(&leftMotors, // left motor group
+lemlib::Drivetrain drivetrain(&leftMotors,  // left motor group
                               &rightMotors, // right motor group
-                              12, // 10 inch track width
+                              12,           // 10 inch track width
                               lemlib::Omniwheel::NEW_325,
                               450, // drivetrain rpm is 450
-                              2 // horizontal drift is 2 (for now)
+                              2    // horizontal drift is 2 (for now)
 );
 
 pros::Imu imu(12);
 
-pros::Rotation horizontal_encoder(-3); //odom sensor
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1);
+pros::Rotation horizontal_encoder(-3); // odom sensor
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder,
+                                                lemlib::Omniwheel::NEW_2, -1);
 
-pros::Rotation vertical_encoder(16); //odom sensor
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -0.5);
+pros::Rotation vertical_encoder(16); // odom sensor
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder,
+                                              lemlib::Omniwheel::NEW_2, -0.5);
 
-lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu);
+lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr,
+                            &horizontal_tracking_wheel, nullptr, &imu);
 
+lemlib::ControllerSettings
+    lateral(7.25, // proportional gain (kP)
+            0,    // integral gain (kI)
+            50,   // derivative gain (kD)
+            3,    // anti windup
+            .5,   // small error range, in inches
+            100,  // small error range timeout, in milliseconds
+            1,    // large error range, in inches
+            2000, // large error range timeout, in milliseconds
+            20    // maximum acceleration (slew)
+    );
 
-lemlib::ControllerSettings lateral(7.25, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              50, // derivative gain (kD)
-                                              3, // anti windup
-                                              .5, // small error range, in inches
-                                              100, // small error range timeout, in milliseconds
-                                              1, // large error range, in inches
-                                                 2000, // large error range timeout, in milliseconds
-                                              20 // maximum acceleration (slew)
-);
-
-lemlib::ControllerSettings angular(1.1, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              1, // derivative gain (kD)
-                                              3, // anti windup
-                                              1, // small error range, in degrees
-                                              1000, // small error range timeout, in milliseconds
-                                              2, // large error range, in degrees
-                                              2000, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
-);
+lemlib::ControllerSettings
+    angular(1.1,  // proportional gain (kP)
+            0,    // integral gain (kI)
+            1,    // derivative gain (kD)
+            3,    // anti windup
+            1,    // small error range, in degrees
+            1000, // small error range timeout, in milliseconds
+            2,    // large error range, in degrees
+            2000, // large error range timeout, in milliseconds
+            0     // maximum acceleration (slew)
+    );
 lemlib::ExpoDriveCurve throttle(3, 10, 1.019);
 lemlib::ExpoDriveCurve steer(3, 10, 1.019);
 
 // Chassis with dummy settings
-lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle, &steer);
+lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
+                        &steer);
 
-//Scraper
-pros::adi::DigitalOut scraper ('A', false);
-pros::adi::DigitalOut aligner ('F', false);
+// Scraper
+pros::adi::DigitalOut scraper('A', false);
+pros::adi::DigitalOut aligner('F', false);
+pros::adi::DigitalOut remover('G', false);
 
-//wing
-
+// wing
+bool removerActivated = false;
 bool hoodActivated = false;
 bool scraperActivated = false;
 
-//flingBlue = false;
+// flingBlue = false;
+bool removerPressedLast = false;
 bool hoodPressedLast = false;
 bool scraperPressedLast = false;
 
+void coord() {
+  // loop forever
+  while (true) {
+    lemlib::Pose pose = chassis.getPose();
+    pros::lcd::print(0, "x: %.2f | y: %.2f | H: %.2f", pose.x, pose.y,
+                     pose.theta);
+    pros::lcd::print(1, "theta: %.2f", pose.theta);
 
+    // lemlib::Pose pose = chassis.getPose(); // get the current position of the
+    // robot pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta);
+    // // print the x position
+    // //pros::lcd::print(0, "x: %f | y: %f", horizontal_encoder.get_position(),
+    // vertical_encoder.get_position(), pose.theta); // print the x position
+    // pros::lcd::print(1, "H: %f", pose.theta); // print the x position
+    // // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y,
+    // pose.theta, vertical_rot.get_position());
+    pros::delay(100);
+  }
 
+  // while (true)
+  // {
+  //     lemlib::Pose pose = chassis.getPose();
+  //     pros::lcd::print(1, "x: %f | y: %f", pose.x, pose.y);
+  //     pros::lcd::print(2, "Theta: %f", pose.theta);
+  //     // if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+  //     // {
+  //     //     printf("x: %f | y: %f | Theta: %f", pose.x, pose.y);
+  //     //     printf("Theta: %f", pose.theta);
+  //     // }
 
-void coord()
-{
-    // loop forever
-    while (true) {
-        lemlib::Pose pose = chassis.getPose();
-        pros::lcd::print(0, "x: %.2f | y: %.2f | H: %.2f", pose.x, pose.y, pose.theta);
-        pros::lcd::print(1, "theta: %.2f", pose.theta);
-
-        // lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
-        // pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta); // print the x position
-        // //pros::lcd::print(0, "x: %f | y: %f", horizontal_encoder.get_position(), vertical_encoder.get_position(), pose.theta); // print the x position
-        // pros::lcd::print(1, "H: %f", pose.theta); // print the x position
-        // // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta, vertical_rot.get_position());
-        pros::delay(100);
-    }
-
-    // while (true)
-    // {
-    //     lemlib::Pose pose = chassis.getPose();
-    //     pros::lcd::print(1, "x: %f | y: %f", pose.x, pose.y);
-    //     pros::lcd::print(2, "Theta: %f", pose.theta);
-    //     // if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
-    //     // {
-    //     //     printf("x: %f | y: %f | Theta: %f", pose.x, pose.y);
-    //     //     printf("Theta: %f", pose.theta);
-    //     // }
-
-    //     pros::delay(50);
-    // }
-
+  //     pros::delay(50);
+  // }
 }
 // drivetrain settings
 /**
@@ -120,33 +131,35 @@ void coord()
  * to keep execution time for this mode under a few seconds.
  */
 void screen() {
-    // loop forever
-    while (true) {
-        lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
-        pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta); // print the x position
-        pros::lcd::print(1, "H: %f", pose.theta); // print the x position
-        // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta, vertical_rot.get_position());
-        pros::delay(10);
-    }
+  // loop forever
+  while (true) {
+    lemlib::Pose pose =
+        chassis.getPose(); // get the current position of the robot
+    pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y,
+                     pose.theta);             // print the x position
+    pros::lcd::print(1, "H: %f", pose.theta); // print the x position
+    // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta,
+    // vertical_rot.get_position());
+    pros::delay(10);
+  }
 }
 
 void initialize() {
-    pros::lcd::initialize();
-    chassis.calibrate();
-    chassis.setPose(0,0,0);
-    horizontal_encoder.reset_position();
-    vertical_encoder.reset_position();
-    pros::lcd::initialize(); // initialize brain screen
-    leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    opticalSensor.set_led_pwm(100);
+  pros::lcd::initialize();
+  chassis.calibrate();
+  chassis.setPose(0, 0, 0);
+  horizontal_encoder.reset_position();
+  vertical_encoder.reset_position();
+  pros::lcd::initialize(); // initialize brain screen
+  leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  opticalSensor.set_led_pwm(100);
 
-    pros::delay(1000);
-    //autonSelectorStart();
-    pros::Task screenTask(screen);
-   
-    
-    //pros::Task updateScreen (coord);
+  pros::delay(1000);
+  // autonSelectorStart();
+  pros::Task screenTask(screen);
+
+  // pros::Task updateScreen (coord);
 }
 
 /**
@@ -165,83 +178,77 @@ void competition_initialize() {}
 /**
  * Runs during auto
  *
- * This is an example autonomous routine which demonstrates a lot of the features LemLib has to offer
+ * This is an example autonomous routine which demonstrates a lot of the
+ * features LemLib has to offer
  */
 
 void skills() {
-    //skills
-    pros::delay(3000);
-    chassis.moveToPoint(0,11,1000);
-    chassis.turnToHeading(90, 750, {.maxSpeed = 90});
-    storageIn();
-    chassis.moveToPoint(40, 11,1000);
-    chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-    
-    scraper.set_value(true);
-    chassis.moveToPoint(44, -7, 2000,{.minSpeed=100});
-    pros::delay(1500);
+  // skills
+  pros::delay(3000);
+  chassis.moveToPoint(0, 11, 1000);
+  chassis.turnToHeading(90, 750, {.maxSpeed = 90});
+  storageIn();
+  chassis.moveToPoint(40, 11, 1000);
+  chassis.turnToHeading(180, 750, {.maxSpeed = 90});
+
+  scraper.set_value(true);
+  chassis.moveToPoint(44, -7, 2000, {.minSpeed = 100});
+  pros::delay(1500);
 }
 
+void autonomous() {
+  // pidTest();
+  bottomControl();
 
-void autonomous() 
-{
-    //pidTest();
-    fastBottomGoals();
-    
-    //startAuton();
-    
-    //chassis.moveToPoint(0, 11, 1000);
-    //chassis.turnToPoint(0,0,0);
+  // startAuton();
 
-    // chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 25});
-    // chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
+  // chassis.moveToPoint(0, 11, 1000);
+  // chassis.turnToPoint(0,0,0);
 
-    // chassis.moveToPoint(5.5,35.5,5000);
-    
+  // chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 25});
+  // chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
 
-
+  // chassis.moveToPoint(5.5,35.5,5000);
 }
 
+void opcontrol() {
+  flingBlue = false;
+  // scraper.set_value(true);
+  // move(60, 0);
+  // bottomGoal25()
+  // Get three blocks
 
-void opcontrol() 
-{
-    flingBlue = false; 
-    // scraper.set_value(true);
-    // move(60, 0);
-    //bottomGoal25()
-    //Get three blocks
-    
+  while (true) {
+    int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    while (true)
-    {
-        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    chassis.arcade(leftY, rightX);
 
-		chassis.arcade(leftY, rightX);
-/*
-        bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+    bool removerPressedNow =
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
 
-        if (hoodPressedNow && !hoodPressedLast) {
-            // Toggle hood
-            hoodActivated = !hoodActivated;
-            hood.set_value(hoodActivated);
-        } 
-
-        hoodPressedLast = hoodPressedNow; */
-
-        bool scraperPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
-
-        if (scraperPressedNow && !scraperPressedLast) {
-            // Toggle hood
-            scraperActivated = !scraperActivated;
-            scraper.set_value(scraperActivated);
-            aligner.set_value(scraperActivated);
-        }
-
-        scraperPressedLast = scraperPressedNow;
-        
-        updateIntake();
-       
-        pros::delay(20);
+    if (removerPressedNow && !removerPressedLast) {
+      // Toggle remover
+      removerActivated = !removerActivated;
+      remover.set_value(removerActivated);
     }
+
+    removerPressedLast = removerPressedNow;
+
+    bool scraperPressedNow =
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+
+    if (scraperPressedNow && !scraperPressedLast) {
+      // Toggle hood
+      scraperActivated = !scraperActivated;
+      scraper.set_value(scraperActivated);
+      aligner.set_value(scraperActivated);
+    }
+
+    scraperPressedLast = scraperPressedNow;
+
+    updateIntake();
+
+    pros::delay(20);
+  }
 }

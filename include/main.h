@@ -113,6 +113,8 @@ extern lemlib::ExpoDriveCurve steer;
 // Chassis with dummy settings
 extern lemlib::Chassis chassis;
 
+extern pros::adi::DigitalOut remover;
+
 //Scraper
 extern pros::adi::DigitalOut scraper;
 extern bool hoodActivated;
