@@ -67,6 +67,7 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle, &steer
 
 //Scraper
 pros::adi::DigitalOut scraper ('A', false);
+pros::adi::DigitalOut aligner ('F', false);
 
 //wing
 
@@ -185,7 +186,7 @@ void skills() {
 void autonomous() 
 {
     //pidTest();
-    fastTopGoals();
+    fastBottomGoals();
     
     //startAuton();
     
@@ -234,6 +235,7 @@ void opcontrol()
             // Toggle hood
             scraperActivated = !scraperActivated;
             scraper.set_value(scraperActivated);
+            aligner.set_value(scraperActivated);
         }
 
         scraperPressedLast = scraperPressedNow;

@@ -114,7 +114,7 @@ void fastTopGoals() {
     pros::Task task(middleTimed);
     chassis.moveToPoint(14.5, 36, 1000,{.forwards = false},false);
     scoreMiddle();
-    pros::delay(700);
+    pros::delay(500);
 
     storageIn();
     pros::delay(350);
@@ -123,10 +123,9 @@ void fastTopGoals() {
     scraper.set_value(true);
     chassis.moveToPoint(-32.7, 16.67, 1000,{.maxSpeed = 90});
     //pros::delay(10000);
-    chassis.turnToHeading(-156,700, {}, false);
-    //chassis.turnToPoint(-32.7, 16.67, 700);
-
-    chassis.moveToPoint(-36.2, 8.3, 750, {}, false);
+    chassis.turnToHeading(-160,700, {}, false);
+    //chassis.turnToPoint(-35.7, 7.8, 750, {}, false);
+    chassis.moveToPoint(-39.27, 7.93, 750, {}, false);
     chassis.cancelAllMotions();
     storageIn();
     move(60, 0, false, 450);
