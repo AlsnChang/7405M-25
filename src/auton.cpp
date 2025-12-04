@@ -17,6 +17,14 @@
 
 
 // }
+
+void middleTimed()
+{
+    scoreMiddle();
+    pros::delay(500);
+    stopIntake();
+}
+
 void move(double power, double turn, bool swing=false, double time=10000) {
     int left = power + turn;
     int right = power - turn;
@@ -96,37 +104,37 @@ void fastTopGoals() {
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
     pros::delay(20);
     chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
-    chassis.turnToPoint(-15, 55, 700);
-    chassis.moveToPoint(-11, 53.7, 1000);
-    pros::delay(350);
+    chassis.turnToPoint(-15.5, 52, 700);
+    chassis.moveToPoint(-15.5, 52, 1000, { .maxSpeed = 55});
 
-    chassis.moveToPoint(3.5, 30, 1000,{ .forwards = false});
-    //pros::delay(10000);
+    chassis.moveToPoint(3.25, 30, 1000,{ .forwards = false});
 
-    //chassis.turnToHeading(-114.5, 1000);
-    chassis.turnToPoint(16.8, 36.25, 1000, {.forwards = false});
-    chassis.moveToPoint(16.8, 36.25, 1000,{.forwards = false},false);
+    //chassis.turnToHeading(-130, 1000);
+    chassis.turnToPoint(14.5, 36, 700, {.forwards = false});
+    pros::Task task(middleTimed);
+    chassis.moveToPoint(14.5, 36, 1000,{.forwards = false},false);
     scoreMiddle();
-    pros::delay(2000);
+    pros::delay(700);
 
-    stopIntake();
     storageIn();
-    pros::delay(150);
+    pros::delay(350);
     //pros::delay(10000);
-    
-    chassis.moveToPoint(-32.7, 16.67, 1500,{.maxSpeed = 90});
-    //pros::delay(10000);
-    chassis.turnToHeading(-156,1000);
 
     scraper.set_value(true);
+    chassis.moveToPoint(-32.7, 16.67, 1000,{.maxSpeed = 90});
+    //pros::delay(10000);
+    chassis.turnToHeading(-156,700, {}, false);
+    //chassis.turnToPoint(-32.7, 16.67, 700);
 
-    chassis.moveToPoint(-37,-7.5, 1000, {.maxSpeed = 50}, false);
+    chassis.moveToPoint(-36.2, 8.3, 750, {}, false);
     chassis.cancelAllMotions();
     storageIn();
-    move(20, 0, false, 500);
-    pros::delay(1000);
+    move(60, 0, false, 450);
+    pros::delay(250);
+    move(50, 0, false, 500);
 
-    chassis.moveToPoint(-26.6, 37, 1000, {.forwards = false, .maxSpeed = 60});
+    chassis.moveToPoint(-28, 37, 1000, {.forwards = false, .maxSpeed = 50});
+    //chassis.moveToPoint(-30.29, 32.5, 1000, {.forwards = false, .maxSpeed = 50});
 
     pros::delay(1500);
     scraper.set_value(false);

@@ -31,3 +31,4 @@ void scoreTop();
 void scoreMiddle();
 void scoreTopAuto();
 void middleTime(int time);
+void slowerStorageIn();

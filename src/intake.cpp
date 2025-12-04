@@ -96,6 +96,13 @@ void storageIn()
     
 }
 
+void slowerStorageIn()
+{
+    //Put in storage
+    flippy.set_value(false);
+    hopper.move (-100);
+    
+}
 
 void bottomGoal()
 {
