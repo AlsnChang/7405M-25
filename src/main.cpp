@@ -198,7 +198,8 @@ void skills() {
 
 void autonomous() {
   // pidTest();
-  bottomControl();
+  //bottomControl();
+  fastBottomGoals();
 
   // startAuton();
 
@@ -223,9 +224,11 @@ void opcontrol() {
     int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
     chassis.arcade(leftY, rightX);
+    //weird stuff
 
+    
     bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
     if (removerPressedNow && !removerPressedLast) {
       // Toggle remover
@@ -234,7 +237,8 @@ void opcontrol() {
     }
 
     removerPressedLast = removerPressedNow;
-
+    
+    
     bool scraperPressedNow =
         controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
