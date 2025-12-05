@@ -199,30 +199,21 @@ void skills() {
 }
 
 void autonomous() {
-  // pidTest();
-  fastTopGoals();
-  
-  // bottomGoalSide();
 
-  // startAuton();
+  // GOOOD AUTON FOR THE RIGHT SIDE
+  fastBottomGoals();
 
-  // chassis.moveToPoint(0, 11, 1000);
-  // chassis.turnToPoint(0,0,0);
+  // OKAY AUTON FOR THE LEFT SIDE
+  // fastTopGoals();
 
-  // chassis.moveToPoint(13.4, 26.1, 3000, {.maxSpeed = 25});
-  // chassis.turnToPoint(5.5,35.5, 1000, {.maxSpeed = 80});
-
-  // chassis.moveToPoint(5.5,35.5,5000);
+  // 7 BALLS AUTON BOTTOM GOAL
+  // bottomControl();
 }
 
 void opcontrol() {
 
   odomlift.set_value(true);
   flingBlue = false;
-  // scraper.set_value(true);
-  // move(60, 0);
-  // bottomGoal25()
-  // Get three blocks
 
   while (true) {
     int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);

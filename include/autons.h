@@ -10,3 +10,4 @@ void fastBottomGoals();
 void fastTopGoals();
 void pidTest();
 void bottomControl();
+void middleTimeOptical();

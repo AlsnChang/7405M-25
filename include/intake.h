@@ -12,12 +12,14 @@ extern pros::Motor secondIn;
 extern pros::Motor firstIn;
 extern pros::Motor hopper;
 extern bool flingBlue;
+extern bool intaking;
 
 extern pros::adi::DigitalOut hood;
 
 extern pros::Optical opticalSensor;
 
 void updateIntake(); 
+void middleTimeOptical();
 void colorSort();
 void storageIn();
 void bottomGoal();
