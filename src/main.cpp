@@ -68,15 +68,18 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle, &steer
 //Scraper
 pros::adi::DigitalOut scraper ('A', false);
 pros::adi::DigitalOut aligner ('F', false);
+pros::adi::DigitalOut remover ('G', false);
 
 //wing
 
 bool hoodActivated = false;
 bool scraperActivated = false;
+bool removerActivated = false; 
 
 //flingBlue = false;
 bool hoodPressedLast = false;
 bool scraperPressedLast = false;
+bool removerPressedLast = false; 
 
 
 
@@ -128,6 +131,19 @@ void screen() {
         // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta, vertical_rot.get_position());
         pros::delay(10);
     }
+}
+
+void move(double power, double turn, bool swing = false, double time =10000) {
+    int left = power + turn; 
+    int right = power - turn; 
+
+    if (swing && left <0) { left =0;}
+    if (swing && right <0) {right =0;}
+    leftMotors.move(left);
+    rightMotors.move(right);
+    pros::delay(time);
+    leftMotors.brake(); 
+    rightMotors.brake();
 }
 
 void initialize() {
@@ -182,12 +198,15 @@ void skills() {
     pros::delay(1500);
 }
 
-void autonomous() {
-  // pidTest();
-  //bottomControl();
-  fastTopGoals();
-}
 
+void autonomous() 
+{
+    //fastBottomGoals();
+    //fastTopGoal();
+    //bottomGoalSide();
+
+
+}
 
 
 void opcontrol() 
@@ -199,12 +218,14 @@ void opcontrol()
     //Get three blocks
     
 
-    chassis.arcade(leftY, rightX);
-    //weird stuff
+    while (true)
+    {
+        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    
-    bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+		chassis.arcade(leftY, rightX);
+/*
+        bool hoodPressedNow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
         if (hoodPressedNow && !hoodPressedLast) {
             // Toggle hood
@@ -224,29 +245,21 @@ void opcontrol()
         }
 
         scraperPressedLast = scraperPressedNow;
+
+         bool removerPressednow = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+
+        if (removerPressednow && !removerPressedLast) {
+            // Toggle hood
+            scraperActivated = !scraperActivated;
+            scraper.set_value(scraperActivated);
+            aligner.set_value(scraperActivated);
+        }
+
+        removerPressedLast = removerPressednow;
+        
         
         updateIntake();
        
         pros::delay(20);
     }
-
-    removerPressedLast = removerPressedNow;
-    
-    
-    bool scraperPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
-
-    if (scraperPressedNow && !scraperPressedLast) {
-      // Toggle hood
-      scraperActivated = !scraperActivated;
-      scraper.set_value(scraperActivated);
-      aligner.set_value(scraperActivated);
-    }
-
-    scraperPressedLast = scraperPressedNow;
-
-    updateIntake();
-
-    pros::delay(20);
-  }
 }

@@ -115,4 +115,6 @@ extern lemlib::Chassis chassis;
 
 //Scraper
 extern pros::adi::DigitalOut scraper;
+extern pros::adi::DigitalOut remover;
 extern bool hoodActivated;
+void move(double power, double turn, bool swing = false, double time =10000);
