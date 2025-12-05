@@ -49,6 +49,7 @@ void pidTest() {
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
 }
 
+<<<<<<< HEAD
 void bottomControl(){
     flingBlue = false;
     //descore.set_value(false);
@@ -101,6 +102,8 @@ void bottomControl(){
 }
 
 
+=======
+>>>>>>> parent of 0bf6175 (hi)
 void fastBottomGoals(){
     flingBlue = false;
     remover.set_value(true);
