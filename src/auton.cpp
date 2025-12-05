@@ -17,25 +17,6 @@
 
 
 // }
-
-void middleTimed()
-{
-    scoreMiddle();
-    pros::delay(500);
-    stopIntake();
-}
-
-void middleTimeOptical() {
-    intaking = true;
-    while(intaking) {
-        scoreMiddle();
-        if(opticalSensor.get_proximity() > 50) { //need to tune this value - 0 (far) & 255 (near)
-            stopIntake();
-            intaking = false;
-        }
-    }
-}
-
 void move(double power, double turn, bool swing=false, double time=10000) {
     int left = power + turn;
     int right = power - turn;
@@ -55,6 +36,67 @@ void move(double power, double turn, bool swing=false, double time=10000) {
     // right_center_motor.move(left);
     // right_back_motor.move(left);
 }
+void skillsTest() {
+    flingBlue = false;
+    //descore.set_value(false);
+    storageIn();
+    chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
+    
+    pros::delay(20);
+    chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
+
+    chassis.turnToPoint(14.86, 51.4, 700);
+    chassis.moveToPoint(14.86, 51.4, 1200,{});
+    pros::delay(350);
+    chassis.moveToPoint(0.49, 32.5, 1000,{ .forwards = false});
+    //pros::delay(100000);
+
+    chassis.turnToHeading(-64, 700);
+    //chassis.turnToPoint(-10.5, 39.3, 700);
+    chassis.moveToPoint(-10.5, 39.3, 700,{},false);
+    //pros::delay(10000);
+    fastBottomScore();
+    pros::delay(1500);
+    storageIn();
+
+    chassis.moveToPoint(35.44, 16.38, 2800,{.forwards = false, .maxSpeed = 75});
+    //pros::delay(1000000);
+
+    chassis.turnToHeading(-191.46, 1000);
+    scraper.set_value(true);
+    stopIntake();
+    chassis.moveToPoint(36.82,10.7, 1200, {}, false);
+
+    chassis.cancelAllMotions();
+    storageIn();
+    move(50, 0, false, 750);
+    pros::delay(250);
+    move(50,0,false,750);
+
+    // chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
+    // scoreTopAuto();
+
+    // // chassis.moveToPoint();
+}
+void middleTimed()
+{
+    scoreMiddle();
+    pros::delay(500);
+    stopIntake();
+}
+
+void middleTimeOptical() {
+    intaking = true;
+    while(intaking) {
+        scoreMiddle();
+        if(opticalSensor.get_proximity() > 50) { //need to tune this value - 0 (far) & 255 (near)
+            stopIntake();
+            intaking = false;
+        }
+    }
+}
+
+
 
 void pidTest() {
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});

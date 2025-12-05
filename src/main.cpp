@@ -185,21 +185,12 @@ void competition_initialize() {}
  */
 
 void skills() {
-  // skills
-  pros::delay(3000);
-  chassis.moveToPoint(0, 11, 1000);
-  chassis.turnToHeading(90, 750, {.maxSpeed = 90});
-  storageIn();
-  chassis.moveToPoint(40, 11, 1000);
-  chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-
-  scraper.set_value(true);
-  chassis.moveToPoint(44, -7, 2000, {.minSpeed = 100});
-  pros::delay(1500);
+  
 }
 
 void autonomous() {
 
+    //skillsTest();
   // GOOOD AUTON FOR THE RIGHT SIDE
   fastBottomGoals();
 
