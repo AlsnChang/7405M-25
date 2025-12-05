@@ -19,6 +19,7 @@ extern pros::adi::DigitalOut hood;
 extern pros::Optical opticalSensor;
 
 void updateIntake(); 
+void middleTimeOptical();
 void colorSort();
 void storageIn();
 void bottomGoal();

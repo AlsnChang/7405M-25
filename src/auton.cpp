@@ -25,26 +25,16 @@ void middleTimed()
     stopIntake();
 }
 
-// void middleTimeOptical() {
-//     while(intake) {
-//         scoreMiddle();
-//         if(opticalSensor.get_proximity() > 50) { //need to tune this value - 0 (far) & 255 (near)
-//             stopIntake();
-//             intake = false;
-//         }
-//     }
-// }
-
 void middleTimeOptical() {
-    while(true) {
+    intaking = true;
+    while(intaking) {
         scoreMiddle();
         if(opticalSensor.get_proximity() > 50) { //need to tune this value - 0 (far) & 255 (near)
             stopIntake();
-            break;
+            intaking = false;
         }
     }
 }
-
 
 void move(double power, double turn, bool swing=false, double time=10000) {
     int left = power + turn;
@@ -135,11 +125,13 @@ void fastTopGoals() {
     chassis.turnToPoint(10.98, 37.12, 700, {.forwards = false});
     chassis.moveToPoint(10.98, 37.12, 700, {.forwards = false});  
 
+
+
     
     // SCORING MIDDLE
-    scoreMiddle();
-    pros::delay(2000);
-    storageIn();
+    // scoreMiddle();
+    // pros::delay(2000);
+    // storageIn();
 
 
     // MOVE BACK SCRAPER TIME
@@ -164,6 +156,8 @@ void fastTopGoals() {
     // scraper.set_value(false);
     // scoreTop();
 }
+
+
 
 void topGoalSide()
 {
