@@ -62,7 +62,7 @@ void skillsTest() {
     chassis.moveToPoint(35.44, 16.38, 2800,{.forwards = false, .maxSpeed = 75});
     //pros::delay(1000000);
 
-    chassis.turnToHeading(-191.46, 1000);
+    chassis.turnToHeading(-185, 1000);
     scraper.set_value(true);
     stopIntake();
     chassis.moveToPoint(36.82,10.7, 1200, {}, false);
@@ -72,11 +72,12 @@ void skillsTest() {
     move(50, 0, false, 750);
     pros::delay(250);
     move(50,0,false,750);
+    pros::delay(1000);
+    move(50,0.2,false,750);
 
-    // chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
-    // scoreTopAuto();
+    chassis.moveToPoint(30.41, 31.12, 1000, {.forwards = false});
+    scoreTopAuto();
 
-    // // chassis.moveToPoint();
 }
 void middleTimed()
 {
@@ -123,8 +124,9 @@ void fastBottomGoals(){
     chassis.moveToPoint(-10.5, 39.3, 700,{},false);
     //pros::delay(10000);
     fastBottomScore();
-    pros::delay(1000);
+    pros::delay(1050);
     storageIn();
+    pros::delay(250);
 
     chassis.moveToPoint(32.5, 24.45, 2800,{.forwards = false, .maxSpeed = 75});
     //pros::delay(1000000);
@@ -136,8 +138,8 @@ void fastBottomGoals(){
 
     chassis.cancelAllMotions();
     storageIn();
-    move(50, 0, false, 750);
-    pros::delay(750);
+    move(40, 0, false, 750);
+    pros::delay(1250);
     //move(50, 0, false, 750);
     //pros::delay(1000);
     // move(50, 0.5,false, 500);
@@ -145,6 +147,8 @@ void fastBottomGoals(){
     // move(-75, 0, false, 300);
 
     chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
+    scraper.set_value(false);
+    pros::delay(250);
     // chassis.moveToPoint(28.6, 34, 1000, {.forwards = false});
 
     // pros::delay(1500);
