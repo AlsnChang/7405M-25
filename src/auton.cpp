@@ -100,6 +100,7 @@ void bottomControl(){
 
 }
 
+
 void fastBottomGoals(){
     flingBlue = false;
     remover.set_value(true);
