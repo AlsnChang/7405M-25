@@ -200,7 +200,8 @@ void skills() {
 
 void autonomous() {
   // pidTest();
-  fastTopGoals();
+    odomlift.set_value(true);
+    fastTopGoals();
   
   // bottomGoalSide();
 

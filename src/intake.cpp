@@ -12,6 +12,7 @@ pros::adi::DigitalOut wingy ('G', false);
 pros::Optical opticalSensor(11);
 
 bool flingBlue = false;
+bool intaking = false;
 
 void updateIntake() 
 {
@@ -137,6 +138,7 @@ void scoreTopAuto() {
 }
 
 void scoreMiddle() {
+    intaking = true;
     flippy.set_value(true);
     intake.move(-100); 
     hopper.move(100);

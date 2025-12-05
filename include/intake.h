@@ -12,6 +12,7 @@ extern pros::Motor secondIn;
 extern pros::Motor firstIn;
 extern pros::Motor hopper;
 extern bool flingBlue;
+extern bool intaking;
 
 extern pros::adi::DigitalOut hood;
 
