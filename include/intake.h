@@ -1,14 +1,11 @@
 #include "main.h"
 #include <map>
+#include "pros/optical.hpp"
+
+
 #pragma once
 
-enum IntakeState {
 
-    FAST, 
-    SLOW, 
-    OFF, 
-    OUTTAKE
-};
 
 //motor declarations
 extern pros::Motor secondIn;
@@ -20,7 +17,6 @@ extern pros::adi::DigitalOut hood;
 
 extern pros::Optical opticalSensor;
 
-void setIntakeState (IntakeState state);
 void updateIntake(); 
 void colorSort();
 void storageIn();

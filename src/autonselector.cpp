@@ -27,14 +27,14 @@ static Button allianceButtons[] = {
 static Button autonBlueButtons[] = {
     {20, 40, 200, 100, "Bottom Goal"},
     {220, 40, 400, 100, "Top Goal"},
-    {20, 140, 200, 200, "null"},
+    {20, 140, 200, 200, "Bottom Control Goal"},
     {220, 140, 400, 200, "null"}
 };
 
 static Button autonRedButtons[] = {
     {20, 40, 200, 100, "Bottom Goal"},
     {220, 40, 400, 100, "Top Goal"},
-    {20, 140, 200, 200, "null"},
+    {20, 140, 200, 200, "Bottom Control Goal"},
     {220, 140, 400, 200, "null"}
 };
 

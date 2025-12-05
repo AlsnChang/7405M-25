@@ -6,6 +6,7 @@
 #include "pros/adi.hpp"
 #include "pros/misc.h"
 #include "pros/motors.hpp"
+#include "pros/optical.hpp"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -79,6 +80,7 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
 pros::adi::DigitalOut scraper('A', false);
 pros::adi::DigitalOut aligner('F', false);
 pros::adi::DigitalOut remover('G', false);
+pros::adi::DigitalOut odomlift('D', false);
 
 // wing
 bool removerActivated = false;
@@ -156,7 +158,7 @@ void initialize() {
   opticalSensor.set_led_pwm(100);
 
   pros::delay(1000);
-  // autonSelectorStart();
+  autonSelectorStart();
   pros::Task screenTask(screen);
 
   // pros::Task updateScreen (coord);
@@ -198,7 +200,7 @@ void skills() {
 
 void autonomous() {
   // pidTest();
-  bottomControl();
+  fastTopGoals();
 
   // startAuton();
 
@@ -212,6 +214,8 @@ void autonomous() {
 }
 
 void opcontrol() {
+
+  odomlift.set_value(true);
   flingBlue = false;
   // scraper.set_value(true);
   // move(60, 0);
@@ -225,7 +229,7 @@ void opcontrol() {
     chassis.arcade(leftY, rightX);
 
     bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
     if (removerPressedNow && !removerPressedLast) {
       // Toggle remover
@@ -236,7 +240,7 @@ void opcontrol() {
     removerPressedLast = removerPressedNow;
 
     bool scraperPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
     if (scraperPressedNow && !scraperPressedLast) {
       // Toggle hood

@@ -24,6 +24,8 @@
  * E_CONTROLLER_MASTER is pedantically correct within the PROS styleguide, but
  * not convenient for most student programmers.
  */
+// #include "intake.h"
+#include "pros/optical.hpp"
 #define PROS_USE_SIMPLE_NAMES
 
 /**
@@ -94,6 +96,7 @@ extern lemlib::Drivetrain drivetrain;
 
 extern pros::Imu imu;
 
+
 extern pros::Rotation horizontal_encoder; //odom sensor
 extern lemlib::TrackingWheel horizontal_tracking_wheel;
 
@@ -117,4 +120,5 @@ extern pros::adi::DigitalOut remover;
 
 //Scraper
 extern pros::adi::DigitalOut scraper;
+extern pros::adi::DigitalOut odomlift;
 extern bool hoodActivated;
