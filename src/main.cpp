@@ -149,6 +149,7 @@ void screen() {
 void initialize() {
   pros::lcd::initialize();
   chassis.calibrate();
+  pros::delay(1000);
   chassis.setPose(0, 0, 0);
   horizontal_encoder.reset_position();
   vertical_encoder.reset_position();
