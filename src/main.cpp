@@ -190,7 +190,8 @@ void skills() {
 
 void autonomous() {
 
-    //skillsTest();
+  odomlift.set_value(true);
+  //skillsTest();
   // GOOOD AUTON FOR THE RIGHT SIDE
   fastBottomGoals();
 
