@@ -164,6 +164,7 @@ void initialize() {
   pros::delay(1000);
   autonSelectorStart();
   pros::Task screenTask(screen);
+  
 
   // pros::Task updateScreen (coord);
 }
