@@ -197,11 +197,16 @@ void skills() {
 void autonomous() {
 
   odomlift.set_value(true);
+  //Just park in the parking zone
+  //skillsPark();
+  
+  //Actually tries to do stuff in skilla
   //skillsTest();
-  // GOOOD AUTON FOR THE RIGHT SIDE
-fastBottomGoals();
 
-  // OKAY AUTON FOR THE LEFT SIDE
+  // GOOOD AUTON FOR THE RIGHT SIDE
+  fastBottomGoals();
+
+  // BAD AUTON FOR THE LEFT SIDE
  //fastTopGoal();
 
   // 7 BALLS AUTON BOTTOM GOAL
@@ -210,7 +215,7 @@ fastBottomGoals();
 
 void opcontrol() {
 
-  odomlift.set_value(true);
+  aligner.set_value(false);
   flingBlue = false;
 
   while (true) {
@@ -237,7 +242,7 @@ void opcontrol() {
       // Toggle hood
       scraperActivated = !scraperActivated;
       scraper.set_value(scraperActivated);
-      aligner.set_value(scraperActivated);
+      aligner.set_value(!scraperActivated);
     }
 
     scraperPressedLast = scraperPressedNow;

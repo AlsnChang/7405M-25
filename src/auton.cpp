@@ -158,9 +158,6 @@ void fastBottomGoals(){
     scoreTopAuto();
 }
 
-
-
-
 void fastTopGoals() {
     flingBlue = false;
     storageIn();
@@ -169,15 +166,11 @@ void fastTopGoals() {
     chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
     chassis.turnToPoint(-17.7, 50.7, 700);
     chassis.moveToPoint(-17.7, 50.7, 1000, { .maxSpeed = 55}, false);
+    middleTime(600);
     // MOVE BACK AND SCORE MIDDLE
     chassis.moveToPoint(0, 29.9, 1000,{ .forwards = false});
-    middleTime(600);
     chassis.turnToHeading(-113.5, 800);
     chassis.moveToPoint(8.7, 31.7, 700, {.forwards = false}, false);
-    
-
-
-
     
     // // SCORING MIDDLE
     scoreMiddle();
@@ -186,7 +179,7 @@ void fastTopGoals() {
 
 
     // MOVE BACK SCRAPER TIME
-    chassis.moveToPoint(-39.5, 11, 1000,{.maxSpeed = 90},false);
+    chassis.moveToPoint(-39.5, 5, 1000,{.maxSpeed = 70},false);
     // scraper.set_value(true);
 
 
@@ -218,4 +211,10 @@ void startAuton()
     {
         
     }
+}
+
+void skillsPark()
+{
+    move(50, 0, false, 500);
+    move(-127, 0, false, 500);
 }

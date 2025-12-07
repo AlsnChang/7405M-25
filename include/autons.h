@@ -13,3 +13,4 @@ void bottomControl();
 void middleTimeOptical();
 
 void skillsTest();
+void skillsPark();
