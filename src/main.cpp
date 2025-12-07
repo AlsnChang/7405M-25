@@ -198,13 +198,13 @@ void autonomous() {
 
   odomlift.set_value(true);
   //Just park in the parking zone
-  //skillsPark();
+  skillsPark();
   
   //Actually tries to do stuff in skilla
   //skillsTest();
 
   // GOOOD AUTON FOR THE RIGHT SIDE
-  fastBottomGoals();
+  //fastBottomGoals();
 
   // BAD AUTON FOR THE LEFT SIDE
   //fastTopGoals();

@@ -119,22 +119,25 @@ void fastBottomGoals(){
     chassis.moveToPoint(14.86, 51.4, 1200,{});
     pros::delay(350);
     chassis.moveToPoint(0.49, 32.5, 1200,{ .forwards = false}, false);
-    bottomTime(400);
-    //chassis.turnToHeading(-62.2, 700);
+    
+    //pros::delay(100);
+    //bottomTime(300);
+
+
     chassis.turnToPoint(-14.5, 37, 700);
     chassis.moveToPoint(-14.5, 37, 700,{},false);
     // chassis.moveToPoint(-13.7, 38.4, 700,{},false);
 
     // // //pros::delay(10000);
     bottomGoal();
-    pros::delay(1000);
+    pros::delay(1500);
     storageIn();
 
     // chassis.moveToPoint(32.5, 24.45, 2800,{.forwards = false, .maxSpeed = 75});
-    chassis.moveToPoint(31.76, 17.53, 2800,{.forwards = false, .maxSpeed = 75});
+    chassis.moveToPoint(31.76, 17.53, 1700,{.forwards = false, .maxSpeed = 75});
 
 
-    chassis.turnToHeading(-195.5, 1000);
+    chassis.turnToHeading(-195.5, 700);
     scraper.set_value(true);
     stopIntake();
     // chassis.moveToPoint(36.5,10.7, 1200, {}, false);
@@ -152,8 +155,10 @@ void fastBottomGoals(){
     // // move(-75, 0, false, 300);
 
     // chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
-    pros::Task time(longTime);
+    //pros::Task time(longTime);
+    chassis.turnToPoint(29.4, 29.9, 1000, {.forwards = false}, false);
     chassis.moveToPoint(29.4, 29.9, 1000, {.forwards = false}, false);
+    
     scraper.set_value(false);    
     // pros::delay(500);
     scoreTopAuto();
@@ -218,6 +223,6 @@ void startAuton()
 
 void skillsPark()
 {
-    move(75, 0, false, 750);
+    chassis.moveToPoint(15, 0, 750);
     move(-127, 0, false, 2000);
 }
