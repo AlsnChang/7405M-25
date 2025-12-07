@@ -30,3 +30,5 @@ void scoreMiddle();
 void scoreTopAuto();
 void middleTime(int time);
 void slowerStorageIn();
+void storagey();
+void bottomTime(int time);

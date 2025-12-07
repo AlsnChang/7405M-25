@@ -34,6 +34,8 @@ lemlib::Drivetrain drivetrain(&leftMotors,  // left motor group
 );
 
 pros::Imu imu(12);
+pros::Distance distance_sensor(7);
+
 
 pros::Rotation horizontal_encoder(-3); // odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder,
@@ -45,6 +47,8 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder,
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr,
                             &horizontal_tracking_wheel, nullptr, &imu);
+
+                        
 
 lemlib::ControllerSettings
     lateral(7.25, // proportional gain (kP)
@@ -61,7 +65,7 @@ lemlib::ControllerSettings
 lemlib::ControllerSettings
     angular(1.1,  // proportional gain (kP)
             0,    // integral gain (kI)
-            1,    // derivative gain (kD)
+            5,    // derivative gain (kD)
             3,    // anti windup
             1,    // small error range, in degrees
             1000, // small error range timeout, in milliseconds
