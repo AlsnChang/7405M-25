@@ -197,10 +197,10 @@ void autonomous() {
   odomlift.set_value(true);
   //skillsTest();
   // GOOOD AUTON FOR THE RIGHT SIDE
-  fastBottomGoals();
+fastBottomGoals();
 
   // OKAY AUTON FOR THE LEFT SIDE
-  // fastTopGoals();
+ //fastTopGoal();
 
   // 7 BALLS AUTON BOTTOM GOAL
   // bottomControl();

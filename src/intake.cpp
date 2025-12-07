@@ -20,7 +20,7 @@ void updateIntake()
     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
     {
         //Put in storage
-        //storageIn();
+        storageIn();
         //storagey();
         
     }
@@ -41,11 +41,6 @@ void updateIntake()
         //Outake into bottom goal
         bottomGoal();   
         //bottomTime(600);    
-    }
-    else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
-    {
-        //Outake into bottom goal
-        bottomGoal();       
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
     {
@@ -124,7 +119,7 @@ void slowerStorageIn()
 void bottomGoal()
 {
     //flippy.set_value(true);
-    hopper.move(80);
+    hopper.move(127);
      
 }
 void fastBottomScore()
@@ -172,12 +167,15 @@ void bottomTime(int time) {
 }
 
 void middleTime(int time) {
-    pros::delay(time);
-
+    
     flippy.set_value(true);
     intake.move(-100); 
     hopper.move(100);
+    pros::delay(time);
+    stopIntake();
 }
+
+
 
 void load()
 {
