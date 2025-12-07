@@ -9,7 +9,7 @@ pros::Motor hopper (13); //self explanatory
 pros::adi::DigitalOut flippy ('B', false);
 pros::adi::DigitalOut wingy ('G', false);
 
-pros::Optical opticalSensor(11);
+pros::Optical opticalSensor(7);
 
 bool flingBlue = false;
 bool intaking = false;
@@ -21,6 +21,7 @@ void updateIntake()
     {
         //Put in storage
         storageIn();
+        //storagey();
         
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
@@ -31,7 +32,6 @@ void updateIntake()
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
     {
-        colorSort();
         //Score in long goal
         scoreTop();
        
@@ -39,12 +39,8 @@ void updateIntake()
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
     {
         //Outake into bottom goal
-        bottomGoal();       
-    }
-    else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
-    {
-        //Outake into bottom goal
-        bottomGoal();       
+        bottomGoal();   
+        //bottomTime(600);    
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
     {
@@ -56,6 +52,8 @@ void updateIntake()
         hopper.brake();
     }
 }
+
+
 
 
 
@@ -91,10 +89,23 @@ void updateIntake()
 
 void storageIn()
 {
-    //Put in storage
-    flippy.set_value(false);
-    hopper.move (-127);
+   
+        //Put in storage
+        flippy.set_value(false);
+        hopper.move (-127);
     
+    
+    
+}
+void storagey() {
+    flippy.set_value(false);
+    hopper.move (-100);
+    while(opticalSensor.get_hue() < 50 || opticalSensor.get_hue() > 100)
+    {
+        pros::delay(50);
+    }
+    pros::delay(100);
+    hopper.brake();
 }
 
 void slowerStorageIn()
@@ -108,7 +119,7 @@ void slowerStorageIn()
 void bottomGoal()
 {
     //flippy.set_value(true);
-    hopper.move(80);
+    hopper.move(127);
      
 }
 void fastBottomScore()
@@ -146,13 +157,25 @@ void scoreMiddle() {
 
 }
 
-void middleTime(int time) {
+void bottomTime(int time) {
+    
+    flippy.set_value(false);
+    hopper.move(-100); 
+    hopper.move(100);
     pros::delay(time);
+    stopIntake();
+}
 
+void middleTime(int time) {
+    
     flippy.set_value(true);
     intake.move(-100); 
     hopper.move(100);
+    pros::delay(time);
+    stopIntake();
 }
+
+
 
 void load()
 {
