@@ -126,7 +126,7 @@ void fastBottomGoals(){
     // chassis.moveToPoint(-13.7, 38.4, 700,{},false);
 
     // // //pros::delay(10000);
-    fastBottomScore();
+    bottomGoal();
     pros::delay(1000);
     storageIn();
 
@@ -152,6 +152,7 @@ void fastBottomGoals(){
     // // move(-75, 0, false, 300);
 
     // chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
+    pros::Task time(longTime);
     chassis.moveToPoint(29.4, 29.9, 1000, {.forwards = false}, false);
     scraper.set_value(false);    
     // pros::delay(500);
@@ -164,41 +165,43 @@ void fastTopGoals() {
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
     pros::delay(20);
     chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
-    chassis.turnToPoint(-17.7, 50.7, 700);
-    chassis.moveToPoint(-17.7, 50.7, 1000, { .maxSpeed = 55}, false);
-    middleTime(600);
-    // MOVE BACK AND SCORE MIDDLE
-    chassis.moveToPoint(0, 29.9, 1000,{ .forwards = false});
-    chassis.turnToHeading(-113.5, 800);
-    chassis.moveToPoint(8.7, 31.7, 700, {.forwards = false}, false);
+    chassis.turnToHeading(-32.6, 1000);
+    chassis.moveToPoint(-12.54, 51.88, 1000, { .maxSpeed = 55}, false);
+    storageIn();
+    pros::delay(250);
+    // // // MOVE BACK AND SCORE MIDDLe
+    chassis.moveToPoint(-1.57, 32, 1000,{ .forwards = false});
+    //pros::Task middle(middleTime);
+    chassis.turnToPoint(11, 33.5, 700, {.forwards = false}, false);
+    chassis.moveToPoint(11, 33.5, 700, {.forwards = false}, false);
     
-    // // SCORING MIDDLE
+    // SCORING MIDDLE
     scoreMiddle();
     pros::delay(1500);
     storageIn();
 
 
-    // MOVE BACK SCRAPER TIME
-    chassis.moveToPoint(-39.5, 5, 1000,{.maxSpeed = 70},false);
-    // scraper.set_value(true);
+    // // // MOVE BACK SCRAPER TIME
+    chassis.moveToPoint(-37.31, 15.5, 1000,{.maxSpeed = 70},false);
+    scraper.set_value(true);
 
 
-    // chassis.turnToHeading(-155,500);
+    // chassis.turnToHeading(-152,500);
 
     //move(50, false, false, 1000);
 
-    // chassis.moveToPoint(-40, 5, 750, {}, false);
+    // chassis.moveToPoint(-41, 4.73, 750, {}, false);
     
     // chassis.cancelAllMotions();
     // storageIn();
     // move(50, 0, false, 1000);
    
 
-    // chassis.moveToPoint(-30.7, 23.6, 1000, {.forwards = false, .maxSpeed = 50});
-    // scraper.set_value(false);
-    // pros::delay(1500);
-    // scraper.set_value(false);
-    // scoreTop();
+    // // chassis.moveToPoint(-30.7, 23.6, 1000, {.forwards = false, .maxSpeed = 50});
+    // // scraper.set_value(false);
+    // // pros::delay(1500);
+    // // scraper.set_value(false);
+    // // scoreTop();
 }
 
 void startAuton()
@@ -215,6 +218,6 @@ void startAuton()
 
 void skillsPark()
 {
-    move(50, 0, false, 500);
-    move(-127, 0, false, 500);
+    move(75, 0, false, 750);
+    move(-127, 0, false, 2000);
 }

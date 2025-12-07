@@ -207,7 +207,7 @@ void autonomous() {
   fastBottomGoals();
 
   // BAD AUTON FOR THE LEFT SIDE
- //fastTopGoal();
+  //fastTopGoals();
 
   // 7 BALLS AUTON BOTTOM GOAL
   // bottomControl();
