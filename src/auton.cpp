@@ -104,6 +104,59 @@ void pidTest() {
 }
 
 
+// void fastBottomGoals(){
+//     flingBlue = false;
+//     remover.set_value(true);
+//     //descore.set_value(false);
+//     storageIn();
+//     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});
+    
+//     pros::delay(20);
+//     chassis.moveToPoint(0, 35, 1000, { .maxSpeed = 40});
+
+//     chassis.turnToPoint(14.86, 51.4, 700);
+//     //pros::delay(10000);
+//     chassis.moveToPoint(14.86, 51.4, 1200,{});
+//     pros::delay(350);
+//     chassis.moveToPoint(-4.42, 29.63, 1000,{ .forwards = false});
+
+//     chassis.turnToHeading(-63.55, 700);
+//     // //chassis.turnToPoint(-10.5, 39.3, 700);
+//     // // chassis.moveToPoint(-10.5, 39.3, 700,{},false);
+//     chassis.moveToPoint(-10.43, 38.57, 700,{},false);
+
+//     // //pros::delay(10000);
+//     // fastBottomScore();
+//     // pros::delay(1500);
+//     // storageIn();
+
+//     // // chassis.moveToPoint(32.5, 24.45, 2800,{.forwards = false, .maxSpeed = 75});
+//     // chassis.moveToPoint(31.76, 17.53, 2800,{.forwards = false, .maxSpeed = 75});
+
+
+//     // chassis.turnToHeading(-195.5, 1000);
+//     // scraper.set_value(true);
+//     // stopIntake();
+//     // // chassis.moveToPoint(36.5,10.7, 1200, {}, false);
+//     // chassis.moveToPoint(36.4,3.63, 1200, {}, false);
+
+
+//     // chassis.cancelAllMotions();
+//     // storageIn();
+//     // move(50, 0, false, 825);
+//     // // pros::delay(750);
+//     // // //move(50, 0, false, 750);
+//     // // //pros::delay(1000);
+//     // // // move(50, 0.5,false, 500);
+//     // // // //back up
+//     // // // move(-75, 0, false, 300);
+
+//     // // chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
+//     // chassis.moveToPoint(29.4, 29.9, 1000, {.forwards = false}, false);
+//     // scraper.set_value(false);    
+//     // // pros::delay(500);
+//     // scoreTopAuto();
+// }
 void fastBottomGoals(){
     flingBlue = false;
     remover.set_value(true);
@@ -123,6 +176,7 @@ void fastBottomGoals(){
     //pros::delay(100);
     //bottomTime(300);
 
+<<<<<<< HEAD
 
     chassis.turnToPoint(-14.5, 37, 700);
     chassis.moveToPoint(-14.5, 37, 700,{},false);
@@ -130,6 +184,17 @@ void fastBottomGoals(){
 
     // // //pros::delay(10000);
     bottomGoal();
+=======
+    // chassis.turnToHeading(-62, 700);
+    chassis.turnToPoint(-9.9, 39.55, 700);
+    // chassis.moveToPoint(-10.5, 39.3, 700,{},false);
+    chassis.moveToPoint(-9.9, 39.55, 700,{},false);
+    chassis.turnToHeading(-64.94, 700);
+
+
+    //pros::delay(10000);
+    fastBottomScore();
+>>>>>>> b1380e8ee784a60d2268c31af7e9524a0b01d2ff
     pros::delay(1500);
     storageIn();
 
@@ -155,10 +220,15 @@ void fastBottomGoals(){
     // // move(-75, 0, false, 300);
 
     // chassis.moveToPoint(28.6, 34.8, 1000, {.forwards = false});
+<<<<<<< HEAD
     //pros::Task time(longTime);
     chassis.turnToPoint(29.4, 29.9, 1000, {.forwards = false}, false);
     chassis.moveToPoint(29.4, 29.9, 1000, {.forwards = false}, false);
     
+=======
+    chassis.turnToPoint(29.33, 33, 1000, {.forwards = false});
+    chassis.moveToPoint(29.33, 33, 1000, {.forwards = false}, false);
+>>>>>>> b1380e8ee784a60d2268c31af7e9524a0b01d2ff
     scraper.set_value(false);    
     // pros::delay(500);
     scoreTopAuto();
@@ -186,8 +256,13 @@ void fastTopGoals() {
     storageIn();
 
 
+<<<<<<< HEAD
     // // // MOVE BACK SCRAPER TIME
     chassis.moveToPoint(-37.31, 15.5, 1000,{.maxSpeed = 70},false);
+=======
+    // MOVE BACK SCRAPER TIME
+    chassis.moveToPoint(-36.1, 18.13, 700,{.maxSpeed = 90});
+>>>>>>> b1380e8ee784a60d2268c31af7e9524a0b01d2ff
     scraper.set_value(true);
 
 

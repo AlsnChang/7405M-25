@@ -3,8 +3,10 @@
 #include "pros/motors.hpp"
 
 
-pros::Motor intake (18); //top & middle
-pros::Motor hopper (13); //self explanatory 
+pros::Motor intake (1); //top & middle
+pros::Motor intake2 (6); //self explanatory 
+pros::Motor hopper (15); //self explanatory 
+
 
 pros::adi::DigitalOut flippy ('B', false);
 pros::adi::DigitalOut wingy ('G', false);
@@ -49,12 +51,13 @@ void updateIntake()
     else
     {
         intake.brake();
-        hopper.brake();
+        intake2.brake();
     }
 }
 
 
 
+<<<<<<< HEAD
 
 
 // void bottomGoal25() {
@@ -65,34 +68,44 @@ void updateIntake()
 //     storageIn();
 //     chassis.moveToPoint(14, 26, 3000, {.maxSpeed = 40});  
 //     pros::delay(2100);
+=======
+void bottomGoal25() {
+    //Get three blocks
+    pros::delay(3);
+    chassis.moveToPoint(-0.5, 10, 800);
+    chassis.turnToHeading(40, 1000);
+    storageIn();
+    chassis.moveToPoint(14, 26, 3000, {.maxSpeed = 40});  
+    pros::delay(2100);
+>>>>>>> b1380e8ee784a60d2268c31af7e9524a0b01d2ff
 
-//     //Go and outtake into bottom goal
-//     stopIntake(); 
-//     chassis.turnToHeading(-37, 1500);
-//     chassis.moveToPoint(5.3, 39, 1500);
-//     pros::delay(50);
-//     bottomGoal();
-//     pros::delay(2000);
-//     stopIntake();
-//     chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
-//     chassis.turnToHeading(-176, 1500);
-//     scraper.set_value(true);
-//     //pros::delay(100);
-//     chassis.moveToPoint(39, -7, 1500);
-//     pros::delay(500);
-//     move(80, 0);
-//     //chassis.moveToPoint(39, -6.3, 1500);
-//     storageIn();
-//     //pros::delay(100000000);
-// }
+    //Go and outtake into bottom goal
+    stopIntake(); 
+    chassis.turnToHeading(-37, 1500);
+    chassis.moveToPoint(5.3, 39, 1500);
+    pros::delay(50);
+    bottomGoal();
+    pros::delay(2000);
+    stopIntake();
+    chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
+    chassis.turnToHeading(-176, 1500);
+    scraper.set_value(true);
+    //pros::delay(100);
+    chassis.moveToPoint(39, -7, 1500);
+    pros::delay(500);
+    // move(80, 0);
+    //chassis.moveToPoint(39, -6.3, 1500);
+    storageIn();
+    //pros::delay(100000000);
+}
 
 
 void storageIn()
 {
     //Put in storage
-    flippy.set_value(false);
-    hopper.move (-127);
-    
+    // flippy.set_value(false);
+    intake.move (127);
+    intake2.move (-127);
 }
 void storagey() {
     flippy.set_value(false);
@@ -107,9 +120,9 @@ void storagey() {
 
 void slowerStorageIn()
 {
-    //Put in storage
-    flippy.set_value(false);
-    hopper.move (-100);
+    // //Put in storage
+    // flippy.set_value(false);
+    // hopper.move (-100);
     
 }
 
