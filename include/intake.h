@@ -11,6 +11,9 @@
 extern pros::Motor secondIn;
 extern pros::Motor firstIn;
 extern pros::Motor hopper;
+extern pros::Motor intake;
+extern pros::Motor intake2;
+
 extern bool flingBlue;
 extern bool intaking;
 

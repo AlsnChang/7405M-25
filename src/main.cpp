@@ -18,11 +18,11 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // motor group - ports 6, 7, 9 (reversed)
 
 pros::MotorGroup
-    leftMotors({-10, -15, -20},
+    leftMotors({-5, -3, -11},
                pros::MotorGearset::blue); // left motor group - ports 3
                                           // (reversed), 4, 5 (reversed)
 pros::MotorGroup rightMotors(
-    {4, 5, 11},
+    {10, 9, 20},
     pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
 
 lemlib::Drivetrain drivetrain(&leftMotors,  // left motor group
@@ -33,13 +33,13 @@ lemlib::Drivetrain drivetrain(&leftMotors,  // left motor group
                               2    // horizontal drift is 2 (for now)
 );
 
-pros::Imu imu(12);
+pros::Imu imu(0);
 
-pros::Rotation horizontal_encoder(-3); // odom sensor
+pros::Rotation horizontal_encoder(16); // odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder,
                                                 lemlib::Omniwheel::NEW_2, -1);
 
-pros::Rotation vertical_encoder(16); // odom sensor
+pros::Rotation vertical_encoder(2); // odom sensor
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder,
                                               lemlib::Omniwheel::NEW_2, -0.5);
 
@@ -202,7 +202,7 @@ void autonomous() {
 
   // GOOOD AUTON FOR THE RIGHT SIDE
   fastBottomGoals();
-
+  // chassis.moveToPoint(0, 3, 1000);
   // OKAY AUTON FOR THE LEFT SIDE
   // fastTopGoals();
 
