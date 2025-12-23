@@ -4,11 +4,9 @@
 
 
 pros::Motor intake (1); //top & middle
-pros::Motor intake2 (6); //self explanatory 
-pros::Motor hopper (15); //self explanatory 
+pros::Motor intake2 (-6); //self explanatory 
 
-
-pros::adi::DigitalOut flippy ('B', false);
+pros::adi::DigitalOut flappy ('B', false);
 pros::adi::DigitalOut wingy ('G', false);
 
 pros::Optical opticalSensor(11);
@@ -59,101 +57,57 @@ void updateIntake()
     }
 }
 
-
-
-void bottomGoal25() {
-    //Get three blocks
-    pros::delay(3);
-    chassis.moveToPoint(-0.5, 10, 800);
-    chassis.turnToHeading(40, 1000);
-    storageIn();
-    chassis.moveToPoint(14, 26, 3000, {.maxSpeed = 40});  
-    pros::delay(2100);
-
-    //Go and outtake into bottom goal
-    stopIntake(); 
-    chassis.turnToHeading(-37, 1500);
-    chassis.moveToPoint(5.3, 39, 1500);
-    pros::delay(50);
-    bottomGoal();
-    pros::delay(2000);
-    stopIntake();
-    chassis.moveToPoint(40, 4, 3000, {.forwards = false, .maxSpeed = 40});  
-    chassis.turnToHeading(-176, 1500);
-    scraper.set_value(true);
-    //pros::delay(100);
-    chassis.moveToPoint(39, -7, 1500);
-    pros::delay(500);
-    // move(80, 0);
-    //chassis.moveToPoint(39, -6.3, 1500);
-    storageIn();
-    //pros::delay(100000000);
-}
-
-
 void storageIn()
 {
     //Put in storage
-    // flippy.set_value(false);
+    flappy.set_value(false);
     intake.move (127);
-    intake2.move (-127);
+    intake2.move (127);
 }
 
 void slowerStorageIn()
 {
-    // //Put in storage
-    // flippy.set_value(false);
-    // hopper.move (-100);
-    
+    // huh
 }
 
 void bottomGoal()
 {
-    //flippy.set_value(true);
-    hopper.move(80);
+    //tune
+    flappy.set_value(false);
+    intake.move(-127);
+    intake2.move(-127);
      
 }
 void fastBottomScore()
 {
-    //flippy.set_value(true);
-    hopper.move(127);
-     
+    //huh
 }
 
 void stopIntake() {
-    hopper.brake();
     intake.brake();
+    intake2.brake();
 }
 
 void scoreTop() {
     
-    flippy.set_value(true);
-    hopper.move(100);
-    intake.move(100);
-}
-
-void scoreTopAuto() {
-    
-    flippy.set_value(true);
-    hopper.move(127);
+    flappy.set_value(true);
+    intake2.move(127);
     intake.move(127);
 }
 
-void scoreMiddle() {
-    intaking = true;
-    flippy.set_value(true);
-    intake.move(-100); 
-    hopper.move(100);
-   
+void scoreTopAuto() {
+    //huh
+}
 
+void scoreMiddle() {
+    //intaking = true;
+    flappy.set_value(true);
+    intake.move(127); 
+    intake2.move(127);
 }
 
 void middleTime(int time) {
-    pros::delay(time);
-
-    flippy.set_value(true);
-    intake.move(-100); 
-    hopper.move(100);
+    //huh
 }
 
 void load()
