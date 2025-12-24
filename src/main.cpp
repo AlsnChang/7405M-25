@@ -77,10 +77,8 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
                         &steer);
 
 // Scraper
-pros::adi::DigitalOut scraper('A', false);
-pros::adi::DigitalOut aligner('F', false);
-pros::adi::DigitalOut remover('G', false);
-pros::adi::DigitalOut odomlift('D', false);
+pros::adi::DigitalOut scraper('E', false);
+pros::adi::DigitalOut descore('F', false);
 
 // wing
 bool removerActivated = false;
@@ -211,8 +209,6 @@ void autonomous() {
 }
 
 void opcontrol() {
-
-  odomlift.set_value(true);
   flingBlue = false;
 
   while (true) {
@@ -227,7 +223,7 @@ void opcontrol() {
     if (removerPressedNow && !removerPressedLast) {
       // Toggle remover
       removerActivated = !removerActivated;
-      remover.set_value(removerActivated);
+      descore.set_value(removerActivated);
     }
 
     removerPressedLast = removerPressedNow;
@@ -239,7 +235,6 @@ void opcontrol() {
       // Toggle hood
       scraperActivated = !scraperActivated;
       scraper.set_value(scraperActivated);
-      aligner.set_value(scraperActivated);
     }
 
     scraperPressedLast = scraperPressedNow;

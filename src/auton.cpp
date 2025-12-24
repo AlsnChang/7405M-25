@@ -162,7 +162,7 @@ void bottomControl(){
 // }
 void fastBottomGoals(){
     flingBlue = false;
-    remover.set_value(true);
+    descore.set_value(true);
     //descore.set_value(false);
     storageIn();
     chassis.moveToPoint(0, 20, 1000, {.earlyExitRange = 10});

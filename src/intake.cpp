@@ -9,7 +9,6 @@ pros::Motor intake2 (-6); //self explanatory
 
 pros::adi::DigitalOut flappy ('B', false);
 pros::adi::DigitalOut flappier ('A', false);
-pros::adi::DigitalOut wingy('E', false);
 
 pros::Optical opticalSensor(11);
 
@@ -47,10 +46,6 @@ void updateIntake()
     {
         //Outake into bottom goal
         bottomGoal();       
-    }
-    else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
-    {
-        wingy.set_value(true);
     }
     else
     {
