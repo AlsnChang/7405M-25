@@ -1,4 +1,5 @@
 #include "intake.h"
+#include "pros/adi.hpp"
 #include "pros/misc.h"
 #include "pros/motors.hpp"
 
@@ -7,7 +8,8 @@ pros::Motor intake (1); //top & middle
 pros::Motor intake2 (-6); //self explanatory 
 
 pros::adi::DigitalOut flappy ('B', false);
-pros::adi::DigitalOut wingy ('G', false);
+pros::adi::DigitalOut flappier ('A', false);
+pros::adi::DigitalOut wingy('E', false);
 
 pros::Optical opticalSensor(11);
 
@@ -61,6 +63,7 @@ void storageIn()
 {
     //Put in storage
     flappy.set_value(false);
+    flappier.set_value(true);
     intake.move (127);
     intake2.move (127);
 }
@@ -73,7 +76,6 @@ void slowerStorageIn()
 void bottomGoal()
 {
     //tune
-    flappy.set_value(false);
     intake.move(-127);
     intake2.move(-127);
      
@@ -89,8 +91,8 @@ void stopIntake() {
 }
 
 void scoreTop() {
-    
-    flappy.set_value(true);
+    flappier.set_value(false);
+    flappy.set_value(false);
     intake2.move(127);
     intake.move(127);
 }
@@ -102,6 +104,7 @@ void scoreTopAuto() {
 void scoreMiddle() {
     //intaking = true;
     flappy.set_value(true);
+    flappier.set_value(true);
     intake.move(127); 
     intake2.move(127);
 }
