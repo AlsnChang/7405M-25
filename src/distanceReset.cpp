@@ -38,6 +38,7 @@ std::array<pros::Distance*, 2> sortDistances()
         if (compare[i] == distances[3] || compare[i] == distances[2])
         {
             closest[counter] = getSensor(i);
+            counter++;
         }
     }
 
