@@ -4,6 +4,7 @@
 #include "intake.h"
 #include "lemlib/api.hpp"
 #include "pros/adi.hpp"
+#include "pros/distance.hpp"
 #include "pros/misc.h"
 #include "pros/motors.hpp"
 #include "pros/optical.hpp"
@@ -80,6 +81,7 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
 pros::adi::DigitalOut scraper('E', false);
 pros::adi::DigitalOut descore('F', false);
 
+
 // wing
 bool removerActivated = false;
 bool hoodActivated = false;
@@ -90,46 +92,6 @@ bool removerPressedLast = false;
 bool hoodPressedLast = false;
 bool scraperPressedLast = false;
 
-void coord() {
-  // loop forever
-  while (true) {
-    lemlib::Pose pose = chassis.getPose();
-    pros::lcd::print(0, "x: %.2f | y: %.2f | H: %.2f", pose.x, pose.y,
-                     pose.theta);
-    pros::lcd::print(1, "theta: %.2f", pose.theta);
-
-    // lemlib::Pose pose = chassis.getPose(); // get the current position of the
-    // robot pros::lcd::print(0, "x: %f | y: %f", pose.x, pose.y, pose.theta);
-    // // print the x position
-    // //pros::lcd::print(0, "x: %f | y: %f", horizontal_encoder.get_position(),
-    // vertical_encoder.get_position(), pose.theta); // print the x position
-    // pros::lcd::print(1, "H: %f", pose.theta); // print the x position
-    // // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y,
-    // pose.theta, vertical_rot.get_position());
-    pros::delay(100);
-  }
-
-  // while (true)
-  // {
-  //     lemlib::Pose pose = chassis.getPose();
-  //     pros::lcd::print(1, "x: %f | y: %f", pose.x, pose.y);
-  //     pros::lcd::print(2, "Theta: %f", pose.theta);
-  //     // if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
-  //     // {
-  //     //     printf("x: %f | y: %f | Theta: %f", pose.x, pose.y);
-  //     //     printf("Theta: %f", pose.theta);
-  //     // }
-
-  //     pros::delay(50);
-  // }
-}
-// drivetrain settings
-/**
- * Runs initialization code. This occurs as soon as the program is started.
- *
- * All other competition modes are blocked by initialize; it is recommended
- * to keep execution time for this mode under a few seconds.
- */
 void screen() {
   // loop forever
   while (true) {
@@ -158,8 +120,6 @@ void initialize() {
   pros::delay(1000);
   autonSelectorStart();
   pros::Task screenTask(screen);
-
-  // pros::Task updateScreen (coord);
 }
 
 /**
@@ -172,15 +132,7 @@ void disabled() {}
  */
 void competition_initialize() {}
 
-// get a path used for pure pursuit
-// this needs to be put outside a function
 
-/**
- * Runs during auto
- *
- * This is an example autonomous routine which demonstrates a lot of the
- * features LemLib has to offer
- */
 
 void skills() {
   // skills
