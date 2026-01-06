@@ -62,9 +62,9 @@ lemlib::ControllerSettings
     );
 
 lemlib::ControllerSettings
-    angular(0.7111, // proportional gain (kP)
+    angular(0, // proportional gain (kP)
             0,    // integral gain (kI)
-            1.2,    // derivative gain (kD)
+            0,    // derivative gain (kD)
             3,    // anti windup
             1,    // small error range, in degrees
             1000, // small error range timeout, in milliseconds
@@ -147,7 +147,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  turnToHeading(130, 1000, 127);
+  turnToHeading(180, 1000, 127);
 
   // while (true) {
   //   int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);

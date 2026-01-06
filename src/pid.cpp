@@ -26,7 +26,8 @@ void calcKp(double angle)
     double third = thirdTerm * std::pow(angle, 2);
     double fourth = fourthTerm * angle;
     double equation = first + second + third + fourth + intercept;
-    angular.setKP(equation);
+
+    chassis.setAngularkP(equation);
 }
 
 constexpr double RAD_TO_DEG = 180.0 / M_PI;
@@ -48,7 +49,7 @@ double calcAngle(std::variant<double, lemlib::Pose> target)
     lemlib::Pose pose = chassis.getPose();
     //check if parameter is an angle, not a point
     if (std::holds_alternative<double>(target)) {
-        return normalize(std::get<double>(target) - pose.theta);
+        return normalize(toDegrees(std::get<double>(target)) - pose.theta);
     } 
     //this means parameter is a point
     else 
@@ -70,8 +71,10 @@ void turnToPose(lemlib::Pose targetPose, int timeout, int maxSpeed)
 
 void turnToHeading(double targetHeading, int timeout, int maxSpeed) 
 {
-    double angleToTurn = -calcAngle(targetHeading);
+    double angleToTurn = calcAngle(targetHeading);
+    std::cout <<"angle: " << angleToTurn << std::endl;
     calcKp(angleToTurn);
+    pros::delay(50);
     chassis.turnToHeading(angleToTurn, timeout, {.maxSpeed = maxSpeed});
 }
 
