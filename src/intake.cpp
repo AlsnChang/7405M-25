@@ -7,8 +7,8 @@
 pros::Motor intake (1); //top & middle
 pros::Motor intake2 (-6); //self explanatory 
 
-pros::adi::DigitalOut flappy ('B', false);
-pros::adi::DigitalOut flappier ('A', false);
+pros::adi::DigitalOut flappy ('A', false);
+pros::adi::DigitalOut flappier ('B', false);
 
 pros::Optical opticalSensor(11);
 

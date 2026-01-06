@@ -3,11 +3,13 @@
 #include "autonselector.h"
 #include "intake.h"
 #include "lemlib/api.hpp"
+#include "lemlib/chassis/chassis.hpp"
 #include "pros/adi.hpp"
 #include "pros/distance.hpp"
 #include "pros/misc.h"
 #include "pros/motors.hpp"
 #include "pros/optical.hpp"
+#include "pid.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -34,35 +36,35 @@ lemlib::Drivetrain drivetrain(&leftMotors,  // left motor group
                               2    // horizontal drift is 2 (for now)
 );
 
-pros::Imu imu(0);
+pros::Imu imu(7);
 
 pros::Rotation horizontal_encoder(16); // odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder,
-                                                lemlib::Omniwheel::NEW_2, -1);
+                                                lemlib::Omniwheel::NEW_2, -1.875);
 
-pros::Rotation vertical_encoder(2); // odom sensor
+pros::Rotation vertical_encoder(18); // odom sensor
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder,
-                                              lemlib::Omniwheel::NEW_2, -0.5);
+                                              lemlib::Omniwheel::NEW_2, .125);
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr,
                             &horizontal_tracking_wheel, nullptr, &imu);
 
 lemlib::ControllerSettings
-    lateral(7.25, // proportional gain (kP)
+    lateral(4.23, // proportional gain (kP)
             0,    // integral gain (kI)
-            50,   // derivative gain (kD)
-            3,    // anti windup
+            5,   // derivative gain (kD)
+            0,    // anti windup
             .5,   // small error range, in inches
             100,  // small error range timeout, in milliseconds
-            1,    // large error range, in inches
+            .7,    // large error range, in inches
             2000, // large error range timeout, in milliseconds
             20    // maximum acceleration (slew)
     );
 
 lemlib::ControllerSettings
-    angular(1.1,  // proportional gain (kP)
+    angular(0.7111, // proportional gain (kP)
             0,    // integral gain (kI)
-            1,    // derivative gain (kD)
+            1.2,    // derivative gain (kD)
             3,    // anti windup
             1,    // small error range, in degrees
             1000, // small error range timeout, in milliseconds
@@ -117,8 +119,8 @@ void initialize() {
   rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   opticalSensor.set_led_pwm(100);
 
-  pros::delay(1000);
-  autonSelectorStart();
+  pros::delay(4000);
+  //autonSelectorStart();
   pros::Task screenTask(screen);
 }
 
@@ -131,22 +133,6 @@ void disabled() {}
  * runs after initialize if the robot is connected to field control
  */
 void competition_initialize() {}
-
-
-
-void skills() {
-  // skills
-  pros::delay(3000);
-  chassis.moveToPoint(0, 11, 1000);
-  chassis.turnToHeading(90, 750, {.maxSpeed = 90});
-  storageIn();
-  chassis.moveToPoint(40, 11, 1000);
-  chassis.turnToHeading(180, 750, {.maxSpeed = 90});
-
-  scraper.set_value(true);
-  chassis.moveToPoint(44, -7, 2000, {.minSpeed = 100});
-  pros::delay(1500);
-}
 
 void autonomous() {
 
@@ -161,38 +147,38 @@ void autonomous() {
 }
 
 void opcontrol() {
-  flingBlue = false;
+  turnToHeading(130, 1000, 127);
 
-  while (true) {
-    int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+  // while (true) {
+  //   int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+  //   int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    chassis.arcade(leftY, rightX);
+  //   chassis.arcade(leftY, rightX);
 
-    bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+  //   bool removerPressedNow =
+  //       controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-    if (removerPressedNow && !removerPressedLast) {
-      // Toggle remover
-      removerActivated = !removerActivated;
-      descore.set_value(removerActivated);
-    }
+  //   if (removerPressedNow && !removerPressedLast) {
+  //     // Toggle remover
+  //     removerActivated = !removerActivated;
+  //     descore.set_value(removerActivated);
+  //   }
 
-    removerPressedLast = removerPressedNow;
+  //   removerPressedLast = removerPressedNow;
 
-    bool scraperPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+  //   bool scraperPressedNow =
+  //       controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
-    if (scraperPressedNow && !scraperPressedLast) {
-      // Toggle hood
-      scraperActivated = !scraperActivated;
-      scraper.set_value(scraperActivated);
-    }
+  //   if (scraperPressedNow && !scraperPressedLast) {
+  //     // Toggle hood
+  //     scraperActivated = !scraperActivated;
+  //     scraper.set_value(scraperActivated);
+  //   }
 
-    scraperPressedLast = scraperPressedNow;
+  //   scraperPressedLast = scraperPressedNow;
 
-    updateIntake();
+  //   updateIntake();
 
-    pros::delay(20);
-  }
+  //   pros::delay(20);
+  // }
 }

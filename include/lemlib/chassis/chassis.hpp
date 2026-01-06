@@ -53,61 +53,52 @@ class OdomSensors {
  * @brief class containing constants for a chassis controller
  */
 class ControllerSettings {
-    public:
-        /**
-         * @brief ControllerSettings constructor
-         *
-         * The constants are stored in a class so that they can be easily passed to the chassis class
-         * Set a constant to 0 and it will be ignored
-         *
-         * @param kP proportional gain
-         * @param kI integral gain
-         * @param kD derivative gain
-         * @param antiWindup integral anti windup range. If error is within this range, integral is set to 0
-         * @param smallError range of error at which the chassis controller will exit if the error is within this range
-         * for an amount of time determined by smallErrorTimeout
-         * @param smallErrorTimeout the time the chassis controller will wait before exiting if error is within a
-         * certain range determined by smallError
-         * @param largeError range of error at which the chassis controller will exit if the error is within this range
-         * for an amount of time determined by largeErrorTimeout
-         * @param largeErrorTimeout the time the chassis controller will wait before exiting if error is within a
-         * certain range determined by largeError
-         * @param slew maximum acceleration
-         *
-         * @b Example
-         * @code {.cpp}
-         * lemlib::ControllerSettings lateralSettings(10, // proportional gain (kP)
-         *                                            0, // integral gain (kI), set to 0 to disable
-         *                                            3, // derivative gain (kD), set to 3
-         *                                            3, // integral anti windup range, set to 0 to disable
-         *                                            1, // small error range, in inches
-         *                                            100, // small error range timeout, in milliseconds
-         *                                            3, // large error range, in inches
-         *                                            500, // large error range timeout, in milliseconds
-         *                                            5); // maximum acceleration (slew)
-         * @endcode
-         */
-        ControllerSettings(float kP, float kI, float kD, float windupRange, float smallError, float smallErrorTimeout,
-                           float largeError, float largeErrorTimeout, float slew)
-            : kP(kP),
-              kI(kI),
-              kD(kD),
-              windupRange(windupRange),
-              smallError(smallError),
-              smallErrorTimeout(smallErrorTimeout),
-              largeError(largeError),
-              largeErrorTimeout(largeErrorTimeout),
-              slew(slew) {}
+public:
+    // Constructor (unchanged)
+    ControllerSettings(float kP, float kI, float kD, float windupRange, float smallError, float smallErrorTimeout,
+                       float largeError, float largeErrorTimeout, float slew)
+        : kP(kP),
+          kI(kI),
+          kD(kD),
+          windupRange(windupRange),
+          smallError(smallError),
+          smallErrorTimeout(smallErrorTimeout),
+          largeError(largeError),
+          largeErrorTimeout(largeErrorTimeout),
+          slew(slew) {}
 
-        float kP;
-        float kI;
-        float kD;
-        float windupRange;
-        float smallError;
-        float smallErrorTimeout;
-        float largeError;
-        float largeErrorTimeout;
-        float slew;
+    // Getter functions
+    float getKP() const { return kP; }
+    float getKI() const { return kI; }
+    float getKD() const { return kD; }
+    float getWindupRange() const { return windupRange; }
+    float getSmallError() const { return smallError; }
+    float getSmallErrorTimeout() const { return smallErrorTimeout; }
+    float getLargeError() const { return largeError; }
+    float getLargeErrorTimeout() const { return largeErrorTimeout; }
+    float getSlew() const { return slew; }
+
+    // Setter functions
+    void setKP(float val) { kP = val; }
+    void setKI(float val) { kI = val; }
+    void setKD(float val) { kD = val; }
+    void setWindupRange(float val) { windupRange = val; }
+    void setSmallError(float val) { smallError = val; }
+    void setSmallErrorTimeout(float val) { smallErrorTimeout = val; }
+    void setLargeError(float val) { largeError = val; }
+    void setLargeErrorTimeout(float val) { largeErrorTimeout = val; }
+    void setSlew(float val) { slew = val; }
+
+private:
+    float kP;
+    float kI;
+    float kD;
+    float windupRange;
+    float smallError;
+    float smallErrorTimeout;
+    float largeError;
+    float largeErrorTimeout;
+    float slew;
 };
 
 /**

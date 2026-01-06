@@ -2,7 +2,6 @@
 #include "intake.h"
 #include "pros/distance.hpp"
 #include "pros/motors.hpp"
-#include "autonselector.h"
 #include "main.h"
 #include "pros/adi.hpp"
 #include "pros/misc.h"
