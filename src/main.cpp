@@ -25,7 +25,7 @@ pros::MotorGroup
                pros::MotorGearset::blue); // left motor group - ports 3
                                           // (reversed), 4, 5 (reversed)
 pros::MotorGroup rightMotors(
-    {10, 9, 20},
+    {19, 9, 20},
     pros::MotorGearset::blue); // right motor group - ports 6, 7, 9 (reversed)
 
 lemlib::Drivetrain drivetrain(&leftMotors,  // left motor group
@@ -62,7 +62,7 @@ lemlib::ControllerSettings
     );
 
 lemlib::ControllerSettings
-    angular(0, // proportional gain (kP)
+    angular(0.7, // proportional gain (kP)
             0,    // integral gain (kI)
             0,    // derivative gain (kD)
             3,    // anti windup
@@ -82,10 +82,12 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
 // Scraper
 pros::adi::DigitalOut scraper('E', false);
 pros::adi::DigitalOut descore('F', false);
+pros::adi::DigitalOut wing('c', false);
 
 
 // wing
 bool removerActivated = false;
+bool wingActivated = false;
 bool hoodActivated = false;
 bool scraperActivated = false;
 
@@ -119,7 +121,7 @@ void initialize() {
   rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   opticalSensor.set_led_pwm(100);
 
-  pros::delay(4000);
+  pros::delay(2500);
   //autonSelectorStart();
   pros::Task screenTask(screen);
 }
@@ -147,38 +149,47 @@ void autonomous() {
 }
 
 void opcontrol() {
-  turnToHeading(180, 1000, 127);
+  //chassis.turnToHeading(130, 2000);
+  //turnToHeading(180, 1000, 127);
 
-  // while (true) {
-  //   int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-  //   int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+  while (true) {
+    int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-  //   chassis.arcade(leftY, rightX);
+    chassis.arcade(leftY, rightX);
 
-  //   bool removerPressedNow =
-  //       controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+    bool wingPressed = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+    
+    if (wingPressed) {
+      // Toggle remover
+      wingPressed = !wingPressed;
+      wing.set_value(wingPressed);
+    }
 
-  //   if (removerPressedNow && !removerPressedLast) {
-  //     // Toggle remover
-  //     removerActivated = !removerActivated;
-  //     descore.set_value(removerActivated);
-  //   }
+    bool removerPressedNow =
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
-  //   removerPressedLast = removerPressedNow;
+    if (removerPressedNow && !removerPressedLast) {
+      // Toggle remover
+      removerActivated = !removerActivated;
+      descore.set_value(removerActivated);
+    }
 
-  //   bool scraperPressedNow =
-  //       controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+    removerPressedLast = removerPressedNow;
 
-  //   if (scraperPressedNow && !scraperPressedLast) {
-  //     // Toggle hood
-  //     scraperActivated = !scraperActivated;
-  //     scraper.set_value(scraperActivated);
-  //   }
+    bool scraperPressedNow =
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
 
-  //   scraperPressedLast = scraperPressedNow;
+    if (scraperPressedNow && !scraperPressedLast) {
+      // Toggle hood
+      scraperActivated = !scraperActivated;
+      scraper.set_value(scraperActivated);
+    }
 
-  //   updateIntake();
+    scraperPressedLast = scraperPressedNow;
 
-  //   pros::delay(20);
-  // }
+    updateIntake();
+
+    pros::delay(20);
+  }
 }
