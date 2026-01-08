@@ -1,4 +1,5 @@
 #include "autonSelector.h"
+#include "autons.h"
 #include "intake.h"
 #include "pros/motors.hpp"
 #include "autonselector.h"
@@ -6,6 +7,7 @@
 #include "pros/adi.hpp"
 #include "pros/misc.h"
 #include "lemlib/api.hpp"
+#include <source_location>
 
 // void skills() {
 //     chassis.moveToPoint(0,15,1000);
@@ -104,6 +106,11 @@ void bottomControl(){
     chassis.moveToPoint(9.7, 49.4, 700);
 
 
+
+}
+
+
+void soloAWP(){
 
 }
 

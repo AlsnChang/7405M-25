@@ -11,3 +11,4 @@ void fastTopGoals();
 void pidTest();
 void bottomControl();
 void middleTimeOptical();
+void soloAWP();

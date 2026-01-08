@@ -63,14 +63,14 @@ lemlib::ControllerSettings
     );
 
 lemlib::ControllerSettings
-    angular(0.7,  // proportional gain (kP)
+    angular(3.075,  // proportional gain (kP)
             0,    // integral gain (kI)
-            0,    // derivative gain (kD)
+            14,    // derivative gain (kD)
             3,    // anti windup
-            1,    // small error range, in degrees
-            1000, // small error range timeout, in milliseconds
-            2,    // large error range, in degrees
-            2000, // large error range timeout, in milliseconds
+            .5,    // small error range, in degrees
+            500, // small error range timeout, in milliseconds
+            1,    // large error range, in degrees
+            800, // large error range timeout, in milliseconds
             0     // maximum acceleration (slew)
     );
 lemlib::ExpoDriveCurve throttle(3, 10, 1.019);
@@ -140,10 +140,11 @@ void competition_initialize() {}
 void autonomous() {
 
   // GOOOD AUTON FOR THE RIGHT SIDE
-  fastBottomGoals();
+  // fastBottomGoals();
   // chassis.moveToPoint(0, 3, 1000);
   // OKAY AUTON FOR THE LEFT SIDE
   // fastTopGoals();
+  chassis.turnToHeading(45, 10000);
 
   // 7 BALLS AUTON BOTTOM GOAL
   // bottomControl();
@@ -158,10 +159,13 @@ void opcontrol() {
     int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
     chassis.arcade(leftY, rightX);
+    
 
+    // bool removerPressedNow =controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A);
+    // wing.set_value(removerPressedNow);
 
     bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 
     if (removerPressedNow && !removerPressedLast) {
       // Toggle remover
