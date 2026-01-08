@@ -4,12 +4,12 @@
 #include "intake.h"
 #include "lemlib/api.hpp"
 #include "lemlib/chassis/chassis.hpp"
+#include "pid.h"
 #include "pros/adi.hpp"
 #include "pros/distance.hpp"
 #include "pros/misc.h"
 #include "pros/motors.hpp"
 #include "pros/optical.hpp"
-#include "pid.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -40,7 +40,8 @@ pros::Imu imu(7);
 
 pros::Rotation horizontal_encoder(16); // odom sensor
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder,
-                                                lemlib::Omniwheel::NEW_2, -1.875);
+                                                lemlib::Omniwheel::NEW_2,
+                                                -1.875);
 
 pros::Rotation vertical_encoder(18); // odom sensor
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder,
@@ -52,17 +53,17 @@ lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr,
 lemlib::ControllerSettings
     lateral(4.23, // proportional gain (kP)
             0,    // integral gain (kI)
-            5,   // derivative gain (kD)
+            5,    // derivative gain (kD)
             0,    // anti windup
             .5,   // small error range, in inches
             100,  // small error range timeout, in milliseconds
-            .7,    // large error range, in inches
+            .7,   // large error range, in inches
             2000, // large error range timeout, in milliseconds
             20    // maximum acceleration (slew)
     );
 
 lemlib::ControllerSettings
-    angular(0.7, // proportional gain (kP)
+    angular(0.7,  // proportional gain (kP)
             0,    // integral gain (kI)
             0,    // derivative gain (kD)
             3,    // anti windup
@@ -84,7 +85,6 @@ pros::adi::DigitalOut scraper('E', false);
 pros::adi::DigitalOut descore('F', false);
 pros::adi::DigitalOut wing('c', false);
 
-
 // wing
 bool removerActivated = false;
 bool wingActivated = false;
@@ -95,6 +95,7 @@ bool scraperActivated = false;
 bool removerPressedLast = false;
 bool hoodPressedLast = false;
 bool scraperPressedLast = false;
+bool wingPressedLast = false;
 
 void screen() {
   // loop forever
@@ -122,7 +123,7 @@ void initialize() {
   opticalSensor.set_led_pwm(100);
 
   pros::delay(2500);
-  //autonSelectorStart();
+  // autonSelectorStart();
   pros::Task screenTask(screen);
 }
 
@@ -149,8 +150,8 @@ void autonomous() {
 }
 
 void opcontrol() {
-  //chassis.turnToHeading(130, 2000);
-  //turnToHeading(180, 1000, 127);
+  // chassis.turnToHeading(130, 2000);
+  // turnToHeading(180, 1000, 127);
 
   while (true) {
     int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -158,21 +159,14 @@ void opcontrol() {
 
     chassis.arcade(leftY, rightX);
 
-    bool wingPressed = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
-    
-    if (wingPressed) {
-      // Toggle remover
-      wingPressed = !wingPressed;
-      wing.set_value(wingPressed);
-    }
 
     bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 
     if (removerPressedNow && !removerPressedLast) {
       // Toggle remover
       removerActivated = !removerActivated;
-      descore.set_value(removerActivated);
+      wing.set_value(removerActivated);
     }
 
     removerPressedLast = removerPressedNow;
