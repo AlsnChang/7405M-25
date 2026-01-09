@@ -20,6 +20,7 @@ extern bool intaking;
 extern pros::adi::DigitalOut hood;
 
 extern pros::adi::DigitalOut flappier;
+extern pros::adi::DigitalOut flappy;
 
 extern pros::Optical opticalSensor;
 

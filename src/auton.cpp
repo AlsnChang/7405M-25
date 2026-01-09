@@ -63,7 +63,7 @@ void soloAWPCedar() {
 
     //pros::delay(100000);
     //chassis.turnTo
-    chassis.moveToPoint(-17.66, 36.71, 1000, {.forwards=false}, false);
+    chassis.moveToPoint(-18, 37.2, 1000, {.forwards=false}, false);
 
     scoreTop();
     scraper.set_value(false);
@@ -80,9 +80,10 @@ void soloAWPCedar() {
     //chassis.moveToPoint(-24.0, -36.08, 1200, {.maxSpeed = 60});
     chassis.moveToPoint(-22.06, -38.39, 1500, {.maxSpeed = 60});
     //chassis.turnToHeading(155,750);
-    chassis.turnToPoint(-35.82, -25.31, 750, {.forwards = false}); 
-    chassis.moveToPoint(-35.82, -25.31, 750, {.forwards = false}); 
-
+    chassis.turnToPoint(-32.00, -22.7, 750, {.forwards = false}); 
+    chassis.moveToPoint(-35.82, -22.71, 750, {.forwards = false}, false); 
+    flappy.set_value(true);
+    flappier.set_value(true);
     
 
 }
