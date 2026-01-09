@@ -81,9 +81,10 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
                         &steer);
 
 // Scraper
-pros::adi::DigitalOut scraper('E', false);
+pros::adi::DigitalOut scraper('C', false);
 pros::adi::DigitalOut descore('F', false);
-pros::adi::DigitalOut wing('c', false);
+pros::adi::DigitalOut wing('E', false);
+//pros::adi::DigitalOut flappier('B', false);
 
 // wing
 bool removerActivated = false;
@@ -141,10 +142,11 @@ void autonomous() {
 
   // GOOOD AUTON FOR THE RIGHT SIDE
   // fastBottomGoals();
-  // chassis.moveToPoint(0, 3, 1000);
+  //chassis.moveToPoint(0, 10, 1000);
+  soloAWPCedar();
   // OKAY AUTON FOR THE LEFT SIDE
   // fastTopGoals();
-  chassis.turnToHeading(45, 10000);
+  //chassis.turnToHeading(45, 10000);
 
   // 7 BALLS AUTON BOTTOM GOAL
   // bottomControl();

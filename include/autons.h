@@ -2,6 +2,7 @@
 #include <map>
 #pragma once
 
+void soloAWPCedar();
 void startAuton();
 void topGoal();
 void bottomGoalSide();

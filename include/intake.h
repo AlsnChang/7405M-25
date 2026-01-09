@@ -19,6 +19,8 @@ extern bool intaking;
 
 extern pros::adi::DigitalOut hood;
 
+extern pros::adi::DigitalOut flappier;
+
 extern pros::Optical opticalSensor;
 
 void updateIntake(); 

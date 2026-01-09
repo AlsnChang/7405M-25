@@ -1,6 +1,7 @@
 #include "autonSelector.h"
 #include "autons.h"
 #include "intake.h"
+//#include "intake.cpp"
 #include "pros/motors.hpp"
 #include "autonselector.h"
 #include "main.h"
@@ -9,17 +10,6 @@
 #include "lemlib/api.hpp"
 #include <source_location>
 
-// void skills() {
-//     chassis.moveToPoint(0,15,1000);
-//     chassis.turnToPoint(0,15,90);
-//     chassis.moveToPoint(40,15,3000);
-//     chassis.turnToPoint(40,15,90);
-//     scraper.set_value(true);
-//     storageIn();
-//     chassis.moveToPoint(40, -10, 1000);
-
-
-// }
 
 void middleTimed()
 {
@@ -57,6 +47,44 @@ void move(double power, double turn, bool swing=false, double time=10000) {
     // right_front_motor.move(left);
     // right_center_motor.move(left);
     // right_back_motor.move(left);
+}
+
+void soloAWPCedar() {
+    chassis.moveToPoint(0, 34, 1000);
+    chassis.turnToPoint(10, 37.2, 650);
+    scraper.set_value(true);
+    chassis.moveToPoint(10, 37.2, 700);
+
+    chassis.cancelAllMotions();
+    flappier.set_value(true);
+    storageIn();
+    move(50, 0, false, 1000);
+    
+
+    //pros::delay(100000);
+    //chassis.turnTo
+    chassis.moveToPoint(-17.66, 36.71, 1000, {.forwards=false}, false);
+
+    scoreTop();
+    scraper.set_value(false);
+    pros::delay(1500);
+
+    chassis.moveToPoint(-10, 36.9, 400);
+
+    chassis.turnToHeading(208.4,750);
+    flappier.set_value(true);
+
+    chassis.moveToPoint(-22.62, 11.38, 750, {.maxSpeed = 50});
+
+    chassis.turnToHeading(180, 850);
+    //chassis.moveToPoint(-24.0, -36.08, 1200, {.maxSpeed = 60});
+    chassis.moveToPoint(-22.06, -38.39, 1500, {.maxSpeed = 60});
+    //chassis.turnToHeading(155,750);
+    chassis.turnToPoint(-35.82, -25.31, 750, {.forwards = false}); 
+    chassis.moveToPoint(-35.82, -25.31, 750, {.forwards = false}); 
+
+    
+
 }
 
 void pidTest() {
