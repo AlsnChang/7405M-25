@@ -84,6 +84,7 @@ void soloAWPCedar() {
     chassis.moveToPoint(-35.82, -22.71, 750, {.forwards = false}, false); 
     flappy.set_value(true);
     flappier.set_value(true);
+    chassis.moveToPoint(3.17,-66.7, 1500);
     
 
 }
@@ -196,6 +197,10 @@ void soloAWP(){
 //     // // pros::delay(500);
 //     // scoreTopAuto();
 // }
+
+void skilly() {
+    
+}
 void fastBottomGoals(){
     flingBlue = false;
     descore.set_value(true);
