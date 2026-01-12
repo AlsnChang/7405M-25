@@ -8,51 +8,75 @@
 #include "lemlib/api.hpp"
 #include <sys/_intsup.h>
 
-pros::Distance front(10), back(9), left(8), right(7);
+pros::Distance frontD{2}, backD{8}, leftD{15}, rightD{10};
 
 pros::Distance* getSensor(int val)
 {
-    if (val == 0) return &front;
-    if (val == 1) return &back;
-    if (val == 2) return &left;
-    if (val == 3) return &right;
+    if (val == 0) return &frontD;
+    if (val == 1) return &backD;
+    if (val == 2) return &leftD;
+    if (val == 3) return &rightD;
     return nullptr;
 }
 
-std::array<pros::Distance*, 2> sortDistances()
-{
-    //values of distance sensors (yes there probably is a better way but whateverrrr)
-    std::array<int, 4> compare = {front.get(), back.get(), left.get(), right.get()};
-    std::array<int, 4> distances = {front.get(), back.get(), left.get(), right.get()};
+ 
+std::array<pros::Distance*, 2> sortDistances() {
+    std::array<std::pair<int, pros::Distance*>, 4> sensors = {{
+        {frontD.get(), &frontD},
+        {backD.get(),  &backD},
+        {leftD.get(),  &leftD},
+        {rightD.get(), &rightD}
+    }};
 
-    //sort the values of the distance sensors greatest -> least
-    std::array<pros::Distance*, 2> closest = {nullptr, nullptr};
-    int n = distances.size();
-    std::sort(distances.begin(), distances.begin() + n);
+    std::sort(sensors.begin(), sensors.end(),
+        [](auto& a, auto& b) {
+            return a.first < b.first;
+        });
 
-    //get the distance sensors with the lowest values (yes yes I probably could have done this better too)
-    for (int i = 0; i < n; i++)
-    {
-        int counter = 0;
-        if (compare[i] == distances[3] || compare[i] == distances[2])
-        {
-            closest[counter] = getSensor(i);
-            counter++;
-        }
-    }
-
-    return closest;
+    return {sensors[0].second, sensors[1].second};
 }
 
+
+// std::array<pros::Distance*, 2> sortDistances()
+// {
+//     //values of distance sensors (yes there probably is a better way but whateverrrr)
+//     std::array<int, 4> compare = {frontD.get(), backD.get(), leftD.get(), rightD.get()};
+//     std::array<int, 4> distances = {frontD.get(), backD.get(), leftD.get(), rightD.get()};
+
+//     //sort the values of the distance sensors greatest -> least
+//     std::array<pros::Distance*, 2> closest = {nullptr, nullptr};
+//     int n = distances.size();
+//     std::sort(distances.begin(), distances.begin() + n);
+
+//     //get the distance sensors with the lowest values (yes yes I probably could have done this better too)
+//     for (int i = 0; i < n; i++)
+//     {
+//         int counter = 0;
+//         if (compare[i] == distances[3] || compare[i] == distances[2])
+//         {
+//             closest[counter] = getSensor(i);
+//             counter++;
+//         }
+//     }
+
+//     return closest;
+// }
+
 //expected values in mm
+//1 foot = around 300 mm
 void distanceReset(double front, double side)
 {
     //there's this cool thingamajingie that java should totally have too!! I love auto!
     auto sensors = sortDistances();
     //we're gonna assume that we always put front value first which probably isn't true but oh welll.
     //but like lowkey think about it, it's always gonna be front sensor right cuz we do it in the corners and that's where match loaders are
-    double firstSensor = sensors[0]->get();
+    if (!sensors[0] || !sensors[1]) {
+        return; // safety check
+    }
+
+    double firstSensor  = sensors[0]->get();
     double secondSensor = sensors[1]->get(); //always a side sensor
+
     //if for some reason first sensor isn't front sensor, swap em using unicorn slaves ✨
     if ((std::abs(secondSensor-front)) < std::abs(firstSensor-front)) 
     {

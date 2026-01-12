@@ -3,4 +3,4 @@
 
 #include "pros/distance.hpp"
 
-extern pros::Distance front, back, left, right;
+extern pros::Distance frontD, backD, leftD, rightD;

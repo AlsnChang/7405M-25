@@ -2,6 +2,7 @@
 #include "autons.h"
 #include "autonselector.h"
 #include "intake.h"
+#include "distanceReset.h"
 #include "lemlib/api.hpp"
 #include "lemlib/chassis/chassis.hpp"
 #include "pid.h"
@@ -21,7 +22,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // motor group - ports 6, 7, 9 (reversed)
 
 pros::MotorGroup
-    leftMotors({-5, -3, -11},
+    leftMotors({-5, -4, -11},
                pros::MotorGearset::blue); // left motor group - ports 3
                                           // (reversed), 4, 5 (reversed)
 pros::MotorGroup rightMotors(
@@ -81,7 +82,7 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
                         &steer);
 
 // Scraper
-pros::adi::DigitalOut scraper('C', false);
+pros::adi::DigitalOut scraper('F', false);
 pros::adi::DigitalOut descore('F', false);
 pros::adi::DigitalOut wing('E', false);
 //pros::adi::DigitalOut flappier('B', false);
@@ -108,7 +109,9 @@ void screen() {
     pros::lcd::print(1, "H: %f", pose.theta); // print the x position
     // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta,
     // vertical_rot.get_position());
-    pros::delay(10);
+    pros::lcd::print(2, "right distance sensor: %f", rightD.get());
+    pros::lcd::print(3, "front distance sensor: %f", frontD.get());
+    pros::delay(50);
   }
 }
 
@@ -123,7 +126,7 @@ void initialize() {
   rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   opticalSensor.set_led_pwm(100);
 
-  pros::delay(2500);
+  pros::delay(4000);
   // autonSelectorStart();
   pros::Task screenTask(screen);
 }
@@ -140,15 +143,18 @@ void competition_initialize() {}
 
 void autonomous() {
 
-  // GOOOD AUTON FOR THE RIGHT SIDE
+  //Last Comp =  GOOOD AUTON FOR THE RIGHT SIDE
   // fastBottomGoals();
-  //chassis.moveToPoint(0, 10, 1000);
-  soloAWPCedar();
-  // OKAY AUTON FOR THE LEFT SIDE
-  // fastTopGoals();
-  //chassis.turnToHeading(45, 10000);
+  
+  // // //soloAWPCedar();
+  chassis.moveToPoint(0, 15, 1000);
+  //distanceReset(300, );
 
-  // 7 BALLS AUTON BOTTOM GOAL
+  //Last Comp = OKAY AUTON FOR THE LEFT SIDE
+  // fastTopGoals();
+  
+
+  //Last Comp = 7 BALLS AUTON BOTTOM GOAL
   // bottomControl();
 }
 
