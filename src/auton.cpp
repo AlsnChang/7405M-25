@@ -201,6 +201,35 @@ void soloAWP(){
 void skilly() {
     
 }
+
+void skills() {
+    storageIn();
+    chassis.moveToPoint(-1.11, 28.9, 1000, {.maxSpeed = 50}, false);
+    scraper.set_value(true);
+    chassis.turnToPoint(18, 38.43, 700, {.forwards = false});
+    chassis.moveToPoint(18, 38.43, 800, {.forwards = false}, false);
+
+    flappier.set_value(true);
+    flappy.set_value(true);
+    pros::delay(1500);
+    flappier.set_value(false);
+    flappy.set_value(false);
+    scraper.set_value(false);
+
+    chassis.moveToPoint(-34.1, 15.83, 1200);
+    chassis.turnToHeading(-160.73, 750);
+    scraper.set_value(true);
+    flappier.set_value(true);
+    flappy.set_value(true);
+
+    chassis.moveToPoint(-38.33, 2, 800);
+
+    chassis.cancelAllMotions();
+    move(50, 0, false, 825);
+    
+
+}
+
 void fastBottomGoals(){
     flingBlue = false;
     descore.set_value(true);

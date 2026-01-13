@@ -5,6 +5,7 @@
 void soloAWPCedar();
 void startAuton();
 void topGoal();
+void skills();
 void bottomGoalSide();
 void bottomGoalSideWPI();
 void fastBottomGoals();

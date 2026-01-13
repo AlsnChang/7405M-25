@@ -5,7 +5,7 @@
 
 
 pros::Motor intake (1); //top & middle
-pros::Motor intake2 (-6); //self explanatory 
+pros::Motor intake2 (-12); //self explanatory 
 
 pros::adi::DigitalOut flappy ('A', false);
 pros::adi::DigitalOut flappier ('B', false);

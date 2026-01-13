@@ -147,7 +147,7 @@ void autonomous() {
   // fastBottomGoals();
   
   // // //soloAWPCedar();
-  chassis.moveToPoint(0, 15, 1000);
+  skills();
   //distanceReset(300, );
 
   //Last Comp = OKAY AUTON FOR THE LEFT SIDE
@@ -161,6 +161,8 @@ void autonomous() {
 void opcontrol() {
   // chassis.turnToHeading(130, 2000);
   // turnToHeading(180, 1000, 127);
+  //chassis.moveToPoint(0, 20, 750);
+  //skills();
 
   while (true) {
     int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -173,7 +175,7 @@ void opcontrol() {
     // wing.set_value(removerPressedNow);
 
     bool removerPressedNow =
-        controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
 
     if (removerPressedNow && !removerPressedLast) {
       // Toggle remover
