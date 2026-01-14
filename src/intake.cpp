@@ -32,7 +32,6 @@ void updateIntake()
     }
     else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
     {
-        colorSort();
         //Score in long goal
         scoreTop();
        
