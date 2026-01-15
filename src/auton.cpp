@@ -248,7 +248,7 @@ void skills() {
 
     // chassis.moveToPoint(-36.5, 79.5, 1000, {.forwards = false}, false);
     // move(-30,0,false,300);
-    chassis.setPose(0, 0, imu.get_heading());
+    chassis.setPose(0, 0, 0);
     scoreTop();
     pros::delay(2000);
 
@@ -270,23 +270,24 @@ void skills() {
     //go to 3rd match loader
     chassis.moveToPoint(0, 16, 1000);
     scraper.set_value(false);
-    chassis.turnToPoint(102, 15, 750);
+    chassis.turnToPoint(103.25, 15, 750);
     //loooong
-    chassis.moveToPoint(102, 15, 2700, {.maxSpeed = 90}, false);
+    chassis.moveToPoint(103.25, 15, 2700, {.maxSpeed = 90}, false);
 
     //unload match loader 3
-    chassis.turnToPoint(102.25, 32.44, 700);
+    chassis.turnToPoint(103.25, 29.92, 700);
     scraper.set_value(true);
-    // chassis.moveToPoint(102.25, 32.44, 1000, {}, false);
+    storageIn();
+    chassis.moveToPoint(103.25, 29.92, 1000, {}, false);
 
-    // pros::delay(250);
-    // chassis.cancelAllMotions();
-    // move(70,0,false, 1250);
-    // pros::delay(250);
+    pros::delay(250);
+    chassis.cancelAllMotions();
+    move(70,0,false, 1250);
+    pros::delay(250);
 
-    // stopIntake();
-    // chassis.moveToPoint(102.25, 20, 1000, {.forwards = false});
-    // scraper.set_value(false);
+    stopIntake();
+    chassis.moveToPoint(103.25, 20, 1000, {.forwards = false});
+    scraper.set_value(false);
 }
 
 void skillsBad() {

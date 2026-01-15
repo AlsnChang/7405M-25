@@ -1,8 +1,8 @@
 #include "main.h"
 #include "autons.h"
 #include "autonselector.h"
-#include "intake.h"
 #include "distanceReset.h"
+#include "intake.h"
 #include "lemlib/api.hpp"
 #include "lemlib/chassis/chassis.hpp"
 #include "pid.h"
@@ -64,15 +64,15 @@ lemlib::ControllerSettings
     );
 
 lemlib::ControllerSettings
-    angular(3.075,  // proportional gain (kP)
-            0,    // integral gain (kI)
+    angular(3.075, // proportional gain (kP)
+            0,     // integral gain (kI)
             14,    // derivative gain (kD)
-            3,    // anti windup
+            3,     // anti windup
             .5,    // small error range, in degrees
-            500, // small error range timeout, in milliseconds
-            1,    // large error range, in degrees
-            800, // large error range timeout, in milliseconds
-            0     // maximum acceleration (slew)
+            500,   // small error range timeout, in milliseconds
+            1,     // large error range, in degrees
+            800,   // large error range timeout, in milliseconds
+            0      // maximum acceleration (slew)
     );
 lemlib::ExpoDriveCurve throttle(3, 10, 1.019);
 lemlib::ExpoDriveCurve steer(3, 10, 1.019);
@@ -85,7 +85,7 @@ lemlib::Chassis chassis(drivetrain, lateral, angular, sensors, &throttle,
 pros::adi::DigitalOut scraper('F', false);
 pros::adi::DigitalOut descore('F', false);
 pros::adi::DigitalOut wing('E', false);
-//pros::adi::DigitalOut flappier('B', false);
+// pros::adi::DigitalOut flappier('B', false);
 
 // wing
 bool removerActivated = false;
@@ -143,35 +143,34 @@ void competition_initialize() {}
 
 void autonomous() {
 
-  //Last Comp =  GOOOD AUTON FOR THE RIGHT SIDE
-  // fastBottomGoals();
-  
+  // Last Comp =  GOOOD AUTON FOR THE RIGHT SIDE
+  //  fastBottomGoals();
+
   // // //soloAWPCedar();
   skills();
-  //distanceReset(300, );
+  // distanceReset(300, );
 
-  //Last Comp = OKAY AUTON FOR THE LEFT SIDE
-  // fastTopGoals();
-  
+  // Last Comp = OKAY AUTON FOR THE LEFT SIDE
+  //  fastTopGoals();
 
-  //Last Comp = 7 BALLS AUTON BOTTOM GOAL
-  // bottomControl();
+  // Last Comp = 7 BALLS AUTON BOTTOM GOAL
+  //  bottomControl();
 }
 
 void opcontrol() {
   // chassis.turnToHeading(130, 2000);
   // turnToHeading(180, 1000, 127);
-  //chassis.moveToPoint(0, 20, 750);
-  //skills();
+  // chassis.moveToPoint(0, 20, 750);
+  // skills();
 
   while (true) {
     int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
     int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
     chassis.arcade(leftY, rightX);
-    
 
-    // bool removerPressedNow =controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A);
+    // bool removerPressedNow
+    // =controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A);
     // wing.set_value(removerPressedNow);
 
     bool removerPressedNow =
