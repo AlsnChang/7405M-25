@@ -202,52 +202,52 @@ void soloAWP(){
 // }
 
 void skills() {
-    // leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    // rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    // chassis.setPose(0,0,-19.67);
-    // storageIn();
-    // chassis.moveToPoint(-9.28, 29.41, 1000);
-    // chassis.turnToPoint(7.38, 44.30, 700, {.forwards = false});
-    // chassis.moveToPoint(7.38, 44.3, 1000, {.forwards = false}, false);
+    leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    chassis.setPose(0,0,-19.67);
+    storageIn();
+    chassis.moveToPoint(-9.28, 29.41, 1000);
+    chassis.turnToPoint(7.38, 44.30, 700, {.forwards = false});
+    chassis.moveToPoint(7.38, 44.3, 1000, {.forwards = false}, false);
 
-    // //score middle goal
-    // scoreMiddle();
-    // pros::delay(1500);
-    // stopIntake();
-    // flappier.set_value(false);
-    // flappy.set_value(false);
+    //score middle goal
+    scoreMiddle();
+    pros::delay(1500);
+    stopIntake();
+    flappier.set_value(false);
+    flappy.set_value(false);
 
-    // //go to match loader
-    // chassis.turnToHeading(-135, 700);
-    // chassis.moveToPoint(-36.5, 3.7, 2000, {.maxSpeed=60});
-    // chassis.turnToHeading(-177, 700, {}, false);
-    // scraper.set_value(true);
-    // storageIn();
-    // chassis.moveToPoint(-38.2, -4.5, 1000);
+    //go to match loader
+    chassis.turnToHeading(-135, 700);
+    chassis.moveToPoint(-36.5, 3.7, 2000, {.maxSpeed=60});
+    chassis.turnToHeading(-177, 700, {}, false);
+    scraper.set_value(true);
+    storageIn();
+    chassis.moveToPoint(-38.2, -4.5, 1000);
 
-    // // //empty match loader 1
-    // chassis.cancelAllMotions();
-    // move(50, 0, false, 825);
-    // pros::delay(700);
-    // chassis.moveToPoint(-38.15, 3.2, 1000, {.forwards = false}, false);
-    // scraper.set_value(false);
-    // chassis.turnToHeading((-205), 750);
-    // pros::delay(50);
-    // stopIntake();
-    // pros::delay(50);
-    // chassis.moveToPoint(-51.4, 30.5, 1000, {.forwards = false, .maxSpeed = 80});
+    // //empty match loader 1
+    chassis.cancelAllMotions();
+    move(50, 0, false, 1250);
+    pros::delay(700);
+    chassis.moveToPoint(-38.15, 3.2, 1000, {.forwards = false}, false);
+    scraper.set_value(false);
+    chassis.turnToHeading((-205), 750);
+    pros::delay(50);
+    stopIntake();
+    pros::delay(50);
+    chassis.moveToPoint(-51.4, 30.5, 1000, {.forwards = false, .maxSpeed = 80});
     
-    // //go to other side
-    // chassis.turnToPoint(-48, 87, 750, {.forwards = false});
-    // chassis.moveToPoint(-48, 92, 2000, {.forwards = false, .maxSpeed = 80}, false);
+    //go to other side
+    chassis.turnToPoint(-48, 87, 750, {.forwards = false});
+    chassis.moveToPoint(-48, 92, 2000, {.forwards = false, .maxSpeed = 80}, false);
 
-    // // //score in long goal 1st time
-    // chassis.turnToHeading(-90, 700);
-    // chassis.moveToPoint(-34.8, 89.5, 1000, {.forwards = false});
-    // chassis.turnToHeading(0, 700);
+    // //score in long goal 1st time
+    chassis.turnToHeading(-90, 700);
+    chassis.moveToPoint(-34.8, 89.5, 1000, {.forwards = false});
+    chassis.turnToHeading(0, 700);
 
-    // chassis.moveToPoint(-36.5, 79.5, 1000, {.forwards = false}, false);
-    // move(-30,0,false,300);
+    chassis.moveToPoint(-36.5, 79.5, 1000, {.forwards = false}, false);
+    move(-50,0,false,900);
     chassis.setPose(0, 0, 0);
     scoreTop();
     pros::delay(2000);
@@ -270,24 +270,24 @@ void skills() {
     //go to 3rd match loader
     chassis.moveToPoint(0, 16, 1000);
     scraper.set_value(false);
-    chassis.turnToPoint(103.25, 15, 750);
-    //loooong
-    chassis.moveToPoint(103.25, 15, 2700, {.maxSpeed = 90}, false);
+    // chassis.turnToPoint(103.25, 15, 750);
+    // //loooong
+    // chassis.moveToPoint(103.25, 15, 2700, {.maxSpeed = 90}, false);
 
-    //unload match loader 3
-    chassis.turnToPoint(103.25, 29.92, 700);
-    scraper.set_value(true);
-    storageIn();
-    chassis.moveToPoint(103.25, 29.92, 1000, {}, false);
+    // //unload match loader 3
+    // chassis.turnToPoint(103.25, 29.92, 700);
+    // scraper.set_value(true);
+    // storageIn();
+    // chassis.moveToPoint(103.25, 29.92, 1000, {}, false);
 
-    pros::delay(250);
-    chassis.cancelAllMotions();
-    move(70,0,false, 1250);
-    pros::delay(250);
+    // pros::delay(250);
+    // chassis.cancelAllMotions();
+    // move(70,0,false, 1250);
+    // pros::delay(250);
 
-    stopIntake();
-    chassis.moveToPoint(103.25, 20, 1000, {.forwards = false});
-    scraper.set_value(false);
+    // stopIntake();
+    // chassis.moveToPoint(103.25, 20, 1000, {.forwards = false});
+    // scraper.set_value(false);
 }
 
 void skillsBad() {
