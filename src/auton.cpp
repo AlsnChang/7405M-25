@@ -9,6 +9,7 @@
 #include "pros/adi.hpp"
 #include "pros/misc.h"
 #include "lemlib/api.hpp"
+#include <cstdio>
 #include <source_location>
 
 
@@ -202,6 +203,7 @@ void soloAWP(){
 // }
 
 void skills() {
+
     leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     chassis.setPose(0,0,-19.67);
@@ -218,55 +220,75 @@ void skills() {
     flappy.set_value(false);
 
     //go to match loader
-    chassis.turnToHeading(-135, 700);    
+    chassis.turnToHeading(-135, 700);  
+    chassis.turnToPoint(-35.5, 4.09,750);  
     // scoreTop();
-    chassis.moveToPoint(-36.5, 3.7, 2000, {.maxSpeed=90});
-    chassis.turnToHeading(-177, 700, {}, false);
+    chassis.moveToPoint(-35.5, 4.09, 2000, {.maxSpeed=90});
+    chassis.turnToHeading(-179, 700, {}, false);
     scraper.set_value(true);
     storageIn();
     pros::delay(500);
-    chassis.moveToPoint(-38.2, -4.5, 1000);
+    chassis.moveToPoint(-36.6, -1.7, 1000);
 
-    // //empty match loader 1
+    // // //empty match loader 1
     chassis.cancelAllMotions();
     move(50, 0, false, 1250);
     pros::delay(700);
-    chassis.moveToPoint(-38.15, 3.2, 1000, {.forwards = false}, false);
+    chassis.moveToPoint(-36.2,0.6, 1000, {.forwards = false}, false);
     scraper.set_value(false);
-    chassis.turnToHeading((-205), 750);
-    pros::delay(50);
+
+    chassis.turnToPoint(-24.49, 9.9, 750, {.forwards = false}, false);
+
     stopIntake();
-    pros::delay(50);
-    chassis.moveToPoint(-51.4, 30.5, 1000, {.forwards = false, .maxSpeed = 80});
+    chassis.moveToPoint(-24.49, 9.9, 1000, {.forwards = false, .maxSpeed = 80});
+
+
+
+
+    // // //go to other side
+    // chassis.turnToPoint(-24.2, 97.5, 750, {.forwards = true});
+    // chassis.moveToPoint(-24.2, 97.5, 2500, {.forwards = true, .maxSpeed = 90}, false);
+    chassis.turnToPoint(-21.5, 98, 750, {.forwards = true});
+    chassis.moveToPoint(-21.5, 98, 2500, {.forwards = true, .maxSpeed = 90}, false);
+
+
+
+
+
+    // // // //score in long goal 1st time
+    // // chassis.turnToHeading(-90, 700);
+    chassis.turnToPoint(-35, 100, 700, {.forwards = false});
+
+
+    chassis.moveToPoint(-35, 100, 1000, {.forwards = false});
+
     
-    //go to other side
-    chassis.turnToPoint(-45.73, 96.59, 750, {.forwards = false});
-    chassis.moveToPoint(-45.73, 96.59, 2500, {.forwards = false, .maxSpeed = 90}, false);
-
-    // //score in long goal 1st time
-    chassis.turnToHeading(-90, 700);
-    // chassis.turnToPoint(-34.8, 89.5, 700, {.forwards = false});
-    chassis.moveToPoint(-33.16, 94.6, 1000, {.forwards = false});
-    chassis.turnToHeading(0, 700);
-
-    chassis.moveToPoint(-33.37, 82.66, 1000, {.forwards = false}, false);
+    // //score top goal
+    chassis.turnToPoint(-34, 73.25, 700, {.forwards = false});
+    chassis.moveToPoint(-34, 73.25, 1000, {.forwards = false, .maxSpeed = 70}, false);
     move(-70,0,false,200);
-    chassis.turnToHeading(0, 750, {},false);
-    // chassis.setPose(0, 0, imu.get_heading());
+    // chassis.turnToHeading(0, 750, {},false);
     scoreTop();
-    pros::delay(2000);
+    pros::delay(3000);
 
     //unload match loader 2
     scraper.set_value(true);
     storageIn();
-    chassis.moveToPoint(-31.97, 108.67, 1000, {}, false);
+    // chassis.moveToPoint(-32.57, 89, 1000);
+    // chassis.turnToPoint(-32.21, 109.05, 700);
+
+    chassis.moveToPoint(-34, 111, 1000, {}, false);
+    chassis.turnToHeading(0, 750);
+
+
     pros::delay(250);
     chassis.cancelAllMotions();
     move(50,0,false, 1250);
     pros::delay(250);
 
-    // // //score in long goal again
-    chassis.moveToPoint(-33.37, 82.66, 1000, {.forwards = false, .maxSpeed = 100}, false);
+    // // // // // //score in long goal again
+    chassis.turnToPoint(-34, 73.25, 750, {.forwards = false});
+    chassis.moveToPoint(-34, 73.25, 1000, {.forwards = false, .maxSpeed = 70}, false);
     stopIntake();     
     move(-50,0,false,200);
     scoreTop();
@@ -278,15 +300,29 @@ void skills() {
 
 
 
+
+
+
+
+
+
+
+
+
     // // //go to 3rd match loader
-    // chassis.moveToPoint(-34.5, 96.65, 1000);
-    // scraper.set_value(false);
+    chassis.moveToPoint(-34.2, 98.5, 1000);
+    scraper.set_value(false);
 
     // chassis.turnToHeading(90, 750);
 
-    // chassis.turnToPoint(63.2, 97.2, 750);
-    // //loooong
+    chassis.turnToPoint(63.2, 97.2, 750);
+    //loooong
     // chassis.moveToPoint(63.2, 97.2, 2700, {.maxSpeed = 90}, false);
+
+
+
+
+
 
     // chassis.turnToHeading(0.83,750);
     // scraper.set_value(true);
