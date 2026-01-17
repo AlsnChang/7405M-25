@@ -11,6 +11,7 @@
 #include "pros/misc.h"
 #include "pros/motors.hpp"
 #include "pros/optical.hpp"
+#include <cstddef>
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -50,6 +51,9 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder,
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr,
                             &horizontal_tracking_wheel, nullptr, &imu);
+
+// lemlib::OdomSensors sensors(nullptr, nullptr,
+//                             &horizontal_tracking_wheel, nullptr, &imu);
 
 lemlib::ControllerSettings
     lateral(4.23, // proportional gain (kP)

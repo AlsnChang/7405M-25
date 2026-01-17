@@ -120,4 +120,5 @@ extern pros::adi::DigitalOut descore;
 
 //Scraper
 extern pros::adi::DigitalOut scraper;
+extern pros::adi::DigitalOut wing;
 extern bool hoodActivated;
