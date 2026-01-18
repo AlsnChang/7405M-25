@@ -15,3 +15,5 @@ void bottomControl();
 void middleTimeOptical();
 void soloAWP();
 void skillsfixed();
+void leftSide3Plus4();
+void lowGoal();

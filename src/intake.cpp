@@ -76,7 +76,16 @@ void bottomGoal()
 }
 void fastBottomScore()
 {
-    //huh
+    intake.move(-110);
+    intake2.move(-110);
+}
+
+void weirdBottom()
+{   
+    flappy.set_value(false);
+    flappier.set_value(true);
+    intake.move(-127);
+    intake2.move(-127);
 }
 
 void stopIntake() {

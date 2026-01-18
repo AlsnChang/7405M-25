@@ -9,6 +9,7 @@
 #include "pros/adi.hpp"
 #include "pros/distance.hpp"
 #include "pros/misc.h"
+#include "pros/motors.h"
 #include "pros/motors.hpp"
 #include "pros/optical.hpp"
 #include <cstddef>
@@ -130,7 +131,10 @@ void initialize() {
   rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   opticalSensor.set_led_pwm(100);
 
-  pros::delay(4000);
+  // pros::delay(4000);
+  pros::delay(1000);
+
+
   // autonSelectorStart();
   pros::Task screenTask(screen);
 }
@@ -146,22 +150,31 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
+  leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  // Skills 
+  // skills();
 
-  // Last Comp =  GOOOD AUTON FOR THE RIGHT SIDE
-  //  fastBottomGoals();
 
-  // // //soloAWPCedar();
+  // Right side Low goal
+  // lowGoal();
+
+
+  // Solo AWP
+  // soloAWPCedar();
   skills();
-  // distanceReset(300, );
 
-  // Last Comp = OKAY AUTON FOR THE LEFT SIDE
-  //  fastTopGoals();
 
-  // Last Comp = 7 BALLS AUTON BOTTOM GOAL
-  //  bottomControl();
+  // Left side 3 + 4 
+  // leftSide3Plus4();
+
+
+
 }
 
 void opcontrol() {
+  leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   // chassis.turnToHeading(130, 2000);
   // turnToHeading(180, 1000, 127);
   // chassis.moveToPoint(0, 20, 750);
