@@ -70,17 +70,17 @@ void lowGoal(){
     scraper.set_value(true);
     // chassis.moveToPoint(4.9, 39, 700, {},false);
     chassis.moveToPoint(6.5, 39, 700, {},false);
-    move(50, 0, false, 800);
+    move(63, 0, false, 700);
     
 
 
     // chassis.moveToPoint(-20.22, 38.5, 1000, {.forwards=false}, false);
     // chassis.moveToPoint(-20.22, 40, 1000, {.forwards=false}, false);
-    chassis.moveToPoint(-20.22, 41, 1000, {.forwards=false}, false);
+    chassis.moveToPoint(-20.22, 39.7, 1000, {.forwards=false}, false);
     scraper.set_value(false);
     move(-50,0,false,250);
     scoreTop();
-    pros::delay(1500);
+    pros::delay(1050);
     chassis.moveToPoint(2, 39.1, 1000);
 
     chassis.turnToPoint(-31.31, 1.62, 750,{}, false);
@@ -111,14 +111,14 @@ void lowGoal(){
 }
 
 void soloAWPCedar() {
-     leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     storageIn();
     chassis.moveToPoint(0, 36, 1000);
     // chassis.turnToPoint(10, 37.2, 650);
     // chassis.turnToHeading(90, 750, {}, false);
     // chassis.turnToPoint(4.9, 38, 700);
-    chassis.turnToPoint(6.5, 39, 600,{},false);
+    chassis.turnToPoint(6.5, 39, 500,{},false);
 
 
 
@@ -132,12 +132,12 @@ void soloAWPCedar() {
 
     // chassis.moveToPoint(-20.22, 38.5, 1000, {.forwards=false}, false);
     // chassis.moveToPoint(-20.22, 40, 1000, {.forwards=false}, false);
-    chassis.moveToPoint(-20.22, 40.3, 1000, {.forwards=false}, false);
+    chassis.moveToPoint(-20.22, 39.7, 1000, {.forwards=false}, false);
     scoreTop();
     scraper.set_value(false);
     move(-50,0,false,250);
     pros::delay(1050);
-    chassis.moveToPoint(2, 39.1, 1000);
+    chassis.moveToPoint(2, 39.1, 700);
 
     chassis.turnToPoint(-23.6, 9.5,750,{}, false);
     storageIn();
@@ -146,16 +146,16 @@ void soloAWPCedar() {
     scraper.set_value(true);
     pros::delay(200);
     scraper.set_value(false);
-    chassis.turnToPoint(-23.17, -39.25, 600);
+    chassis.turnToPoint(-23.17, -39.25, 450);
     chassis.moveToPoint(-23.17, -39.25, 1500);
-    pros::delay(800);
+    pros::delay(750);
     scraper.set_value(true);
     pros::delay(200);
     scraper.set_value(false);
 
-    chassis.turnToPoint(-38.07, -25.38, 700,{.forwards = false});
+    chassis.turnToPoint(-38.07, -25.38, 550,{.forwards = false});
     chassis.moveToPoint(-38.07, -25.38, 1000, {.forwards =false},false);
-    bottomGoal();
+    // bottomGoal();
     move(-50,0,false,200);
     scoreMiddle();
     pros::delay(350);
@@ -178,7 +178,8 @@ void soloAWPCedar() {
 
 
     chassis.turnToPoint(-14.4, -63.6,600, {.forwards = false});
-    chassis.moveToPoint(-14.4, -63.6,1000, {.forwards = false},false);
+    chassis.moveToPoint(-14.4, -63.6,1000, {.forwards = false});
+    pros::delay(1000);
     scraper.set_value(false);
     scoreTop();
     move(-50,0,false,250);
@@ -209,22 +210,25 @@ void leftSide3Plus4(){
 
     //score middle goal
     scoreMiddle();
-    pros::delay(1500);
+    pros::delay(500);
+    // fastBottomScore();
+    // pros::delay(150);
+    stopIntake();
     flappier.set_value(false);
     flappy.set_value(false);
 
-    chassis.turnToHeading(-135, 700);
-    chassis.moveToPoint(-36.5, 3.7, 2000, {});
-    chassis.turnToHeading(-177, 700, {}, false);
-    scraper.set_value(true);
-    pros::delay(750);
+    chassis.turnToHeading(-135, 300);
+    chassis.moveToPoint(-36.5, 3.7, 1300, {});
     storageIn();
+    chassis.turnToHeading(-177, 500, {}, false);
+    scraper.set_value(true);
+    pros::delay(175);
     chassis.moveToPoint(-38.2, -4.5, 1000);
 
     // //empty match loader 1
     chassis.cancelAllMotions();
-    move(50, 0, false, 1250);
-    pros::delay(500);
+    move(55, 0, false, 900);
+    pros::delay(100);
 
 
 
@@ -232,19 +236,21 @@ void leftSide3Plus4(){
     // // go back to goal 
     chassis.moveToPoint(-37.49, 23.99, 1000, {.forwards = false}, false);
     scraper.set_value(false);
-    move(-50,0,false,250);
     scoreTop();
-    pros::delay(1000);
+    move(-50,0,false,250);
+    pros::delay(1150);
 
-    // // scoreMiddle();
+    // move(50,0,false,350);
+    // pros::delay(300);
+    // move(-70,0,false,200);
+
     
-    chassis.moveToPoint(-37, 9.62, 1000, {},false);
-    // bottomGoal();
-    chassis.turnToPoint(-24.7, 21.02, 750, {.forwards = false});
-    chassis.moveToPoint(-24.7, 21.02, 1000, {.forwards = false});
-    chassis.turnToPoint(-25.3, 43.39, 750, {.forwards = false});
-    chassis.moveToPoint(-25.3, 43.39, 1000, {.forwards = false});
-    chassis.turnToHeading(-180, 0);
+    chassis.moveToPoint(-37, 9.62, 600, {},false);
+    chassis.turnToPoint(-24.7, 21.02, 500, {.forwards = false});
+    chassis.moveToPoint(-24.7, 21.02, 600, {.forwards = false});
+    chassis.turnToPoint(-26, 43.39, 500, {.forwards = false});
+    chassis.moveToPoint(-26, 43.39, 700, {.forwards = false});
+    chassis.turnToHeading(-180, 200);
 
 
 
@@ -329,7 +335,7 @@ void skills() {
     chassis.moveToPoint(-36.5, 3.7, 1500, {});
     chassis.turnToHeading(-177, 700, {}, false);
     scraper.set_value(true);
-    pros::delay(750);
+    pros::delay(450);
     storageIn();
     chassis.moveToPoint(-38.2, -4.5, 1000);
 
@@ -359,8 +365,8 @@ void skills() {
     chassis.moveToPoint(-51.5,15.1, 1000, {.forwards = false});
     
     // go to other side 
-    chassis.turnToPoint(-44.5, 96.59, 750, {.forwards = false});
-    chassis.moveToPoint(-44.5, 96.59, 2500, {.forwards = false}, false);
+    chassis.turnToPoint(-45.5, 96.59, 750, {.forwards = false});
+    chassis.moveToPoint(-45.5, 96.59, 2500, {.forwards = false}, false);
 
 
     // chassis.moveToPoint(-51.5,15.1, 1000, {.forwards = false, .maxSpeed = 80});
@@ -374,16 +380,20 @@ void skills() {
 
 
     // //score in long goal 1st time
-
+    
+    // OLD CODE 
     chassis.turnToPoint(-32.39, 94.79, 1000, {.forwards = false});
     chassis.moveToPoint(-32.39, 94.79, 1000, {.forwards = false});
+    chassis.turnToPoint(-35, 83.20, 750, {.forwards = false});
+    chassis.moveToPoint(-35, 83.20, 1000, {.forwards = false},false);
 
 
 
-    chassis.turnToPoint(-34, 83.20, 750, {.forwards = false});
-    chassis.moveToPoint(-34, 83.20, 1000, {.forwards = false},false);
-    // chassis.turnToPoint(-34.2, 77, 750, {.forwards = false});
-    // chassis.moveToPoint(-34.2, 77, 1000, {.forwards = false},false);
+    // chassis.turnToPoint(-35, 94.79, 1000, {.forwards = false});
+    // chassis.moveToPoint(-35, 94.79, 1000, {.forwards = false});
+    // chassis.turnToPoint(-35, 83.20, 750, {.forwards = false});
+    // chassis.moveToPoint(-35, 83.20, 1000, {.forwards = false},false);
+
 
     move(-50,0,false,300);
     // aligned to goal
@@ -393,18 +403,18 @@ void skills() {
     // // //unload match loader 2
     scraper.set_value(true);
     storageIn();
-    chassis.moveToPoint(-34, 107, 1000, {}, false);
+    chassis.moveToPoint(-35.5, 107, 1000, {}, false);
     pros::delay(250);
     chassis.cancelAllMotions();
-    move(70,0,false, 1500);
+    move(50,0,false, 1500);
     pros::delay(250);
 
     // //score in long goal again
-    chassis.turnToPoint(-34.5, 83.20, 750, {.forwards = false});
-    chassis.moveToPoint(-34.5, 83.20, 1000, {.forwards = false}, false);
+    chassis.turnToPoint(-35, 83.20, 750, {.forwards = false});
+    chassis.moveToPoint(-35, 83.20, 1000, {.forwards = false}, false);
     // stopIntake();     
-    move(-50,0,false,200);
-    pros::delay(500);
+    move(-60,0,false,400);
+    pros::delay(100);
     scoreTop();
     pros::delay(2500);
     stopIntake();
@@ -415,19 +425,19 @@ void skills() {
     chassis.moveToPoint(-33.4, 93.3, 1000);
     scraper.set_value(false);
 
-    chassis.turnToHeading(90, 750);
+    // chassis.turnToHeading(90, 750);
 
     chassis.turnToPoint(66, 97.2, 750);
     //loooong
 
     // MADE FASTER
-    chassis.moveToPoint(66, 97.2, 2750, {}, false);
+    chassis.moveToPoint(66, 97.2, 2300, {}, false);
 
     chassis.turnToHeading(0.83,750);
     scraper.set_value(true);
     storageIn();
 
-    chassis.moveToPoint(66.5, 108, 1000);
+    chassis.moveToPoint(66, 108, 1000);
     // // //unload match loader 3
     
     pros::delay(250);
@@ -453,7 +463,7 @@ void skills() {
     chassis.turnToPoint(78.72, 10.5, 750, {.forwards = false});
 
     // MADE FASTER
-    chassis.moveToPoint(78.72, 10.5, 3000, {.forwards = false}, false);
+    chassis.moveToPoint(78.72, 10.5, 2500, {.forwards = false}, false);
 
     
     
@@ -464,7 +474,7 @@ void skills() {
     
     //score top 
     move(-70,0,false,200);
-    pros::delay(500);
+    pros::delay(100);
     scoreTop();
     pros::delay(3000);
     stopIntake();
@@ -476,21 +486,21 @@ void skills() {
     pros::delay(250);
     chassis.cancelAllMotions();
     move(40,0,false, 1250);
-    pros::delay(250);
+    pros::delay(500);
 
     // //score in long goal again 2nd time
     chassis.moveToPoint(67, 28.61, 1000, {.forwards = false, .maxSpeed = 100}, false);
     stopIntake();     
     move(-50,0,false,200);
-    pros::delay(500);
+    pros::delay(100);
     scoreTop();
-    pros::delay(3000);
+    pros::delay(3300);
     move(50,0,false,200);
     pros::delay(250);
     move(-50,0,false,200);
 
-    scraper.set_value(false);    
-    chassis.moveToPose(30, -17, -90, 1500, {.lead = .3});
+    // scraper.set_value(false);    
+    // chassis.moveToPose(30, -17, -90, 1500, {.lead = .3});
     // move(120,0,false,2000);
 
 

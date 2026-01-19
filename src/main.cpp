@@ -162,11 +162,11 @@ void autonomous() {
 
   // Solo AWP
   // soloAWPCedar();
-  skills();
+  // skills();
 
 
   // Left side 3 + 4 
-  // leftSide3Plus4();
+  leftSide3Plus4();
 
 
 
