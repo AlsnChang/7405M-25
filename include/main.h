@@ -122,3 +122,9 @@ extern pros::adi::DigitalOut descore;
 extern pros::adi::DigitalOut scraper;
 extern pros::adi::DigitalOut wing;
 extern bool hoodActivated;
+
+//distance sensors
+extern pros::Distance back_sensor;
+extern pros::Distance front_sensor; 
+extern pros::Distance left_sensor;
+extern pros::Distance right_sensor;

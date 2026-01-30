@@ -14,6 +14,8 @@
 #include <source_location>
 
 
+
+
 void middleTimed(){
     scoreMiddle();
     pros::delay(500);
@@ -507,6 +509,91 @@ void skills() {
 
 
 
+}
+
+void skills2(){
+    leftMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    rightMotors.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    chassis.setPose(0,0,-19.67);
+    wing.set_value(true);
+    storageIn();
+
+    //moving to middle goal
+    chassis.moveToPoint(-9.28, 29.41, 1000);
+    chassis.turnToPoint(7.38, 44.30, 700, {.forwards = false});
+    chassis.moveToPoint(7.38, 44.3, 800, {.forwards = false, .maxSpeed = 90}, false);
+
+    //score middle goal
+    scoreMiddle();
+    pros::delay(1500);
+    flappier.set_value(false);
+    flappy.set_value(false);
+
+    //go to match loader
+    chassis.turnToHeading(-135, 700);
+    chassis.moveToPoint(-36.5, 3.7, 1500, {});
+    chassis.turnToHeading(-177, 700, {}, false);
+    scraper.set_value(true);
+    pros::delay(450);
+    storageIn();
+    chassis.moveToPoint(-38.2, -4.5, 1000);
+
+    // //empty match loader 1
+    chassis.cancelAllMotions();
+    move(60, 0, false, 1250);
+    pros::delay(700);
+
+    // go backwards for turn
+    chassis.moveToPoint(-41.15, 3.2, 1000, {.forwards = false}, false);
+    scraper.set_value(false);
+
+    chassis.turnToPoint(-51.5,15.1, 750, {.forwards = false}, false);
+    stopIntake();
+
+
+    chassis.moveToPoint(-51.5,15.1, 1000, {.forwards = false});
+    
+    // go to other side 
+    chassis.turnToPoint(-47.5, 96.59, 750, {.forwards = false});
+    chassis.moveToPoint(-47.5, 96.59, 2500, {.forwards = false}, false);
+
+    // //score in long goal 1st time
+    
+    // OLD CODE 
+    chassis.turnToPoint(-32.39, 94.79, 1000, {.forwards = false});
+    chassis.moveToPoint(-32.39, 94.79, 1000, {.forwards = false});
+    chassis.turnToPoint(-36, 83.20, 750, {.forwards = false});
+    chassis.moveToPoint(-36, 83.20, 1000, {.forwards = false},false);
+
+
+
+
+
+    move(-50,0,false,300);
+    // aligned to goal
+    scoreTop();
+    pros::delay(2500);
+
+    // // //unload match loader 2
+    scraper.set_value(true);
+    storageIn();
+    chassis.moveToPoint(-35.5, 107, 1000, {}, false);
+    pros::delay(250);
+    chassis.cancelAllMotions();
+    move(40,0,false, 1500);
+    pros::delay(250);
+
+    // //score in long goal again
+    chassis.turnToPoint(-36, 83.20, 750, {.forwards = false});
+    chassis.moveToPoint(-36, 83.20, 1000, {.forwards = false}, false);
+    // stopIntake();     
+    move(-60,0,false,400);
+    pros::delay(100);
+    scoreTop();
+    pros::delay(2500);
+    stopIntake();
+    chassis.moveToPoint(-35.5, 96.5, 700);
+    
 }
 
 

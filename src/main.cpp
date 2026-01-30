@@ -114,8 +114,8 @@ void screen() {
     pros::lcd::print(1, "H: %f", pose.theta); // print the x position
     // printf("x: %f | y: %f | H: %f | rot: %d \n", pose.x, pose.y, pose.theta,
     // vertical_rot.get_position());
-    pros::lcd::print(2, "right distance sensor: %f", rightD.get());
-    pros::lcd::print(3, "front distance sensor: %f", frontD.get());
+    pros::lcd::print(2, "right distance sensor: %f", right_sensor.get());
+    pros::lcd::print(3, "front distance sensor: %f", front_sensor.get());
     pros::delay(50);
   }
 }
@@ -162,11 +162,11 @@ void autonomous() {
 
   // Solo AWP
   // soloAWPCedar();
-  // skills();
+  skills2();
 
 
   // Left side 3 + 4 
-  leftSide3Plus4();
+  // leftSide3Plus4();
 
 
 
