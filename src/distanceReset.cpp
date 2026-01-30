@@ -37,7 +37,7 @@ double getResetPositionY(){
 }
 
 void resetPositionWithSensor(pros::Distance sensor, double sensor_offset, double sensor_angle_offset, double field_half_size) {
-    double sensorReading = sensor.get();
+    double sensorReading = ((sensor.get())/25.4);
   
     // Check for invalid reading (distance sensors return -1 or very large values when no object detected)
     if (sensorReading < 0 || sensorReading > 200) {
